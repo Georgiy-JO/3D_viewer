@@ -1,6 +1,11 @@
-#include <iostream>
+#include "view/ui/mainwindow.h"
 
-int main() {
-  std::cout << "Hello Viewer3D v2.0" << std::endl;
-  return 0;
+#include <QApplication>
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }

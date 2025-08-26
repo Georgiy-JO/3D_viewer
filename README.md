@@ -21,7 +21,7 @@
 
 ### Пример диаграммы классов проекта 
 ! Не соответствует структуре проекта в полной мере  
-![3dviewer_meme](misc/images/unreadable_example_class_diagram.png)
+![unreadable_example_class_diagram](misc/images/unreadable_example_class_diagram.png)
 
 ## Check list
 

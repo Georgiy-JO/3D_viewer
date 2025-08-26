@@ -6,6 +6,10 @@ project(Viewer3D
   DESCRIPTION "3D Viewer Application"
 )
 
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -14,7 +18,11 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
   add_compile_options(-Wall -Wextra -Wpedantic -Werror -g)
 endif()
 
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)          #new
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGLWidgets Widgets)     #new
 find_package(OpenGL REQUIRED)
+
 # find_package(GLEW REQUIRED)   # for GLFW3 and GLEW
 # find_package(GLFW3 REQUIRED)  # for GLFW3 and GLEW
 
@@ -68,6 +76,11 @@ set(SOURCES
   model/parser/parser_src/prefix_handlers.cpp
   model/parser/parser_src/model_parser.cpp
   model/parser/service_functions/service_functions.cpp
+  main.cpp
+  view/render/model_viewer.cpp
+  view/ui/mainwindow.cpp
+  view/ui/mainwindow.ui
+  controller/model_parser_worker.cpp
 )
 
 set(HEADERS
@@ -81,12 +94,22 @@ set(HEADERS
   model/parser/parser.h
   model/parser/model_parser.h
   model/parser/service_functions/service_functions.h
+  view/ui/mainwindow.h
+  view//render/model_viewer.h
+  controller/model_parser_worker.h
 )
 
-add_executable(Viewer3D
-  main.cpp
-  ${SOURCES}
-  ${HEADERS}
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    add_executable(Viewer3D
+        ${SOURCES}
+        ${HEADERS}
+    )
+endif()
+
+add_custom_target(run_Viewer3D
+    COMMAND Viewer3D
+    DEPENDS Viewer3D
+    COMMENT "Running Viewer3D executable"
 )
 
 find_program(CLANG_FORMAT_EXE
@@ -96,20 +119,19 @@ find_program(CLANG_FORMAT_EXE
 
 if(CLANG_FORMAT_EXE)
     set(ALL_SOURCE_FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/core/**/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/core/**/*.h
         ${CMAKE_CURRENT_SOURCE_DIR}/model/**/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/model/**/*.h
         ${CMAKE_CURRENT_SOURCE_DIR}/model/**/**/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/model/**/**/*.h
-        # ${CMAKE_CURRENT_SOURCE_DIR}/view/**/*.cpp
-        # ${CMAKE_CURRENT_SOURCE_DIR}/view/**/*.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/view/**/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/view/**/*.h
         # ${CMAKE_CURRENT_SOURCE_DIR}/controller/**/*.cpp
         # ${CMAKE_CURRENT_SOURCE_DIR}/controller/**/*.h
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/**/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/**/*.h
-        # ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
-        # ${CMAKE_CURRENT_SOURCE_DIR}/*.h
     )
 
     file(GLOB_RECURSE FORMAT_SOURCE_FILES
@@ -155,10 +177,10 @@ endif()
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES
   ${HEADERS}
   ${SOURCES}
-  main.cpp
 )
 
 target_include_directories(Viewer3D PUBLIC
+    $<BUILD_INTERFACE:${INCLUDE_DIRS}>     #new
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21matrix>
@@ -168,11 +190,32 @@ target_include_directories(Viewer3D PUBLIC
 
 target_link_libraries(Viewer3D PRIVATE
     s21matrix
+    Qt${QT_VERSION_MAJOR}::Widgets     #new
+    Qt${QT_VERSION_MAJOR}::OpenGLWidgets      #new
+    OpenGL::GLU       #new
+    OpenGL::GL      #new
     # ${MY_QT_LIBS}  # for qt6
     # OpenGL::GL
     # GLEW::GLEW
     # glfw
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 include(GNUInstallDirs)
 install(TARGETS Viewer3D
