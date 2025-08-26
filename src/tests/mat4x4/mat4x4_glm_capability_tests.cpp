@@ -8,8 +8,6 @@
 
 #include "core/math/mat4x4.h"
 #include "core/math/vec3.h"
-#include "core/math/vec2.h"
-#include "core/math/vec4.h"
 
 namespace {
 

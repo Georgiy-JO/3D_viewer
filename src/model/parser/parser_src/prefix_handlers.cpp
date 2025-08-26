@@ -1,11 +1,41 @@
-#include <iostream>
+#include "../parser.h"
+namespace s21::inbound_model::parser {
+  using namespace service_functions;
 
-#include "parsing_utils.h"
+const std::vector<std::string>& Parser::CreatePrefixArray() {
+  static const std::vector<std::string> array = {
+      "v",       // #0 Vertex coordinates
+      // "vt",      // #1 Vertex texture coordinate
+      // "vn",      // #2 Vertex normal vector
+      // "vp",      // #3 Parameter space vertex
+      "f",       // #4 Face (ref to verts. Ex.: f v1/vt1/vn1 v2/vt2/vn2 ...)
+      "l",       // #5 Line (sequence of verts or vert/texture pairs)
+      "p",       // #6 Point (used for point clouds)
+      // "g",       // #7 Group name
+      "o"       // #8 Object name
+      // "s",       // #9 Smoothing group
+      // "mg",      // #10 Merging group
+      // "mtlib",   // #11 Material library file (external .mtl file)
+      // "usemtl",  // #12 Use material (refers to a material in .mtl file)
+      // "curv",    // #13 Curve
+      // "curv2",   // #14 2D curve
+      // "surf",    // #15 Surface
+      // "parm",    // #16 Parameter values
+      // "deg",     // #17 Degree of curve or surface
+      // "bmat",    // #18 Basis matrix
+      // "step",    // #19 Steps for curve/surface
+      // "cstype",  // #20 Curve or surface type (`bezier`, `bspline`, `rat` etc.)
+      // "trim",    // #21 Trimming loop
+      // "hole",    // #22 Hole in surface
+      // "scrv",    // #23 Special curve
+      // "sp",      // #24 Surface patch
+      // "end"      // #25 End statement (for groupings or surface defs)
+  };
+  return array;
+}
 
-namespace s21::inbound_model {
-
-bool LineStartsWithPrefix(const std::string& line, const std::string& prefix) {
-  if (line.length() == 0 || prefix.length() == 0) return false;
+bool Parser::LineStartsWithPrefix(const std::string& line, const std::string& prefix) {
+  if (line.length() == 0 || prefix.length() == 0 || line[0]!=prefix[0]) return false;
   auto prefix_position = line.find(prefix);
   if (prefix_position == line.npos || prefix_position != 0) return false;
   auto next_ch_position = prefix.length();
@@ -14,23 +44,23 @@ bool LineStartsWithPrefix(const std::string& line, const std::string& prefix) {
   return IsSpaceCh(line[next_ch_position]);
 }
 
-void PrefixV(Model3D& model, const std::string& line) {
+void Parser::PrefixV(const std::string& line) {
   std::istringstream iss(line);
   double x = 0.0, y = 0.0, z = 0.0;
 
   if (iss >> x >> y >> z) {
-    model.AddVert(x, y, z);
+    m_model.AddVert(x, y, z);
 
     LSpaceChTrim(iss);
     if (IsNextNumber(iss)) iss >> x;  // Optional 4th value
     LSpaceChTrim(iss);
     int symbol = iss.peek();
     if (!IsHash(symbol) && IsNotEOF(symbol))
-      model.RemoveVert(model.GetVerticesAmount() - 1);
+      m_model.RemoveVert(m_model.GetVerticesAmount() - 1);
   }
 }
 
-void PrefixF(Model3D& model, std::string& line) {
+void Parser::PrefixF(std::string& line) {
   RSpaceChTrim(line);
   std::istringstream iss(line);
   int next_symbol = EOF;
@@ -47,41 +77,41 @@ void PrefixF(Model3D& model, std::string& line) {
   }
 
   if (vertices.size() >= 3)  // f prefix allow only 3+ vertices included
-    EdgesAdder(model, vertices);
+    EdgesAdder(vertices);
 }
 
-void PrefixL(Model3D& model, const std::string& line) {
+void Parser::PrefixL(const std::string& line) {
   std::vector<double> vertices;
   PrefixCommonLP(line, vertices);
 
   if (vertices.size() >= 2) {  // l prefix allow only 2+ vertices included
-    if (EdgesAdder(model, vertices))
-      model.RemoveEdge(model.GetEdgesAmount() - 1);
+    if (EdgesAdder(vertices))
+      m_model.RemoveEdge(m_model.GetEdgesAmount() - 1);
   }
 }
 
-void PrefixP(Model3D& model, const std::string& line) {
+void Parser::PrefixP(const std::string& line) {
   std::vector<double> vertices;
   PrefixCommonLP(line, vertices);
 
   if (vertices.size() >= 1)  // p prefix allow only 1+ vertices included
-    SingleVertEdgesAdder(model, vertices);
+    SingleVertEdgesAdder(vertices);
 }
 
-bool PrefixO(Model3D& model, std::string& line) {
+bool Parser::PrefixO(std::string& line) {
   size_t position = line.find('#');
   if (position != line.npos) line.erase(line.begin() + position, line.end());
   RSpaceChTrim(line);
   LSpaceChTrim(line);
 
   if (line.length() != 0)
-    ModelNameSetter(model, line);
+    ModelNameSetter(line);
   else
     return false;
   return true;
 }
 
-void PrefixCommonLP(const std::string& line, std::vector<double>& vertices) {
+void Parser::PrefixCommonLP(const std::string& line, std::vector<double>& vertices) {
   std::istringstream iss(line);
   LSpaceChTrim(iss);
   int next_symbol = iss.peek();
@@ -93,7 +123,7 @@ void PrefixCommonLP(const std::string& line, std::vector<double>& vertices) {
 }
 
 // Allowed for vertex referencing: 3. = 3.0 = 3.
-bool ProcessCharF(std::istringstream& iss, std::vector<double>& vertices,
+bool Parser::ProcessCharF(std::istringstream& iss, std::vector<double>& vertices,
                   int& next_symbol) {
   double number = 0;
   if (IsHash(next_symbol) || !IsNotEOF(next_symbol)) return false;
@@ -139,7 +169,7 @@ bool ProcessCharF(std::istringstream& iss, std::vector<double>& vertices,
 }
 
 // Allowed for vertex referencing: 3. = 3.0 = 3.
-bool ProcessCharLP(std::istringstream& iss, std::vector<double>& vertices,
+bool Parser::ProcessCharLP(std::istringstream& iss, std::vector<double>& vertices,
                    int& next_symbol) {
   double number = 0;
   if (IsNextNumber(iss)) {
@@ -161,4 +191,6 @@ bool ProcessCharLP(std::istringstream& iss, std::vector<double>& vertices,
   return true;
 }
 
-}  // namespace s21::inbound_model
+
+
+}   //s21::inbound_model::parser

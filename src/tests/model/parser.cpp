@@ -1,46 +1,47 @@
 #include "../../model/parser/parser.h"
+#include "../../model/parser/model_parser.h"
 
+#include <fstream>
 #include <gtest/gtest.h>
-//I'm here to simplify merging
-
-
+/*
+// We are private now ¯\_(ツ)_/¯
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_CreatePrefixArray) {
   using s21::inbound_model::CreatePrefixArray;
   auto array = CreatePrefixArray();
 
-  EXPECT_EQ(array.size(), 26);
+  EXPECT_EQ(array.size(), 5);     //change to 26 in case adding more prefixes
   EXPECT_EQ(array[0], "v");
-  EXPECT_EQ(array[1], "vt");
-  EXPECT_EQ(array[2], "vn");
-  EXPECT_EQ(array[3], "vp");
-  EXPECT_EQ(array[4], "f");
-  EXPECT_EQ(array[5], "l");
-  EXPECT_EQ(array[6], "p");
-  EXPECT_EQ(array[7], "g");
-  EXPECT_EQ(array[8], "o");
-  EXPECT_EQ(array[9], "s");
-  EXPECT_EQ(array[10], "mg");
-  EXPECT_EQ(array[11], "mtlib");
-  EXPECT_EQ(array[12], "usemtl");
-  EXPECT_EQ(array[13], "curv");
-  EXPECT_EQ(array[14], "curv2");
-  EXPECT_EQ(array[15], "surf");
-  EXPECT_EQ(array[16], "parm");
-  EXPECT_EQ(array[17], "deg");
-  EXPECT_EQ(array[18], "bmat");
-  EXPECT_EQ(array[19], "step");
-  EXPECT_EQ(array[20], "cstype");
-  EXPECT_EQ(array[21], "trim");
-  EXPECT_EQ(array[22], "hole");
-  EXPECT_EQ(array[23], "scrv");
-  EXPECT_EQ(array[24], "sp");
-  EXPECT_EQ(array[25], "end");
+  // EXPECT_EQ(array[1], "vt");
+  // EXPECT_EQ(array[2], "vn");
+  // EXPECT_EQ(array[3], "vp");
+  EXPECT_EQ(array[ 1], "f");
+  EXPECT_EQ(array[2], "l");
+  EXPECT_EQ(array[3], "p");
+  // EXPECT_EQ(array[7], "g");
+  EXPECT_EQ(array[4], "o");
+  // EXPECT_EQ(array[9], "s");
+  // EXPECT_EQ(array[10], "mg");
+  // EXPECT_EQ(array[11], "mtlib");
+  // EXPECT_EQ(array[12], "usemtl");
+  // EXPECT_EQ(array[13], "curv");
+  // EXPECT_EQ(array[14], "curv2");
+  // EXPECT_EQ(array[15], "surf");
+  // EXPECT_EQ(array[16], "parm");
+  // EXPECT_EQ(array[17], "deg");
+  // EXPECT_EQ(array[18], "bmat");
+  // EXPECT_EQ(array[19], "step");
+  // EXPECT_EQ(array[20], "cstype");
+  // EXPECT_EQ(array[21], "trim");
+  // EXPECT_EQ(array[22], "hole");
+  // EXPECT_EQ(array[23], "scrv");
+  // EXPECT_EQ(array[24], "sp");
+  // EXPECT_EQ(array[25], "end");
 
   std::string prefix = "f";
 
   for (size_t i = 0; i < array.size(); i++) {
     if (array[i] == "f") {
-      EXPECT_EQ(i, 4);
+      EXPECT_EQ(i, 1);    //change to 4 in case adding more prefixes
       EXPECT_EQ(array[i], "f");
     }
   }
@@ -135,243 +136,6 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_CreatePrefixArray) {
   array_4 = CreatePrefixArray();
 }
 
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNum) {
-  int ch = 'k';
-  EXPECT_EQ(s21::inbound_model::IsNum(ch), false);
-  for (ch = 0; ch < 127; ch++) {
-    if (ch <= 57 && ch >= 48)
-      EXPECT_EQ(s21::inbound_model::IsNum(ch), true);
-    else
-      EXPECT_EQ(s21::inbound_model::IsNum(ch), false);
-  }
-
-  EXPECT_EQ(s21::inbound_model::IsNum('0'), true);
-  EXPECT_EQ(s21::inbound_model::IsNum('1'), true);
-  EXPECT_EQ(s21::inbound_model::IsNum('2'), true);
-  EXPECT_EQ(s21::inbound_model::IsNum('3'), true);
-  EXPECT_EQ(s21::inbound_model::IsNum('4'), true);
-  EXPECT_EQ(s21::inbound_model::IsNum('5'), true);
-  EXPECT_EQ(s21::inbound_model::IsNum('6'), true);
-  EXPECT_EQ(s21::inbound_model::IsNum('7'), true);
-  EXPECT_EQ(s21::inbound_model::IsNum('8'), true);
-  EXPECT_EQ(s21::inbound_model::IsNum('9'), true);
-  EXPECT_EQ(s21::inbound_model::IsNum(EOF), false);
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsInteger) {
-  double num = 0.0;
-
-  for (num = -50.0; num < 100; num++) {
-    EXPECT_EQ(s21::inbound_model::IsInteger(num), true);
-  }
-  for (num = -50.1; num < 100; num++) {
-    EXPECT_EQ(s21::inbound_model::IsInteger(num), false);
-  }
-  for (num = -50.5; num < 100; num++) {
-    EXPECT_EQ(s21::inbound_model::IsInteger(num), false);
-  }
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNonzeroInteger) {
-  double num = 0.0;
-
-  EXPECT_EQ(s21::inbound_model::IsNonzeroInteger(num), false);
-  for (num = -50.0; num < 0; num++) {
-    EXPECT_EQ(s21::inbound_model::IsNonzeroInteger(num), true);
-  }
-  EXPECT_EQ(s21::inbound_model::IsNonzeroInteger(num), false);
-  num++;
-  for (; num < 100; num++) {
-    EXPECT_EQ(s21::inbound_model::IsNonzeroInteger(num), true);
-  }
-  for (num = -50.1; num < 100; num++) {
-    EXPECT_EQ(s21::inbound_model::IsNonzeroInteger(num), false);
-  }
-  for (num = -50.5; num < 100; num++) {
-    EXPECT_EQ(s21::inbound_model::IsNonzeroInteger(num), false);
-  }
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSpaceCh) {
-  int ch = 33;
-  for (; ch < 127; ch++) {
-    EXPECT_EQ(s21::inbound_model::IsSpaceCh(ch), false);
-  }
-  EXPECT_EQ(s21::inbound_model::IsSpaceCh(' '), true);
-  EXPECT_EQ(s21::inbound_model::IsSpaceCh('\t'), true);
-  EXPECT_EQ(s21::inbound_model::IsSpaceCh(EOF), false);
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsHash) {
-  int ch = 33;
-  for (ch = 0; ch < 35; ch++) {
-    EXPECT_EQ(s21::inbound_model::IsHash(ch), false);
-  }
-  EXPECT_EQ(s21::inbound_model::IsHash(ch), true);
-  ch++;
-  for (; ch < 127; ch++) {
-    EXPECT_EQ(s21::inbound_model::IsHash(ch), false);
-  }
-  EXPECT_EQ(s21::inbound_model::IsHash('#'), true);
-  EXPECT_EQ(s21::inbound_model::IsHash(EOF), false);
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSlash) {
-  int ch = 33;
-  for (ch = 0; ch < 47; ch++) {
-    EXPECT_EQ(s21::inbound_model::IsSlash(ch), false);
-  }
-  EXPECT_EQ(s21::inbound_model::IsSlash(ch), true);
-  ch++;
-  for (; ch < 127; ch++) {
-    EXPECT_EQ(s21::inbound_model::IsSlash(ch), false);
-  }
-  EXPECT_EQ(s21::inbound_model::IsSlash('/'), true);
-  EXPECT_EQ(s21::inbound_model::IsSlash(EOF), false);
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSpaceChHashEOF) {
-  int ch = 33;
-  for (ch = 0; ch < '\t'; ch++) {
-    EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF(ch), false);
-  }
-  EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF(ch), true);
-  EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF('\t'), true);
-  ch++;
-  for (; ch < ' '; ch++) {
-    EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF(ch), false);
-  }
-  EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF(ch), true);
-  EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF(' '), true);
-  ch++;
-  for (; ch < '#'; ch++) {
-    EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF(ch), false);
-  }
-  EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF(ch), true);
-  EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF('#'), true);
-  ch++;
-  for (; ch < 127; ch++) {
-    EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF(ch), false);
-  }
-  EXPECT_EQ(s21::inbound_model::IsSpaceChHashEOF(EOF), true);
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNotEOF) {
-  int ch = 33;
-  for (ch = 0; ch < 127; ch++) {
-    EXPECT_EQ(s21::inbound_model::IsNotEOF(ch), true);
-  }
-  EXPECT_EQ(s21::inbound_model::IsNotEOF(EOF), false);
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNextNumber) {
-  using s21::inbound_model::IsNextNumber;
-  std::string line{"Hell 2 you! "};
-  std::istringstream iss{line};
-  int ch = iss.peek();
-  while (1) {
-    if (ch == EOF)
-      break;
-    else if (ch == '2')
-      EXPECT_EQ(IsNextNumber(iss), true);
-    else
-      EXPECT_EQ(IsNextNumber(iss), false);
-
-    iss.get();
-    ch = iss.peek();
-  }
-
-  line = "-555";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), true);
-  line = "-555.6";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), true);
-  line = "0";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), true);
-  line = ".";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), false);
-  line = "--";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), false);
-  line = "/-";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), false);
-  line = "-f";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), false);
-  line = "-k";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), false);
-  line = "k";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), false);
-  line = "55";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), true);
-  line = "-0.6";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), true);
-  line = "0.66";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), true);
-  line = " ";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), false);
-  line = "\t";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), false);
-  line = "";
-  iss.clear();
-  iss.str(line);
-  EXPECT_EQ(IsNextNumber(iss), false);
-
-  line =
-      "      -5555.55    -5555.55   -5555.55   -5555.55  f          -5555.55   "
-      "  ddd    qwwq  -5555.55 -5555.55 -5555.55 -5555.55/-5555.55/-5555.55   "
-      "fghj  ";
-  double num;
-  iss.clear();
-  iss.str(line);
-  ch = iss.get();
-  while (s21::inbound_model::IsNotEOF(ch)) {
-    if (IsNextNumber(iss)) {
-      iss >> num;
-      EXPECT_DOUBLE_EQ(num, -5555.55);
-    }
-    ch = iss.get();
-  }
-  line =
-      "      5    5   5   5  f          5     ddd    qwwq  5 5 5 5/5/5   fghj "
-      " ";
-  iss.clear();
-  iss.str(line);
-  ch = iss.get();
-  while (s21::inbound_model::IsNotEOF(ch)) {
-    if (IsNextNumber(iss)) {
-      iss >> num;
-      EXPECT_DOUBLE_EQ(num, 5);
-    }
-    ch = iss.get();
-  }
-}
-
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_VerticeDecoder) {
   using s21::inbound_model::VerticeDecoder;
 
@@ -409,193 +173,6 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_VerticeDecoder) {
   EXPECT_EQ(output, 0);
   EXPECT_EQ(VerticeDecoder(-6, output, 12), true);
   EXPECT_EQ(output, 6);
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_RSpaceChTrim_string) {
-  using s21::inbound_model::RSpaceChTrim;
-
-  std::string line{"Hello there!"};
-
-  size_t length = line.length();
-  size_t length_origin = length;
-  RSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length);
-  EXPECT_EQ(line.length(), length_origin);
-
-  line = "Hello there!     ";
-  length = line.length();
-  RSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length - 5);
-  EXPECT_EQ(line.length(), length_origin);
-  EXPECT_EQ(*(line.end() - 1), '!');
-
-  line = "Hello there!      \t\t\t\t";
-  length = line.length();
-  RSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length - 10);
-  EXPECT_EQ(line.length(), length_origin);
-  EXPECT_EQ(*(line.end() - 1), '!');
-
-  line = "Hello there!     \n\t\t\t\t";
-  length = line.length();
-  RSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length - 4);
-  EXPECT_EQ(line.length(), length_origin + 6);
-  EXPECT_EQ(*(line.end() - 1), '\n');
-
-  line = "";
-  length = line.length();
-  RSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length);
-  EXPECT_EQ(line.length(), 0);
-
-  line = "   asdf     ";
-  length = line.length();
-  RSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length - 5);
-  EXPECT_EQ(line.length(), 7);
-
-  line = "                         ";
-  length = line.length();
-  RSpaceChTrim(line);
-  EXPECT_EQ(line.length(), 0);
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_LSpaceChTrim_string) {
-  using s21::inbound_model::LSpaceChTrim;
-
-  std::string line{"Hello there!"};
-
-  size_t length = line.length();
-  size_t length_origin = length;
-  LSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length);
-  EXPECT_EQ(line.length(), length_origin);
-
-  line = "               Hello there!";
-  length = line.length();
-  LSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length - 15);
-  EXPECT_EQ(line.length(), length_origin);
-  EXPECT_EQ(*(line.end() - 1), '!');
-
-  line = "      \t\t\t\tHello there!";
-  length = line.length();
-  LSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length - 10);
-  EXPECT_EQ(line.length(), length_origin);
-  EXPECT_EQ(*(line.end() - 1), '!');
-
-  line = "     \t\t\n\t\tHello there!";
-  length = line.length();
-  LSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length - 7);
-  EXPECT_EQ(line.length(), length_origin + 3);
-  EXPECT_EQ(*(line.end() - 1), '!');
-
-  line = "";
-  length = line.length();
-  LSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length);
-  EXPECT_EQ(line.length(), 0);
-
-  line = "   asdf     ";
-  length = line.length();
-  LSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length - 3);
-  EXPECT_EQ(line.length(), 9);
-
-  line = "                         ";
-  length = line.length();
-  LSpaceChTrim(line);
-  EXPECT_EQ(line.length(), 0);
-
-  line = "   asdf     ";
-  length = line.length();
-  LSpaceChTrim(line);
-  s21::inbound_model::RSpaceChTrim(line);
-  EXPECT_EQ(line.length(), length - 8);
-  EXPECT_EQ(line.length(), 4);
-  EXPECT_EQ(line[0], 'a');
-  EXPECT_EQ(*(line.end() - 1), 'f');
-}
-
-TEST(Model_Parser, ParssingUnits_ServiseFunctions_LSpaceChTrim_istringsteam) {
-  using s21::inbound_model::LSpaceChTrim;
-
-  std::string line{"Hello there!"};
-  std::istringstream iss(line);
-
-  size_t length;
-  size_t length_origin = line.length();
-  iss.clear();
-  iss.str(line);
-  LSpaceChTrim(iss);
-  EXPECT_EQ(iss.peek(), 'H');
-  length = 0;
-  while (iss.peek() != EOF) {
-    length++;
-    iss.get();
-  }
-  EXPECT_EQ(length, length_origin);
-  iss.unget();
-  EXPECT_EQ(iss.get(), '!');
-
-  line = "               Hello there!";
-  iss.clear();
-  iss.str(line);
-  LSpaceChTrim(iss);
-  EXPECT_EQ(iss.peek(), 'H');
-  length = 0;
-  while (iss.peek() != EOF) {
-    length++;
-    iss.get();
-  }
-  EXPECT_EQ(length, length_origin);
-  iss.unget();
-  EXPECT_EQ(iss.get(), '!');
-
-  line = "     \n\t\t\t\tHello there!";
-  iss.clear();
-  iss.str(line);
-  LSpaceChTrim(iss);
-  EXPECT_EQ(iss.peek(), 'H');
-  length = 0;
-  while (iss.peek() != EOF) {
-    length++;
-    iss.get();
-  }
-  EXPECT_EQ(length, length_origin);
-  iss.unget();
-  EXPECT_EQ(iss.get(), '!');
-
-  line = "";
-  iss.clear();
-  iss.str(line);
-  LSpaceChTrim(iss);
-  EXPECT_EQ(iss.peek(), EOF);
-  EXPECT_EQ(iss.eof(), true);
-
-  line = "   asdf     ";
-  iss.clear();
-  iss.str(line);
-  LSpaceChTrim(iss);
-  EXPECT_EQ(iss.peek(), 'a');
-  length = 0;
-  while (iss.peek() != EOF) {
-    length++;
-    iss.get();
-  }
-  EXPECT_EQ(length, 9);
-  iss.unget();
-  EXPECT_EQ(iss.get(), ' ');
-
-  line = "                         ";
-  iss.clear();
-  iss.str(line);
-  LSpaceChTrim(iss);
-  EXPECT_EQ(iss.peek(), EOF);
-  EXPECT_EQ(iss.eof(), true);
 }
 
 TEST(Model_Parser, ParssingUnits_ModelAlters_ModelNameSetter) {
@@ -2858,9 +2435,438 @@ TEST(Model_Parser, ParssingUnits_PrefixHandlers_PrefixF) {
   EXPECT_EQ(model.GetEdgesAmount(), 0);
 }
 
+
+
+
+
+*/
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNum) {
+
+  int ch = 'k';
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum(ch), false);
+  for (ch = 0; ch < 127; ch++) {
+    if (ch <= 57 && ch >= 48)
+      EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum(ch), true);
+    else
+      EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum(ch), false);
+  }
+
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('0'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('1'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('2'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('3'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('4'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('5'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('6'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('7'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('8'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('9'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum(EOF), false);
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsInteger) {
+  double num = 0.0;
+
+  for (num = -50.0; num < 100; num++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsInteger(num), true);
+  }
+  for (num = -50.1; num < 100; num++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsInteger(num), false);
+  }
+  for (num = -50.5; num < 100; num++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsInteger(num), false);
+  }
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNonzeroInteger) {
+  double num = 0.0;
+
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNonzeroInteger(num), false);
+  for (num = -50.0; num < 0; num++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNonzeroInteger(num), true);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNonzeroInteger(num), false);
+  num++;
+  for (; num < 100; num++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNonzeroInteger(num), true);
+  }
+  for (num = -50.1; num < 100; num++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNonzeroInteger(num), false);
+  }
+  for (num = -50.5; num < 100; num++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNonzeroInteger(num), false);
+  }
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSpaceCh) {
+  int ch = 33;
+  for (; ch < 127; ch++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceCh(ch), false);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceCh(' '), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceCh('\t'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceCh(EOF), false);
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsHash) {
+  int ch = 33;
+  for (ch = 0; ch < 35; ch++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsHash(ch), false);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsHash(ch), true);
+  ch++;
+  for (; ch < 127; ch++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsHash(ch), false);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsHash('#'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsHash(EOF), false);
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSlash) {
+  int ch = 33;
+  for (ch = 0; ch < 47; ch++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSlash(ch), false);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSlash(ch), true);
+  ch++;
+  for (; ch < 127; ch++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSlash(ch), false);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSlash('/'), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSlash(EOF), false);
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSpaceChHashEOF) {
+  int ch = 33;
+  for (ch = 0; ch < '\t'; ch++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch), false);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF('\t'), true);
+  ch++;
+  for (; ch < ' '; ch++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch), false);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(' '), true);
+  ch++;
+  for (; ch < '#'; ch++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch), false);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch), true);
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF('#'), true);
+  ch++;
+  for (; ch < 127; ch++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch), false);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(EOF), true);
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNotEOF) {
+  int ch = 33;
+  for (ch = 0; ch < 127; ch++) {
+    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNotEOF(ch), true);
+  }
+  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNotEOF(EOF), false);
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNextNumber) {
+  using s21::inbound_model::parser::service_functions::IsNextNumber;
+  std::string line{"Hell 2 you! "};
+  std::istringstream iss{line};
+  int ch = iss.peek();
+  while (1) {
+    if (ch == EOF)
+      break;
+    else if (ch == '2')
+      EXPECT_EQ(IsNextNumber(iss), true);
+    else
+      EXPECT_EQ(IsNextNumber(iss), false);
+
+    iss.get();
+    ch = iss.peek();
+  }
+
+  line = "-555";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), true);
+  line = "-555.6";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), true);
+  line = "0";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), true);
+  line = ".";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), false);
+  line = "--";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), false);
+  line = "/-";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), false);
+  line = "-f";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), false);
+  line = "-k";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), false);
+  line = "k";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), false);
+  line = "55";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), true);
+  line = "-0.6";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), true);
+  line = "0.66";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), true);
+  line = " ";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), false);
+  line = "\t";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), false);
+  line = "";
+  iss.clear();
+  iss.str(line);
+  EXPECT_EQ(IsNextNumber(iss), false);
+
+  line =
+      "      -5555.55    -5555.55   -5555.55   -5555.55  f          -5555.55   "
+      "  ddd    qwwq  -5555.55 -5555.55 -5555.55 -5555.55/-5555.55/-5555.55   "
+      "fghj  ";
+  double num;
+  iss.clear();
+  iss.str(line);
+  ch = iss.get();
+  while (s21::inbound_model::parser::service_functions::IsNotEOF(ch)) {
+    if (IsNextNumber(iss)) {
+      iss >> num;
+      EXPECT_DOUBLE_EQ(num, -5555.55);
+    }
+    ch = iss.get();
+  }
+  line =
+      "      5    5   5   5  f          5     ddd    qwwq  5 5 5 5/5/5   fghj "
+      " ";
+  iss.clear();
+  iss.str(line);
+  ch = iss.get();
+  while (s21::inbound_model::parser::service_functions::IsNotEOF(ch)) {
+    if (IsNextNumber(iss)) {
+      iss >> num;
+      EXPECT_DOUBLE_EQ(num, 5);
+    }
+    ch = iss.get();
+  }
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_RSpaceChTrim_string) {
+  using s21::inbound_model::parser::service_functions::RSpaceChTrim;
+
+  std::string line{"Hello there!"};
+
+  size_t length = line.length();
+  size_t length_origin = length;
+  RSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length);
+  EXPECT_EQ(line.length(), length_origin);
+
+  line = "Hello there!     ";
+  length = line.length();
+  RSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length - 5);
+  EXPECT_EQ(line.length(), length_origin);
+  EXPECT_EQ(*(line.end() - 1), '!');
+
+  line = "Hello there!      \t\t\t\t";
+  length = line.length();
+  RSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length - 10);
+  EXPECT_EQ(line.length(), length_origin);
+  EXPECT_EQ(*(line.end() - 1), '!');
+
+  line = "Hello there!     \n\t\t\t\t";
+  length = line.length();
+  RSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length - 4);
+  EXPECT_EQ(line.length(), length_origin + 6);
+  EXPECT_EQ(*(line.end() - 1), '\n');
+
+  line = "";
+  length = line.length();
+  RSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length);
+  EXPECT_EQ(line.length(), 0);
+
+  line = "   asdf     ";
+  length = line.length();
+  RSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length - 5);
+  EXPECT_EQ(line.length(), 7);
+
+  line = "                         ";
+  length = line.length();
+  RSpaceChTrim(line);
+  EXPECT_EQ(line.length(), 0);
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_LSpaceChTrim_string) {
+  using s21::inbound_model::parser::service_functions::LSpaceChTrim;
+
+  std::string line{"Hello there!"};
+
+  size_t length = line.length();
+  size_t length_origin = length;
+  LSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length);
+  EXPECT_EQ(line.length(), length_origin);
+
+  line = "               Hello there!";
+  length = line.length();
+  LSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length - 15);
+  EXPECT_EQ(line.length(), length_origin);
+  EXPECT_EQ(*(line.end() - 1), '!');
+
+  line = "      \t\t\t\tHello there!";
+  length = line.length();
+  LSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length - 10);
+  EXPECT_EQ(line.length(), length_origin);
+  EXPECT_EQ(*(line.end() - 1), '!');
+
+  line = "     \t\t\n\t\tHello there!";
+  length = line.length();
+  LSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length - 7);
+  EXPECT_EQ(line.length(), length_origin + 3);
+  EXPECT_EQ(*(line.end() - 1), '!');
+
+  line = "";
+  length = line.length();
+  LSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length);
+  EXPECT_EQ(line.length(), 0);
+
+  line = "   asdf     ";
+  length = line.length();
+  LSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length - 3);
+  EXPECT_EQ(line.length(), 9);
+
+  line = "                         ";
+  length = line.length();
+  LSpaceChTrim(line);
+  EXPECT_EQ(line.length(), 0);
+
+  line = "   asdf     ";
+  length = line.length();
+  LSpaceChTrim(line);
+  s21::inbound_model::parser::service_functions::RSpaceChTrim(line);
+  EXPECT_EQ(line.length(), length - 8);
+  EXPECT_EQ(line.length(), 4);
+  EXPECT_EQ(line[0], 'a');
+  EXPECT_EQ(*(line.end() - 1), 'f');
+}
+
+TEST(Model_Parser, ParssingUnits_ServiseFunctions_LSpaceChTrim_istringsteam) {
+  using s21::inbound_model::parser::service_functions::LSpaceChTrim;
+
+  std::string line{"Hello there!"};
+  std::istringstream iss(line);
+
+  size_t length;
+  size_t length_origin = line.length();
+  iss.clear();
+  iss.str(line);
+  LSpaceChTrim(iss);
+  EXPECT_EQ(iss.peek(), 'H');
+  length = 0;
+  while (iss.peek() != EOF) {
+    length++;
+    iss.get();
+  }
+  EXPECT_EQ(length, length_origin);
+  iss.unget();
+  EXPECT_EQ(iss.get(), '!');
+
+  line = "               Hello there!";
+  iss.clear();
+  iss.str(line);
+  LSpaceChTrim(iss);
+  EXPECT_EQ(iss.peek(), 'H');
+  length = 0;
+  while (iss.peek() != EOF) {
+    length++;
+    iss.get();
+  }
+  EXPECT_EQ(length, length_origin);
+  iss.unget();
+  EXPECT_EQ(iss.get(), '!');
+
+  line = "     \n\t\t\t\tHello there!";
+  iss.clear();
+  iss.str(line);
+  LSpaceChTrim(iss);
+  EXPECT_EQ(iss.peek(), 'H');
+  length = 0;
+  while (iss.peek() != EOF) {
+    length++;
+    iss.get();
+  }
+  EXPECT_EQ(length, length_origin);
+  iss.unget();
+  EXPECT_EQ(iss.get(), '!');
+
+  line = "";
+  iss.clear();
+  iss.str(line);
+  LSpaceChTrim(iss);
+  EXPECT_EQ(iss.peek(), EOF);
+  EXPECT_EQ(iss.eof(), true);
+
+  line = "   asdf     ";
+  iss.clear();
+  iss.str(line);
+  LSpaceChTrim(iss);
+  EXPECT_EQ(iss.peek(), 'a');
+  length = 0;
+  while (iss.peek() != EOF) {
+    length++;
+    iss.get();
+  }
+  EXPECT_EQ(length, 9);
+  iss.unget();
+  EXPECT_EQ(iss.get(), ' ');
+
+  line = "                         ";
+  iss.clear();
+  iss.str(line);
+  LSpaceChTrim(iss);
+  EXPECT_EQ(iss.peek(), EOF);
+  EXPECT_EQ(iss.eof(), true);
+}
+
 TEST(Model_Parser, Parser_ModelNormalizer) {
   using s21::inbound_model::Edge;
-  using s21::inbound_model::ModelNormalizer;
   using s21::inbound_model::Vec3;
 
   s21::inbound_model::Model3D model;
@@ -2876,7 +2882,8 @@ TEST(Model_Parser, Parser_ModelNormalizer) {
   EXPECT_EQ(model.GetEdgesAmount(), 15);
   EXPECT_EQ(model.GetVerticesAmount(), 21);
 
-  ModelNormalizer(model);
+  s21::inbound_model::parser::Parser prs1(model,"nothing.txt");
+  prs1.ModelNormalizer();
   EXPECT_EQ(model.GetEdgesAmount(), 2);
   EXPECT_EQ(model.GetVerticesAmount(), 21);
 
@@ -2894,7 +2901,7 @@ TEST(Model_Parser, Parser_ModelNormalizer) {
   model.Clear();
   EXPECT_EQ(model.GetEdgesAmount(), 0);
   EXPECT_EQ(model.GetVerticesAmount(), 0);
-  ModelNormalizer(model);
+  prs1.ModelNormalizer();
   EXPECT_EQ(model.GetEdgesAmount(), 0);
   EXPECT_EQ(model.GetVerticesAmount(), 0);
 }
@@ -2910,22 +2917,27 @@ TEST(Model_Parser, Parser_ParseIt_Prepare) {
 
 TEST(Model_Parser, Parser_ParseIt) {
   using s21::inbound_model::Edge;
-  using s21::inbound_model::ParseIt;
+  using s21::inbound_model::parser::Parser;
 
   std::string file_name;
   s21::inbound_model::Model3D model;
+  Parser prs(model,file_name);
 
-  EXPECT_THROW(ParseIt(model, file_name), std::ios_base::failure);
+  EXPECT_THROW(prs.ParseIt(), std::ios_base::failure);
   file_name = "models/test.txt";
-  EXPECT_THROW(ParseIt(model, file_name), std::ios_base::failure);
+  prs.SetFileName(file_name);
+  EXPECT_THROW(prs.ParseIt(), std::ios_base::failure);
   file_name = "models/test_2.obj";
-  EXPECT_NO_THROW(ParseIt(model, file_name));
+  prs.SetFileName(file_name);
+  EXPECT_NO_THROW(prs.ParseIt());
   EXPECT_EQ(model.GetVerticesAmount(), 0);
   EXPECT_EQ(model.GetEdgesAmount(), 0);
   EXPECT_EQ(model.GetName(), "test_2");
+  EXPECT_EQ(prs.GetFilename(),file_name);
   model.Clear();
   file_name = "models/test.obj";
-  EXPECT_NO_THROW(ParseIt(model, file_name));
+  prs.SetFileName(file_name);
+  model = prs.ParseIt();
 
   EXPECT_EQ(model.GetVerticesAmount(), 175);
   double check_x, check_y, check_z;
@@ -3048,19 +3060,150 @@ TEST(Model_Parser, Parser_ParseIt) {
   EXPECT_EQ(model(53), Edge(174, 174));
 
   EXPECT_EQ(model.GetName(), "model_1_&_model 2");
+
+  model=prs.GetModelRef();
+
+
+  EXPECT_EQ(model.GetVerticesAmount(), 175);
+
+  check_x = (model.GetCenteringVector().x + 1) * model.GetScaleFactor();
+  check_y = (model.GetCenteringVector().y + 2) * model.GetScaleFactor();
+  check_z = (model.GetCenteringVector().z + 3) * model.GetScaleFactor();
+  EXPECT_DOUBLE_EQ(model[0].x, check_x);
+  EXPECT_DOUBLE_EQ(model[0].y, check_y);
+  EXPECT_DOUBLE_EQ(model[0].z, check_z);
+
+  check_x = (model.GetCenteringVector().x + 88) * model.GetScaleFactor();
+  check_y = (model.GetCenteringVector().y + 89) * model.GetScaleFactor();
+  check_z = (model.GetCenteringVector().z + 90) * model.GetScaleFactor();
+  EXPECT_DOUBLE_EQ(model[20].x, check_x);
+  EXPECT_DOUBLE_EQ(model[20].y, check_y);
+  EXPECT_DOUBLE_EQ(model[20].z, check_z);
+
+  check_x = (model.GetCenteringVector().x + 98) * model.GetScaleFactor();
+  check_y = (model.GetCenteringVector().y + 99) * model.GetScaleFactor();
+  check_z = (model.GetCenteringVector().z + 100) * model.GetScaleFactor();
+  EXPECT_DOUBLE_EQ(model[23].x, check_x);
+  EXPECT_DOUBLE_EQ(model[23].y, check_y);
+  EXPECT_DOUBLE_EQ(model[23].z, check_z);
+
+  i = 24;
+  for (size_t j = 101; model[i].x < (201.0 + model.GetCenteringVector().x) *
+                                        model.GetScaleFactor();
+       i++, j++) {
+    check_x = (model.GetCenteringVector().x + j) * model.GetScaleFactor();
+    check_y = (model.GetCenteringVector().y + j + 1) * model.GetScaleFactor();
+    check_z = (model.GetCenteringVector().z + j + 2) * model.GetScaleFactor();
+    EXPECT_DOUBLE_EQ(model[i].x, check_x);
+    EXPECT_DOUBLE_EQ(model[i].y, check_y);
+    EXPECT_DOUBLE_EQ(model[i].z, check_z);
+  }
+  i++;
+  for (size_t j = 201; i < model.GetVerticesAmount(); i++, j++) {
+    check_x = (model.GetCenteringVector().x + j) * model.GetScaleFactor();
+    check_y = (model.GetCenteringVector().y + j + 1) * model.GetScaleFactor();
+    check_z = (model.GetCenteringVector().z + j + 2) * model.GetScaleFactor();
+    EXPECT_DOUBLE_EQ(model[i].x, check_x);
+    EXPECT_DOUBLE_EQ(model[i].y, check_y);
+    EXPECT_DOUBLE_EQ(model[i].z, check_z);
+  }
+  check_x = (model.GetCenteringVector().x + 250) * model.GetScaleFactor();
+  check_y = (model.GetCenteringVector().y + 251) * model.GetScaleFactor();
+  check_z = (model.GetCenteringVector().z + 252) * model.GetScaleFactor();
+  EXPECT_DOUBLE_EQ(model[model.GetVerticesAmount() - 1].x, check_x);
+  EXPECT_DOUBLE_EQ(model[model.GetVerticesAmount() - 1].y, check_y);
+  EXPECT_DOUBLE_EQ(model[model.GetVerticesAmount() - 1].z, check_z);
+
+  check_x = (model.GetCenteringVector().x + 201) * model.GetScaleFactor();
+  check_y = (model.GetCenteringVector().y + 202) * model.GetScaleFactor();
+  check_z = (model.GetCenteringVector().z + 203) * model.GetScaleFactor();
+  EXPECT_DOUBLE_EQ(model[124].x, check_x);
+  EXPECT_DOUBLE_EQ(model[124].y, check_y);
+  EXPECT_DOUBLE_EQ(model[124].z, check_z);
+  check_x = (model.GetCenteringVector().x + 201) * model.GetScaleFactor();
+  check_y = (model.GetCenteringVector().y + 202) * model.GetScaleFactor();
+  check_z = (model.GetCenteringVector().z + 203) * model.GetScaleFactor();
+  EXPECT_DOUBLE_EQ(model[125].x, check_x);
+  EXPECT_DOUBLE_EQ(model[125].y, check_y);
+  EXPECT_DOUBLE_EQ(model[125].z, check_z);
+
+  EXPECT_EQ(model.GetEdgesAmount(), 54);
+  EXPECT_EQ(model(0), Edge(0, 3));
+  EXPECT_EQ(model(1), Edge(0, 15));
+  EXPECT_EQ(model(2), Edge(3, 5));
+  EXPECT_EQ(model(3), Edge(5, 7));
+  EXPECT_EQ(model(4), Edge(7, 8));
+  EXPECT_EQ(model(5), Edge(8, 11));
+  EXPECT_EQ(model(6), Edge(10, 99));
+  EXPECT_EQ(model(7), Edge(11, 12));
+  EXPECT_EQ(model(8), Edge(11, 13));
+  EXPECT_EQ(model(9), Edge(11, 96));
+  EXPECT_EQ(model(10), Edge(13, 15));
+  EXPECT_EQ(model(11), Edge(16, 17));
+  EXPECT_EQ(model(12), Edge(16, 18));
+  EXPECT_EQ(model(13), Edge(17, 18));
+  EXPECT_EQ(model(14), Edge(32, 33));
+  EXPECT_EQ(model(15), Edge(32, 35));
+  EXPECT_EQ(model(16), Edge(33, 35));
+  EXPECT_EQ(model(17), Edge(36, 37));
+  EXPECT_EQ(model(18), Edge(37, 38));
+  EXPECT_EQ(model(19), Edge(38, 39));
+  EXPECT_EQ(model(20), Edge(39, 40));
+  EXPECT_EQ(model(21), Edge(40, 41));
+  EXPECT_EQ(model(22), Edge(41, 42));
+  EXPECT_EQ(model(23), Edge(42, 43));
+  EXPECT_EQ(model(24), Edge(43, 44));
+  EXPECT_EQ(model(25), Edge(44, 45));
+  EXPECT_EQ(model(26), Edge(51, 52));
+  EXPECT_EQ(model(27), Edge(52, 53));
+  EXPECT_EQ(model(28), Edge(53, 54));
+  EXPECT_EQ(model(29), Edge(96, 97));
+  EXPECT_EQ(model(30), Edge(97, 98));
+  EXPECT_EQ(model(31), Edge(98, 99));
+  EXPECT_EQ(model(32), Edge(100, 101));
+  EXPECT_EQ(model(33), Edge(100, 102));
+  EXPECT_EQ(model(34), Edge(101, 102));
+  EXPECT_EQ(model(35), Edge(109, 111));
+  EXPECT_EQ(model(36), Edge(109, 124));
+  EXPECT_EQ(model(37), Edge(111, 113));
+  EXPECT_EQ(model(38), Edge(113, 116));
+  EXPECT_EQ(model(39), Edge(116, 117));
+  EXPECT_EQ(model(40), Edge(117, 119));
+  EXPECT_EQ(model(41), Edge(119, 121));
+  EXPECT_EQ(model(42), Edge(121, 124));
+  EXPECT_EQ(model(43), Edge(124, 124));
+  EXPECT_EQ(model(44), Edge(165, 165));
+  EXPECT_EQ(model(45), Edge(166, 166));
+  EXPECT_EQ(model(46), Edge(167, 167));
+  EXPECT_EQ(model(47), Edge(168, 168));
+  EXPECT_EQ(model(48), Edge(169, 169));
+  EXPECT_EQ(model(49), Edge(170, 170));
+  EXPECT_EQ(model(50), Edge(171, 171));
+  EXPECT_EQ(model(51), Edge(172, 172));
+  EXPECT_EQ(model(52), Edge(173, 173));
+  EXPECT_EQ(model(53), Edge(174, 174));
+
+  EXPECT_EQ(model.GetName(), "model_1_&_model 2");
+
+  s21::inbound_model::Model3D model_2;
+
+  prs.SetModelRef(model_2);
+  model=prs.GetModelRef();
+  EXPECT_EQ(model.GetEdgesAmount(),0);
+  EXPECT_EQ(model.GetVerticesAmount(),0);
 }
 
-TEST(Model_Parser, Parser_Parser_pointer) {
+TEST(Model_Parser, ModelParser_ParseModelFromFile_pointer) {
   using s21::inbound_model::Edge;
-  using s21::inbound_model::Parser;
+  using s21::inbound_model::ParseModelFromFile;
 
   std::string file_name;
   std::unique_ptr<s21::inbound_model::Model3D> model;
-  EXPECT_THROW(model = Parser(file_name), std::ios_base::failure);
+  EXPECT_THROW(model = ParseModelFromFile(file_name), std::ios_base::failure);
   file_name = "models/test.txt";
-  EXPECT_THROW(model = Parser(file_name), std::ios_base::failure);
+  EXPECT_THROW(model = ParseModelFromFile(file_name), std::ios_base::failure);
   file_name = "models/test.obj";
-  EXPECT_NO_THROW(model = Parser(file_name));
+  EXPECT_NO_THROW(model = ParseModelFromFile(file_name));
 
   EXPECT_EQ(model->GetVerticesAmount(), 175);
   double check_x, check_y, check_z;
@@ -3185,18 +3328,18 @@ TEST(Model_Parser, Parser_Parser_pointer) {
   EXPECT_EQ(model->GetName(), "model_1_&_model 2");
 }
 
-TEST(Model_Parser, Parser_Parser_reference) {
+TEST(Model_Parser, ModelParser_ParseModelFromFile_reference) {
   using s21::inbound_model::Edge;
-  using s21::inbound_model::Parser;
+  using s21::inbound_model::ParseModelFromFile;
 
   std::string file_name;
   s21::inbound_model::Model3D model;
 
-  EXPECT_THROW(Parser(model, file_name), std::ios_base::failure);
+  EXPECT_THROW(ParseModelFromFile(model, file_name), std::ios_base::failure);
   file_name = "models/test.txt";
-  EXPECT_THROW(Parser(model, file_name), std::ios_base::failure);
+  EXPECT_THROW(ParseModelFromFile(model, file_name), std::ios_base::failure);
   file_name = "models/test.obj";
-  EXPECT_NO_THROW(Parser(model, file_name));
+  EXPECT_NO_THROW(ParseModelFromFile(model, file_name));
 
   EXPECT_EQ(model.GetVerticesAmount(), 175);
   double check_x, check_y, check_z;
@@ -3324,10 +3467,10 @@ TEST(Model_Parser, Parser_Parser_reference) {
 // cube_first.obj
 TEST(Model_Parser, ObjectFiles_SimpleModel) {
   using s21::inbound_model::Edge;
-  using s21::inbound_model::Parser;
+  using s21::inbound_model::ParseModelFromFile;
 
   s21::inbound_model::Model3D model;
-  EXPECT_NO_THROW(Parser(model, "models/cube_first.obj"));
+  EXPECT_NO_THROW(ParseModelFromFile(model, "models/cube_first.obj"));
 
   EXPECT_EQ(model.GetName(), "cube_first");
 
@@ -3401,14 +3544,14 @@ TEST(Model_Parser, ObjectFiles_cubecarcas){
  * This test can be updated using ANY visualization way.
  * Object with medium vertices amount.
  * cuberubik.obj
- * T ~ 0,5 seconds
+ * T ~ 0,6 seconds
  */
 TEST(Model_Parser, ObjectFiles_MiddleVerticesAmountModel) {
   using s21::inbound_model::Edge;
-  using s21::inbound_model::Parser;
+  using s21::inbound_model::ParseModelFromFile;
 
   s21::inbound_model::Model3D model;
-  EXPECT_NO_THROW(Parser(model, "models/cuberubik.obj"));
+  EXPECT_NO_THROW(ParseModelFromFile(model, "models/cuberubik.obj"));
 
   EXPECT_EQ(model.GetName(), "cuberubik");
   EXPECT_DOUBLE_EQ(model.GetVerticesAmount(), 6696);
@@ -3418,17 +3561,17 @@ TEST(Model_Parser, ObjectFiles_MiddleVerticesAmountModel) {
  * This test can be updated using ANY visualization way.
  * Object with high vertices amount.
  * Dog.obj
- * T ~ 26 seconds
+ * T ~ 28 seconds
  * @warning For valgrind testing this testcase
  * (ObjectFiles_HighVerticesAmountModel) must be commented
  * or removed.
  */
 TEST(Model_Parser, ObjectFiles_HighVerticesAmountModel) {
   using s21::inbound_model::Edge;
-  using s21::inbound_model::Parser;
+  using s21::inbound_model::ParseModelFromFile;
 
   s21::inbound_model::Model3D model;
-  EXPECT_NO_THROW(Parser(model, "models/Dog.obj"));
+  EXPECT_NO_THROW(ParseModelFromFile(model, "models/Dog.obj"));
 
   EXPECT_EQ(model.GetName(), "Dog");
   EXPECT_DOUBLE_EQ(model.GetVerticesAmount(), 49714);
@@ -3438,14 +3581,15 @@ TEST(Model_Parser, ObjectFiles_HighVerticesAmountModel) {
  * This test can be updated using ANY visualization way.
  * Object with negative vertex references.
  * skull.obj
- * T ~ 0,5 seconds
+ * T ~ 0,6 seconds
  */
 TEST(Model_Parser, ObjectFiles_NegativeVertexReferenceModel) {
+
   using s21::inbound_model::Edge;
-  using s21::inbound_model::Parser;
+  using s21::inbound_model::ParseModelFromFile;
 
   s21::inbound_model::Model3D model;
-  EXPECT_NO_THROW(Parser(model, "models/skull.obj"));
+  EXPECT_NO_THROW(ParseModelFromFile(model, "models/skull.obj"));
 
   EXPECT_EQ(model.GetName(), "skull");
   EXPECT_DOUBLE_EQ(model.GetVerticesAmount(), 6122);

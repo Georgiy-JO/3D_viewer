@@ -27,29 +27,32 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
     find_package(glm REQUIRED)
 
     set(INBOUND_MODEL_INCLUDE_DIRS
+        ${CMAKE_CURRENT_SOURCE_DIR}/..
+        ${CMAKE_CURRENT_SOURCE_DIR}/../core/math
         ${CMAKE_CURRENT_SOURCE_DIR}/../model
         ${CMAKE_CURRENT_SOURCE_DIR}/../model/model3d
         ${CMAKE_CURRENT_SOURCE_DIR}/../model/model3d/elements
         ${CMAKE_CURRENT_SOURCE_DIR}/../model/parser
-        ${CMAKE_CURRENT_SOURCE_DIR}/../core/math
+        ${CMAKE_CURRENT_SOURCE_DIR}/../model/parser/service_functions
     )
 
     set(INBOUND_MODEL_SRC
-        ${CMAKE_CURRENT_SOURCE_DIR}/../model/model3d/model3d.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/../model/model3d/elements/axisbounds.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/../model/model3d/elements/edges.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/../model/model3d/elements/vertices.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/../core/math/vec3.cpp
+        ../model/model3d/model3d.cpp
+        ../model/model3d/elements/axisbounds.cpp
+        ../model/model3d/elements/edges.cpp
+        ../model/model3d/elements/vertices.cpp
+        ../core/math/vec3.cpp
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/../model/parser/parser.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/../model/parser/parsing_utils/model_alterers.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/../model/parser/parsing_utils/prefix_handlers.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/../model/parser/parsing_utils/service_functions.cpp
+        ../model/parser/parser_src/parser.cpp
+        ../model/parser/parser_src/model_parser.cpp
+        ../model/parser/parser_src/model_alterers.cpp
+        ../model/parser/parser_src/prefix_handlers.cpp
+        ../model/parser/service_functions/service_functions.cpp
     )
 
     set(INBOUND_MODEL_TEST_SRC
-        ${CMAKE_CURRENT_SOURCE_DIR}/model/model3d.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/model/parser.cpp
+        model/model3d.cpp
+        model/parser.cpp
     )
 
     include(FetchContent)
@@ -149,7 +152,7 @@ if(BUILD_COVERAGE AND LCOV_EXECUTABLE AND GENHTML_EXECUTABLE)
 
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/inbound_model_cov
 
-        COMMAND ${LCOV_EXECUTABLE} --capture --directory ${CMAKE_CURRENT_BINARY_DIR} --output-file coverage/coverage_1.info --ignore-errors mismatch
+        COMMAND ${LCOV_EXECUTABLE} --capture --directory ${CMAKE_CURRENT_BINARY_DIR}  --output-file coverage/coverage_1.info --ignore-errors mismatch --path ${CMAKE_CURRENT_BINARY_DIR}/..
         COMMAND ${LCOV_EXECUTABLE} --remove coverage/coverage_1.info '/usr/*' 'gtest/*' 'tests/*' --output-file coverage/coverage.info
         COMMAND ${CMAKE_COMMAND} -E remove -f coverage/coverage_1.info
         COMMAND ${GENHTML_EXECUTABLE} --output-directory=coverage coverage/coverage.info
