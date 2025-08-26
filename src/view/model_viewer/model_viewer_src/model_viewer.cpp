@@ -1,365 +1,22 @@
-#include "model_viewer.h"
+
+
 // #include <GL/glu.h>     //Needed?
-
-
-    // #include <QOpenGLShader>                          // For shader type enum
-
-
+// #include <QOpenGLShader>                          // For shader type enum
 ///  GPU_Model------------------------------------------------------------------------------------------------------
-#include <cstdint>                                // fixed-size integer types
-#include <memory>
-#include <stdexcept>
-namespace s21::render{
-GPU_Model::GPU_Model():m_vao(0),m_vbo(0), m_ebo(0), m_EdgesCount(0), m_VerticesAmount(0){
-    // initialize function pointers for modern OpenGL (from QOpenGLFunctions_3_3_Core)
-    initializeOpenGLFunctions();
-
-
-    // Generate and bind a Vertex Array Object (VAO)
-    glGenVertexArrays(1, &m_vao);          // create 1 VAO and store name in m_vao
-    glBindVertexArray(m_vao);              // bind the VAO so subsequent state is stored in it
-
-    // Generate VBO
-    glGenBuffers(1, &m_vbo);               // create 1 VBO
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);  // bind VBO as array buffer (vertex data)
-
-    glEnableVertexAttribArray(0);          // enable attribute location 0
-    /**
-     * @note Define vertex attribute layout matching location=0:
-     *      0 → Attribute location index 0
-     *      3 → 3 components (x, y, z) per vertex
-     *      GL_FLOAT → Each component is a float
-     *      GL_FALSE → Don’t normalize the data
-     *      3 * sizeof(float) → Stride = 3 floats per vertex (tightly packed)
-     *      (void*)0 → Offset = start at the beginning of the buffer
-     */
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-
-    // Generate EBO (element/index buffer) for edges and tells what kind of buffer it will work with
-    glGenBuffers(1, &m_ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-
-    // Unbind VAO (safe practice)
-    glBindVertexArray(0);
-
-    // Unbind array buffer to avoid accidental modification later
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-GPU_Model::GPU_Model(std::shared_ptr<s21::inbound_model::Model3D> model_):GPU_Model(){
-    SetModelData(model_);
-}
-
-GPU_Model::~GPU_Model(){
-    if (m_ebo) {
-        glDeleteBuffers(1, &m_ebo);
-        m_ebo = 0;
-    }
-    if (m_vbo) {
-        glDeleteBuffers(1, &m_vbo);
-        m_vbo = 0;
-    }
-    if (m_vao) {
-        glDeleteVertexArrays(1, &m_vao);
-        m_vao = 0;
-    }
-    m_EdgesCount = 0;
-    m_VerticesAmount=0;
-    m_model_name.clear();
-}
-
-void GPU_Model::SetModelData(std::shared_ptr<s21::inbound_model::Model3D> model_){
-    if (!model_ || model_->GetVerticesAmount()==0) 
-        throw std::invalid_argument("Model is empty or null");
-    // Ensure a VAO/VBO/EBO exist
-    if (m_vao == 0)
-        throw std::runtime_error("GPU buffers were not allocated or are deleted (something went terribly wrong).");
-
-    m_VerticesAmount = model_->GetVerticesAmount();
-    m_EdgesCount=model_->GetEdgesAmount();     //it is not actually edges amount it is more like count of edges ends
-    m_model_name=QString::fromStdString(model_->GetName());
-
-    /**
-     * @note We need do transfor the data from Model3D to save space and store data tightly.
-     *      We could send Vec3 straight to GPU if Vec3 would be based of float (it's double).
-     *      Overflow won't happen due to fact that model is normalized already.
-     */
-    std::vector<float> vertices;           // will store in form: x,y,z,x,y,z,...
-    vertices.reserve(m_VerticesAmount * 3);
-    s21::vectors::Vec3 v;
-    for (uint32_t i = 0; i < m_VerticesAmount; ++i) {
-        v = static_cast<s21::vectors::Vec3>((*model_)[i]);
-        if(v.x>std::numeric_limits<float>::max() || v.y>std::numeric_limits<float>::max()|| v.z>std::numeric_limits<float>::max())
-            throw std::runtime_error("Model was not normalized before passing to GPU buffer (Vertex has value out of range).");
-        vertices.push_back(static_cast<float> (v.x));
-        vertices.push_back(static_cast<float>(v.y));
-        vertices.push_back(static_cast<float>(v.z));
-    }
-
-    std::vector<uint32_t> edges;
-    edges.reserve(m_EdgesCount*2);
-    s21::inbound_model::Edge e(0,0);
-    for (size_t i = 0; i < m_EdgesCount; ++i){
-        e=static_cast<s21::inbound_model::Edge>((*model_)(i));
-        edges.push_back(e.begin);
-        edges.push_back(e.end);
-    }
-    m_EdgesCount*=2;
-  
-    // Bind VAO so EBO binding and attribute state apply to this VAO
-    glBindVertexArray(m_vao);
-
-    // Bind and upload vertex positions into VBO
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    /**
-     * @note Upload data to the GPU buffer. 
-     *      GL_ARRAY_BUFFER - it tells OpenGL that the buffer we’re working with is a vertex attribute 
-     *      buffer (it is connected to m_vbo).
-     *      GL_STATIC_DRAW - it tells OpenGL that we won’t be modifying the data in the buffer very often
-     *      (GL_STREAM_DRAW → changes every frame). We are using GPU side transformations (via shaders): 
-     *      in this case the vertex buffer data stays the same — the GPU just transforms it on the fly for rendering.
-    */
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float),
-                 vertices.data(), GL_STATIC_DRAW);
-
-    // Bind and upload element/index data into EBO
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, edges.size() * sizeof(uint32_t),
-                 edges.data(), GL_STATIC_DRAW);
-
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-const GLuint& GPU_Model::GetVertexArrayObject()const{
-    return m_vao;
-}
-
-size_t GPU_Model::GetEdgesCount() const{
-    return m_EdgesCount;
-}
-
-uint32_t GPU_Model::GetVerticesAmount() const{
-    return m_VerticesAmount;
-}
-}   //s21::render
 ///  GPU_Model------------------------------------------------------------------------------------------------------
-
-
-
-
 ///  uniforms------------------------------------------------------------------------------------------------------
-
-#include <stdexcept>
-namespace s21::render::uniforms{
-
-     UniformMatrix::UniformMatrix():m_matrix(){
-        m_matrix.SetToIdentity();
-    }
-
-    const s21::matrix::Matrix4x4& UniformMatrix::GetMatrix() const{
-        return m_matrix;
-    }
-    
-    QMatrix4x4 UniformMatrix::GetMatrixQT() const{
-        QMatrix4x4 qmatrix;
-        for(int i=0;i<4;i++){
-            for(int j=0;j<4;j++){
-                qmatrix(i,j)=m_matrix(i,j);
-            }
-        }
-        return qmatrix;
-    }
-
-
-    void TransformationMatrix::Reset(){
-        m_matrix.SetToIdentity();
-    }
-    
-    void TransformationMatrix::RotateX(float degrees){
-        m_matrix.Rotate(degrees, s21::vectors::Vec3(1.0,0.0,0.0));
-    }
-    
-    void TransformationMatrix::RotateY(float degrees){
-        m_matrix.Rotate(degrees, s21::vectors::Vec3(0.0,1.0,0.0));
-    }
-    
-    void TransformationMatrix::RotateZ(float degrees){
-        m_matrix.Rotate(degrees, s21::vectors::Vec3(0.0,0.0,1.0));
-    }
-    
-    void TransformationMatrix::Translate(float x, float y, float z){
-        m_matrix.Translate(s21::vectors::Vec3(x,y,z));
-    }
-    
-    void TransformationMatrix::Scale(float scale){
-        m_matrix.Scale(scale);
-    }
-
-
-    CameraMatrix::CameraMatrix(){
-        Reset();
-    }
-
-    void CameraMatrix::Reset(s21::vectors::Vec3 vec) {
-        m_matrix.SetToIdentity();
-        m_matrix.Translate(vec);
-    }
-
- 
-
-    ProjectionMatrix::ProjectionMatrix(){
-        m_matrix.SetToIdentity();
-    }
-
-    void ProjectionMatrix::Reset(double w, double h, double fov_angle, double near_plane, double far_plane){        
-        if(h<=0)
-            throw std::invalid_argument("ProjectionMatrix::Reset - height must be positive");
-        fov_angle=s21::matrix::DegreesToRadians(fov_angle);
-        double tan=std::tan(fov_angle/2.0f);
-        double ratio=w/(h>0?h:1.0f);
-        s21::matrix::Matrix local (4,4);
-
-        local(0,0)=1.0f/(ratio*tan);
-        local(0,1)=0;
-        local(0,2)=0;
-        local(0,3)=0;
-
-        local(1,0)=0;
-        local(1,1)=1.0f/(tan);
-        local(1,2)=0;
-        local(1,3)=0;
-
-        local(2,0)=0;
-        local(2,1)=0;
-        local(2,2)=(far_plane+near_plane)/(near_plane-far_plane);
-        local(2,3)=2*far_plane*near_plane/(near_plane-far_plane);
-
-        local(3,0)=0;
-        local(3,1)=0;
-        local(3,2)=-1;
-        local(3,3)=0;  
-
-        m_matrix=local;
-    }
-
-}   //s21::render::uniforms
-
-
 ///  uniforms------------------------------------------------------------------------------------------------------
-
 ///  Shaders------------------------------------------------------------------------------------------------------
-#include <fstream>
-#include <stdexcept>
-namespace s21::render{
-
-void ShaderProgram::SetShaders(){
-    SetShaders(kDefaultVertexShaderPath, kDefaultFragmentShaderPath);
-}
-
-void ShaderProgram::SetShaders(const std::string& vertex_shader_path, const std::string& fragment_shader_path){
-    auto vertexShSrc = GetFileData(vertex_shader_path);
-    auto fragmentShSrc = GetFileData(fragment_shader_path);
-    if(vertexShSrc.empty()) throw std::ios_base::failure("Vertex shader file can't be found: "+vertex_shader_path);
-    if(fragmentShSrc.empty()) throw std::ios_base::failure("Fragment shader file can't be found: "+fragment_shader_path);
-
-    m_program.removeAllShaders();
-
-    if(!m_program.addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShSrc.c_str()))
-        throw std::runtime_error("Vertex shader is inconsistent: "+ m_program.log().toStdString());
-    if(!m_program.addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShSrc.c_str()))
-        throw std::runtime_error("Fragment shader is inconsistent: "+ m_program.log().toStdString());
-
-    // Link the program
-    m_program.link();
-}
-
-QOpenGLShaderProgram& ShaderProgram::GetProgram(){
-    return m_program;
-}
-std::string GetFileData(const std::string& file_name){
-    std::ifstream ifs(file_name, std::ios::binary | std::ios::ate);
-    if(!ifs) return {};
-
-    std::size_t size=ifs.tellg();
-    ifs.seekg(0,std::ios::beg);
-
-    std::string output (size, '\0');
-    ifs.read(output.data(),size);
-    return output;
-}
-void ShaderProgram::UploadUniforms(const s21::render::uniforms::TransformationMatrix& trans_marix, 
-            const s21::render::uniforms::CameraMatrix& cam_marix, 
-            const s21::render::uniforms::ProjectionMatrix& project_matrix){
-    Bind();
-    m_program.setUniformValue("model", trans_marix.GetMatrixQT());
-    m_program.setUniformValue("view", cam_marix.GetMatrixQT());
-    m_program.setUniformValue("projection", project_matrix.GetMatrixQT());
-    Unbind();
-}
-void ShaderProgram::Bind(){
-    m_program.bind();
-}
-void ShaderProgram::Unbind(){
-    m_program.release();
-}
-}   //s21::render
 ///  Shaders------------------------------------------------------------------------------------------------------
-
 ///  gui mouse------------------------------------------------------------------------------------------------------
-namespace s21::gui::openglwidget{
-void MouseActions::SetLastMousePosition(QMouseEvent *event){
-    m_lastMousePos.x = event->pos().x();
-    m_lastMousePos.y = event->pos().y();
-
-}
-void MouseActions::PressEvent(QMouseEvent *event) {
-    SetLastMousePosition(event);
-
-    if (event->button() == Qt::LeftButton) m_left_button_down = true;
-    if (event->button() == Qt::RightButton) m_right_button_down = true;
-}
-
-Vec2Pair MouseActions::MoveEvent(QMouseEvent *event) {
-    Vec2 delta(event->pos().x() - m_lastMousePos.x,event->pos().y() - m_lastMousePos.y) ;
-    Vec2Pair output;
-
-    // If left button is down, rotate the model based on mouse movement
-    if (m_left_button_down) {
-        output.rotation_vec.y = delta.x * kRotateSensitivityFactor;
-        output.rotation_vec.x = delta.y * kRotateSensitivityFactor;
-    }
-    if(m_right_button_down){
-        output.translation_vec.x=delta.x*kTranslateSensitivityFactor;
-        output.translation_vec.y=delta.y*kTranslateSensitivityFactor;
-    }
-
-    SetLastMousePosition(event);
-    return output;
-}
-
-double MouseActions::WheelEvent(QWheelEvent *event) {
-    // delta is typically in 1/8 of a degree units
-    int d = event->angleDelta().y();
-    float factor=1.0f;
-    if (d != 0) {
-        // scale roughly exponentially for nicer feel
-        factor += (d > 0 ? kScaleSensitivityFactor : -kScaleSensitivityFactor);
-        // if (factor < kMinScaleStep) output = kMinScaleStep;
-    }
-    return factor;
-}
-void MouseActions::ReleaseEvent(QMouseEvent *event) {
-    if (event->button() == Qt::LeftButton) m_left_button_down = false;
-    if (event->button() == Qt::RightButton) m_right_button_down = false;
-}
-}   //s21::gui::openglwidget
 ///  gui mouse------------------------------------------------------------------------------------------------------
-
 ///  gui ModelViewer------------------------------------------------------------------------------------------------------
-namespace s21::gui::openglwidget{
+///  gui ModelViewer------------------------------------------------------------------------------------------------------
+#include "../model_viewer.h"
 
-    ModelViewer::ModelViewer(QWidget* parent = nullptr):QOpenGLWidget(parent), m_render(), m_mouse(){}
+namespace s21::gui{
+
+    ModelViewer::ModelViewer(QWidget* parent ):QOpenGLWidget(parent), m_render(), m_mouse(){}
 
     void ModelViewer::SetModel(std::shared_ptr<s21::inbound_model::Model3D> model_ ){
         m_render.Model().SetModelData(std::move(model_));
@@ -459,8 +116,7 @@ namespace s21::gui::openglwidget{
 
 
 
-}   //s21::gui::openglwidget
-///  gui ModelViewer------------------------------------------------------------------------------------------------------
+}   //s21::gui
 
 
 
@@ -470,7 +126,7 @@ namespace s21::gui::openglwidget{
 
 
 
-namespace s21::render{
+//!!!!!// namespace s21::render{
 //!!!!!// // ModelViewer::ModelViewer(QWidget* parent): QOpenGLWidget(parent), m_model(nullptr){}
 //!!!!!// ModelViewer::ModelViewer(QWidget* parent): 
 //!!!!!//     QOpenGLWidget(parent)
@@ -898,4 +554,4 @@ void SetupAxis(){
 
 
 
-}   //s21::render
+//!!!!!// }   //s21::render

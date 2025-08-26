@@ -43,22 +43,22 @@ find_package(OpenGL REQUIRED)
 #   AUTORCC ON
 # )
 
-add_subdirectory(third_party/s21matrix)
-
 set(INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/core
   ${CMAKE_CURRENT_SOURCE_DIR}/core/math
   ${CMAKE_CURRENT_SOURCE_DIR}/controller
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party
-  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21matrix
+  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21_matrix
   ${CMAKE_CURRENT_SOURCE_DIR}/model
   ${CMAKE_CURRENT_SOURCE_DIR}/model/model3d
   ${CMAKE_CURRENT_SOURCE_DIR}/model/model3d/elements
   ${CMAKE_CURRENT_SOURCE_DIR}/model/parser
   ${CMAKE_CURRENT_SOURCE_DIR}/model/parser/service_functions
+  ${CMAKE_CURRENT_SOURCE_DIR}/model/render
+  ${CMAKE_CURRENT_SOURCE_DIR}/model/render/uniforms
   ${CMAKE_CURRENT_SOURCE_DIR}/view
-  ${CMAKE_CURRENT_SOURCE_DIR}/view/render
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/model_viewer
   ${CMAKE_CURRENT_SOURCE_DIR}/view/ui
 )
 
@@ -76,11 +76,16 @@ set(SOURCES
   model/parser/parser_src/prefix_handlers.cpp
   model/parser/parser_src/model_parser.cpp
   model/parser/service_functions/service_functions.cpp
-  main.cpp
-  view/render/model_viewer.cpp
+  model/render/render_src/gui_model.cpp
+  model/render/render_src/shader_program.cpp
+  model/render/uniforms/uniforms.cpp
   view/ui/mainwindow.cpp
   view/ui/mainwindow.ui
+  view/model_viewer/model_viewer_src/model_viewer.cpp
+  view/model_viewer/model_viewer_src/mouse_actions.cpp
   controller/model_parser_worker.cpp
+  main.cpp
+  third_party/s21_matrix/matrix.cpp
 )
 
 set(HEADERS
@@ -95,8 +100,13 @@ set(HEADERS
   model/parser/model_parser.h
   model/parser/service_functions/service_functions.h
   view/ui/mainwindow.h
-  view//render/model_viewer.h
+  view/model_viewer/model_viewer.h
+  view/model_viewer/mouse_actions.h
   controller/model_parser_worker.h
+  controller/render_controller.h
+  third_party/s21_matrix/matrix_exceptions.hpp
+  third_party/s21_matrix/matrix_service.hpp
+  third_party/s21_matrix/matrix.hpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -104,6 +114,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${SOURCES}
         ${HEADERS}
     )
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/model/render/shaders
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 endif()
 
 add_custom_target(run_Viewer3D
@@ -183,13 +195,13 @@ target_include_directories(Viewer3D PUBLIC
     $<BUILD_INTERFACE:${INCLUDE_DIRS}>     #new
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21matrix>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21_matrix>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
     $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(Viewer3D PRIVATE
-    s21matrix
+    s21_matrix
     Qt${QT_VERSION_MAJOR}::Widgets     #new
     Qt${QT_VERSION_MAJOR}::OpenGLWidgets      #new
     OpenGL::GLU       #new

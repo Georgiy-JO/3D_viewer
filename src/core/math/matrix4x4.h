@@ -34,7 +34,7 @@ namespace s21::matrix
             Matrix m_matrix;         
     };
 
-    constexpr double DegreesToRadians(double degrees);
+    double DegreesToRadians(double degrees);
     
     
 } // namespace s21::matrix

@@ -1,6 +1,5 @@
 #include "model_parser_worker.h"
 
-
 namespace s21::controller{
     ModelParserWorker::ModelParserWorker(const QString& filename_, QObject* parent_): QObject(parent_), m_filename(filename_){}
 

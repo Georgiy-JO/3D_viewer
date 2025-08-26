@@ -119,7 +119,7 @@ namespace s21::matrix
         return double(m_matrix(row,col));
     }
 
-    constexpr double DegreesToRadians(double degrees) {
+    double DegreesToRadians(double degrees) {
         return degrees * (M_PI / 180.0);
     }
 

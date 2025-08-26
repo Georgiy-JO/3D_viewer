@@ -3,7 +3,6 @@
 #define SRC_MODEL_MODEL3D_MODEL3D_H
 
 #include <string>
-#include <cstdint> 
 
 #include "elements/axisbounds.h"
 #include "elements/mesh.h"

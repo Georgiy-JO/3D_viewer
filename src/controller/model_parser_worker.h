@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QString>
-#include <memory>
 #include "../model/parser/model_parser.h"
 
 namespace s21::controller{
