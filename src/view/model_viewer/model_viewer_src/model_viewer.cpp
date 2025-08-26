@@ -24,6 +24,7 @@ namespace s21::gui{
     }
 
     void ModelViewer::initializeGL(){
+        initializeOpenGLFunctions();
         // Basic GL state
         glEnable(GL_DEPTH_TEST);    // enable z-buffer test for correct occlusion
 
@@ -33,6 +34,7 @@ namespace s21::gui{
         glLineWidth(1.0f);          // default line width (you can tweak later)
         
         m_render.Program().SetShaders();
+        m_render.Model().InitializeModel();
 
         m_render.Camera().Reset();
         glClearColor(kBackgroundColor.x,kBackgroundColor.y,kBackgroundColor.z,kBackgroundColor.w);  
@@ -59,7 +61,7 @@ namespace s21::gui{
         
 
         // Bind VAO (which also binds VBO/EBO layouts)
-        glBindVertexArray(m_render.Model().GetVertexArrayObject());     //error here:identifier "glBindVertexArray" is undefined
+        glBindVertexArray(m_render.Model().GetVertexArrayObject());
 
         // Draw the edges stored in the EBO as lines.
         // GL_LINES: each pair of indices defines a line segment.
@@ -69,7 +71,7 @@ namespace s21::gui{
         glDrawArrays(GL_POINTS, 0, m_render.Model().GetVerticesAmount());
 
         // Unbind VAO and program
-        glBindVertexArray(0);   //error here:identifier "glBindVertexArray" is undefined
+        glBindVertexArray(0);
         m_render.Program().GetProgram().release();
     }
 

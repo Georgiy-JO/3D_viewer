@@ -201,7 +201,7 @@ target_include_directories(Viewer3D PUBLIC
 )
 
 target_link_libraries(Viewer3D PRIVATE
-    s21_matrix
+    # s21_matrix
     Qt${QT_VERSION_MAJOR}::Widgets     #new
     Qt${QT_VERSION_MAJOR}::OpenGLWidgets      #new
     OpenGL::GLU       #new

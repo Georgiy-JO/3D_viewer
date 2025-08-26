@@ -8,9 +8,9 @@ namespace s21::render{
 class GPU_Model: protected QOpenGLFunctions_3_3_Core {
     public:
         GPU_Model();
-        GPU_Model(std::shared_ptr<s21::inbound_model::Model3D> model_);
         ~GPU_Model();
 
+        void InitializeModel();
         void SetModelData(std::shared_ptr<s21::inbound_model::Model3D> model_);
         const GLuint& GetVertexArrayObject()const;
         size_t GetEdgesCount() const;
@@ -21,8 +21,8 @@ class GPU_Model: protected QOpenGLFunctions_3_3_Core {
         GLuint m_vbo;               // Vertex Buffer Object (vertices)
         GLuint m_ebo;               // Element Buffer Object (edges)
 
-        size_t m_EdgesCount;      //indices in EBO
-        uint32_t m_VerticesAmount;   //indices in VBO
+        size_t m_EdgesCount=0;      //indices in EBO
+        uint32_t m_VerticesAmount=0;   //indices in VBO
         QString m_model_name;
 };
 }   //s21::render

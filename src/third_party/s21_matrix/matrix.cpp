@@ -260,13 +260,15 @@ Matrix Matrix::minorMaker(const int row, const int col) const {
       cols_ == 1)
     throw OutOfRangeError();
   int n = (rows_ - 1) * (cols_ - 1);
-  double ar[n]{0};
+  double* ar=new double[n]();
   for (int i = 0, k = 0; i < rows_; i++) {
     for (int j = 0; j < cols_; j++) {
       if (i != row && j != col) ar[k++] = matrix_[i][j];
     }
   }
-  return Matrix(rows_ - 1, cols_ - 1, n, ar);
+  Matrix result(rows_ - 1, cols_ - 1, n, ar);
+  delete[] ar;
+  return result;
 }
 
 Matrix Matrix::CalcComplements() const {

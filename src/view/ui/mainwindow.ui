@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="s21::render::ModelViewer" name="mv_widget">
+   <widget class="s21::gui::ModelViewer" name="mv_widget">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -156,9 +156,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>s21::render::ModelViewer</class>
+   <class>s21::gui::ModelViewer</class>
    <extends>QOpenGLWidget</extends>
-   <header location="global">model_viewer.h</header>
+   <header>../model_viewer/model_viewer.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

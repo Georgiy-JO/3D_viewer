@@ -3,8 +3,30 @@
 #include <stdexcept>
 
 namespace s21::render{
-GPU_Model::GPU_Model():m_vao(0),m_vbo(0), m_ebo(0), m_EdgesCount(0), m_VerticesAmount(0){
-    // initialize function pointers for modern OpenGL (from QOpenGLFunctions_3_3_Core)
+GPU_Model::GPU_Model():m_vao(0),m_vbo(0), m_ebo(0), m_EdgesCount(0), m_VerticesAmount(0){}
+
+
+GPU_Model::~GPU_Model(){
+    if (m_ebo) {
+        glDeleteBuffers(1, &m_ebo);
+        m_ebo = 0;
+    }
+    if (m_vbo) {
+        glDeleteBuffers(1, &m_vbo);
+        m_vbo = 0;
+    }
+    if (m_vao) {
+        glDeleteVertexArrays(1, &m_vao);
+        m_vao = 0;
+    }
+    m_EdgesCount = 0;
+    m_VerticesAmount=0;
+    m_model_name.clear();
+}
+
+void GPU_Model::InitializeModel()
+{
+     // initialize function pointers for modern OpenGL (from QOpenGLFunctions_3_3_Core)
     initializeOpenGLFunctions();
 
 
@@ -39,34 +61,13 @@ GPU_Model::GPU_Model():m_vao(0),m_vbo(0), m_ebo(0), m_EdgesCount(0), m_VerticesA
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-GPU_Model::GPU_Model(std::shared_ptr<s21::inbound_model::Model3D> model_):GPU_Model(){
-    SetModelData(model_);
-}
-
-GPU_Model::~GPU_Model(){
-    if (m_ebo) {
-        glDeleteBuffers(1, &m_ebo);
-        m_ebo = 0;
-    }
-    if (m_vbo) {
-        glDeleteBuffers(1, &m_vbo);
-        m_vbo = 0;
-    }
-    if (m_vao) {
-        glDeleteVertexArrays(1, &m_vao);
-        m_vao = 0;
-    }
-    m_EdgesCount = 0;
-    m_VerticesAmount=0;
-    m_model_name.clear();
-}
-
 void GPU_Model::SetModelData(std::shared_ptr<s21::inbound_model::Model3D> model_){
-    if (!model_ || model_->GetVerticesAmount()==0) 
-        throw std::invalid_argument("Model is empty or null");
     // Ensure a VAO/VBO/EBO exist
     if (m_vao == 0)
-        throw std::runtime_error("GPU buffers were not allocated or are deleted (something went terribly wrong).");
+        throw std::runtime_error("GPU buffers were not initialized (something went terribly wrong).");
+        
+    if (!model_ || model_->GetVerticesAmount()==0) 
+        throw std::invalid_argument("Model is empty or null");
 
     m_VerticesAmount = model_->GetVerticesAmount();
     m_EdgesCount=model_->GetEdgesAmount();     //it is not actually edges amount it is more like count of edges ends

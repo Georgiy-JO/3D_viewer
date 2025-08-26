@@ -8,6 +8,7 @@
 
 namespace s21::gui{
 class ModelViewer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core{
+
  Q_OBJECT
 
 public:
@@ -95,7 +96,7 @@ private:
 
         
 
-
+/*
 namespace s21::render{
 // ModelViewer: QOpenGLWidget that renders a Model3D using shaders and VBO/EBO.
 // Inherit QOpenGLFunctions_3_3_Core to access modern GL functions (VAO, VBO, etc.)
@@ -112,22 +113,17 @@ class ModelViewer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
     //upload model data to GPU    
     void SetModel(std::shared_ptr<s21::inbound_model::Model3D> model_ );
    protected:
-    /**
-     * @note Called once when the OpenGL context is ready.
-     * @note Used to initialize OpenGL state, load shaders, etc.
-     * @note Automatically called by Qt when QOpenGLWidget is shown for the first time.
-     */
-    void initializeGL() override;    
-    /**
-     * @note Called when the widget is resized.
-     * @note Sets up the viewport and projection.
-     */ 
+    // * @note Called once when the OpenGL context is ready.
+    // * @note Used to initialize OpenGL state, load shaders, etc.
+    // * @note Automatically called by Qt when QOpenGLWidget is shown for the first time.
+     
+    void initializeGL() override;  
+    // * @note Called when the widget is resized.
+    // * @note Sets up the viewport and projection.
     void resizeGL(int w, int h) override;
-    /**
-     * @note Called every time the widget needs to be redrawn.
-     * @note OpenGL drawing happens here.
-     * @note Usually is used through update().
-     */
+    // * @note Called every time the widget needs to be redrawn.
+    // * @note OpenGL drawing happens here.
+    // * @note Usually is used through update().
     void paintGL() override;
 
 
@@ -185,5 +181,5 @@ class ModelViewer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
 
 }   //s21::render
-
+*/
 #endif  //SRC_VIEW_RENDER_MODEL_VIEWER_H
