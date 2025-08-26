@@ -1,8 +1,6 @@
 #ifndef SRC_MODEL_MODEL3D_ELEMENTS_AXISBOUNDS_H
 #define SRC_MODEL_MODEL3D_ELEMENTS_AXISBOUNDS_H
 
-#include <utility>
-
 namespace s21::inbound_model {
 
 struct AxisBounds {

@@ -1,6 +1,8 @@
 #include "../parser.h"
 
 #include <fstream>
+#include <stdexcept>
+#include <algorithm>
 
 namespace s21::inbound_model::parser {
 using namespace service_functions;

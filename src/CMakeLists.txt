@@ -63,7 +63,7 @@ set(INCLUDE_DIRS
 )
 
 set(SOURCES
-  core/math/mat4x4.cpp
+  core/math/matrix4x4.cpp
   core/math/vec2.cpp
   core/math/vec3.cpp
   core/math/vec4.cpp
@@ -84,7 +84,7 @@ set(SOURCES
 )
 
 set(HEADERS
-  core/math/mat4x4.h
+  core/math/matrix4x4.h
   core/math/vec2.h
   core/math/vec3.h
   core/math/vec4.h
@@ -242,5 +242,3 @@ add_subdirectory(tests)
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
-
-

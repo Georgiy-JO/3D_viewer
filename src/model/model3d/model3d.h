@@ -2,11 +2,8 @@
 #ifndef SRC_MODEL_MODEL3D_MODEL3D_H
 #define SRC_MODEL_MODEL3D_MODEL3D_H
 
-#include <algorithm>
-#include <cmath>
-#include <initializer_list>
-#include <stdexcept>
 #include <string>
+#include <cstdint> 
 
 #include "elements/axisbounds.h"
 #include "elements/mesh.h"
@@ -16,12 +13,12 @@ namespace s21::inbound_model {
 class Model3D {
  public:
   void AddVert(double x_, double y_, double z_);
-  void RemoveVert(size_t number);
+  void RemoveVert(uint32_t number);
 
   void AddEdge(size_t beg_, size_t end_);
   void RemoveEdge(size_t number);
 
-  size_t GetVerticesAmount() const;
+  uint32_t GetVerticesAmount() const;
   size_t GetEdgesAmount() const;
 
   double GetScaleFactor() const;
@@ -88,7 +85,7 @@ class Model3D {
   const std::string& GetName();
 
   // Returns vector of the folowing index.
-  const Vec3& operator[](size_t number) const;
+  const Vec3& operator[](uint32_t number) const;
   // Returns edge of the folowing index.
   const Edge& operator()(size_t number) const;
 

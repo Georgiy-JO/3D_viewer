@@ -2,15 +2,16 @@
 #define SRC_MODEL_MODEL3D_ELEMENTS_MESH_H
 
 #include <vector>
+#include <cstdint> 
 
 #include "../../../core/math/vec3.h"
 
 namespace s21::inbound_model {
 
 struct Edge {
-  size_t begin;
-  size_t end;
-  Edge(size_t beg_, size_t end_);
+  uint32_t begin;
+  uint32_t end;
+  Edge(uint32_t beg_, uint32_t end_);
   Edge(const Edge& other);
   ~Edge() = default;
 
@@ -45,8 +46,8 @@ struct Edges {
   void Normalize();  // Include sorting and removing duplicates -- ~o(n*log(n))
 
  private:
-  void QuickSort(size_t first, size_t last);
-  void Swap(size_t first, size_t last);
+  void QuickSort(uint32_t first, uint32_t last);
+  void Swap(uint32_t first, uint32_t last);
   void Deduplicate();  // ~o(n)
 };
 

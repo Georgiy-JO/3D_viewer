@@ -1,4 +1,9 @@
 #include "model3d.h"
+#include <limits>
+#include <initializer_list>
+#include <stdexcept>
+#include <algorithm>
+#include <cmath>
 
 namespace s21::inbound_model {
 
@@ -6,11 +11,12 @@ void Model3D::AddVert(double x_, double y_, double z_) {
   Unscale();
   Uncenter();
 
-  (*m_vertices).push_back(Vec3(x_, y_, z_));
+  if(GetVerticesAmount()<std::numeric_limits<uint32_t>::max())
+    (*m_vertices).push_back(Vec3(x_, y_, z_));
   UpdateBounds();
 }
 
-void Model3D::RemoveVert(size_t number) {
+void Model3D::RemoveVert(uint32_t number) {
   if (number < (*m_vertices).size()) {
     auto removed = (*m_vertices)[number];
     (*m_vertices).erase((*m_vertices).begin() + number);
@@ -19,7 +25,8 @@ void Model3D::RemoveVert(size_t number) {
 }
 
 void Model3D::AddEdge(size_t beg_, size_t end_) {
-  (*m_edges).push_back(Edge(beg_, end_));
+  if(beg_<=std::numeric_limits<uint32_t>::max() && end_<=std::numeric_limits<uint32_t>::max())
+    (*m_edges).push_back(Edge(beg_, end_));
 }
 
 void Model3D::RemoveEdge(size_t number) {
@@ -28,7 +35,7 @@ void Model3D::RemoveEdge(size_t number) {
   }
 }
 
-size_t Model3D::GetVerticesAmount() const { return (*m_vertices).size(); }
+uint32_t Model3D::GetVerticesAmount() const { return (*m_vertices).size(); }
 
 size_t Model3D::GetEdgesAmount() const { return (*m_edges).size(); }
 
@@ -118,7 +125,7 @@ void Model3D::Center(const Vec3& vec) {
   CenterBounds(vec);
 }
 
-const Vec3& Model3D::operator[](size_t number) const {
+const Vec3& Model3D::operator[](uint32_t number) const {
   if (number < (*m_vertices).size())
     return (*m_vertices)[number];
   else
@@ -186,9 +193,9 @@ void Model3D::SetBoundsVect(const Vec3& vect) {
 }
 
 void Model3D::AddSingleVertEdges() {
-  size_t verts_amount = (*m_vertices).size();
-  size_t edges_amount = (*m_edges).size();
-  for (size_t i = 0, exist_flag = 0; i < verts_amount; i++) {
+  uint32_t verts_amount = GetVerticesAmount();
+  size_t edges_amount = GetEdgesAmount();
+  for (uint32_t i = 0, exist_flag = 0; i < verts_amount; i++) {
     exist_flag = 0;
     if (i < verts_amount / 2) {
       for (size_t j = 0; j < edges_amount; j++) {
@@ -210,7 +217,7 @@ void Model3D::AddSingleVertEdges() {
 }
 
 void Model3D::RemoveSingleVertEdges() {
-  for (size_t j = (*m_edges).size(); j > 0; j--) {
+  for (size_t j = GetEdgesAmount(); j > 0; j--) {
     if ((*m_edges)[j - 1].begin == (*m_edges)[j - 1].end) RemoveEdge(j - 1);
   }
 }
@@ -221,8 +228,8 @@ void Model3D::NormalizeEdges() { m_edges.Normalize(); }
 
 void Model3D::RemoveGhostEdges() {
   if ((*m_edges).size() > 0) {
-    size_t verts_amount = (*m_vertices).size();
-    for (size_t i = (*m_edges).size(); i > 0; i--) {
+    uint32_t verts_amount = GetVerticesAmount();
+    for (size_t i = GetEdgesAmount(); i > 0; i--) {
       if ((*m_edges)[i - 1].begin >= verts_amount ||
           (*m_edges)[i - 1].end >= verts_amount)
         RemoveEdge(i - 1);
@@ -235,7 +242,7 @@ void Model3D::ManageEdges() {
 
   auto verts_amount = (*m_vertices).size();
 
-  for (size_t i = (*m_edges).size(); i > 0; i--) {
+  for (size_t i = GetEdgesAmount(); i > 0; i--) {
     if (i > 1 && (*m_edges)[i - 1] == (*m_edges)[i - 2]) {
       RemoveEdge(i - 1);
       continue;

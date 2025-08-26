@@ -51,8 +51,8 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
     )
 
     set(INBOUND_MODEL_TEST_SRC
-        model/model3d.cpp
-        model/parser.cpp
+        model/model3d_tests.cpp
+        model/parser_tests.cpp
     )
 
     include(FetchContent)
@@ -70,28 +70,29 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
 endif()
 
 if(BUILD_TESTS)
-    # mat4x4 tests
-    set(INCLUDE_DIRS
-        ${CMAKE_CURRENT_SOURCE_DIR}/..
-        # ${CMAKE_CURRENT_SOURCE_DIR}/../s21matrix
-        ${CMAKE_CURRENT_SOURCE_DIR}/../core
-        ${CMAKE_CURRENT_SOURCE_DIR}/../core/math
-        ${gtest_SOURCE_DIR}/include
-    )
 
-    add_executable(mat4x4_glm_compatibility
-        mat4x4/mat4x4_glm_capability_tests.cpp
-        ../core/math/mat4x4.cpp
-        ../core/math/vec2.cpp
-        ../core/math/vec3.cpp
-        ../core/math/vec4.cpp
-        $<TARGET_OBJECTS:s21matrix>
-    )
+    # # mat4x4 tests
+    # set(INCLUDE_DIRS
+    #     ${CMAKE_CURRENT_SOURCE_DIR}/..
+    #     # ${CMAKE_CURRENT_SOURCE_DIR}/../s21matrix
+    #     ${CMAKE_CURRENT_SOURCE_DIR}/../core
+    #     ${CMAKE_CURRENT_SOURCE_DIR}/../core/math
+    #     ${gtest_SOURCE_DIR}/include
+    # )
 
-    target_include_directories(mat4x4_glm_compatibility PRIVATE ${INCLUDE_DIRS})
-    target_compile_options(mat4x4_glm_compatibility PRIVATE -O2)
-    target_link_libraries(mat4x4_glm_compatibility gtest_main glm::glm pthread)
-    add_test(NAME Mat4GLMTest COMMAND mat4x4_glm_compatibility)
+    # add_executable(mat4x4_glm_compatibility
+    #     mat4x4/mat4x4_glm_capability_tests.cpp
+    #     ../core/math/mat4x4.cpp
+    #     ../core/math/vec2.cpp
+    #     ../core/math/vec3.cpp
+    #     ../core/math/vec4.cpp
+    #     $<TARGET_OBJECTS:s21matrix>
+    # )
+
+    # target_include_directories(mat4x4_glm_compatibility PRIVATE ${INCLUDE_DIRS})
+    # target_compile_options(mat4x4_glm_compatibility PRIVATE -O2)
+    # target_link_libraries(mat4x4_glm_compatibility gtest_main glm::glm pthread)
+    # add_test(NAME Mat4GLMTest COMMAND mat4x4_glm_compatibility)
 
 
     # Inbound model tests

@@ -5,7 +5,7 @@ namespace s21::inbound_model {
 
 // Edge methods
 
-Edge::Edge(size_t beg_, size_t end_) {
+Edge::Edge(uint32_t beg_, uint32_t end_) {
   if (beg_ > end_) {
     begin = end_;
     end = beg_;
@@ -61,9 +61,9 @@ void Edges::Sort() {
   if (edges.size() > 1) QuickSort(0, edges.size() - 1);
 }
 
-void Edges::QuickSort(size_t first, size_t last) {
+void Edges::QuickSort(uint32_t first, uint32_t last) {
   if (first < last) {
-    size_t left = first, right = last, middle = (first + last) / 2;
+    uint32_t left = first, right = last, middle = (first + last) / 2;
     Edge pivot = edges[middle];
     do {
       while (left < last && edges[left] < pivot) {
@@ -84,7 +84,7 @@ void Edges::QuickSort(size_t first, size_t last) {
   }
 }
 
-void Edges::Swap(size_t first, size_t last) {
+void Edges::Swap(uint32_t first, uint32_t last) {
   auto temp_edge = edges[first];
   edges[first] = edges[last];
   edges[last] = temp_edge;
