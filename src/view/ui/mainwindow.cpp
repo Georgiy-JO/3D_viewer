@@ -56,3 +56,16 @@ void MainWindow::TextMessageOutput(const QString& str){
 //     TextMessageOutput(QString::fromStdString(str));
 // }
 
+
+void MainWindow::on_tmpButton_clicked()
+{
+    ui->mv_widget->RotateX(2);
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_sl_move_OX_sliderMoved(int position)
+{
+
+}
+

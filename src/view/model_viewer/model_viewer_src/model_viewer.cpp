@@ -102,16 +102,25 @@ namespace s21::gui{
 
     void ModelViewer::mouseReleaseEvent(QMouseEvent *event) {
         m_mouse.ReleaseEvent(event);
+        event->accept();
     }
 
+    /**
+     * @note It's not ideal. Would be better to use a matrix approach for better transformation.
+     * Create a matrix of screen (or use the one from uniforms) and multiply. 
+     * Might update that in the future. 
+     */
     void ModelViewer::mouseMoveEvent(QMouseEvent *event) {
-        m_mouse.MoveEvent(event);
+        auto local_pair = m_mouse.MoveEvent(event);
+        RotateY(local_pair.rotation_vec.x);
+        RotateX(local_pair.rotation_vec.y);
+        Translate(local_pair.translation_vec.x,-local_pair.translation_vec.y,0);
         event->accept();
         update();
     }
 
     void ModelViewer::wheelEvent(QWheelEvent *event) {
-        m_mouse.WheelEvent(event);
+        Scale(m_mouse.WheelEvent(event));
         event->accept();
         update();
     }

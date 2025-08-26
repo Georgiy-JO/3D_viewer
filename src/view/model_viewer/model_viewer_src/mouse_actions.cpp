@@ -19,8 +19,8 @@ Vec2Pair MouseActions::MoveEvent(QMouseEvent *event) {
 
     // If left button is down, rotate the model based on mouse movement
     if (m_left_button_down) {
-        output.rotation_vec.y = delta.x * kRotateSensitivityFactor;
-        output.rotation_vec.x = delta.y * kRotateSensitivityFactor;
+        output.rotation_vec.x = delta.x * kRotateSensitivityFactor;
+        output.rotation_vec.y = delta.y * kRotateSensitivityFactor;
     }
     if(m_right_button_down){
         output.translation_vec.x=delta.x*kTranslateSensitivityFactor;

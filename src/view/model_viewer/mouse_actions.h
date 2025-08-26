@@ -18,7 +18,7 @@ class MouseActions{
 
     private:
         static constexpr double kRotateSensitivityFactor=0.5f;
-        static constexpr double kTranslateSensitivityFactor=1.0f;
+        static constexpr double kTranslateSensitivityFactor=0.1f;
         static constexpr double kScaleSensitivityFactor=0.1f;
         // static constexpr double kMinScaleStep=0.01f;
 

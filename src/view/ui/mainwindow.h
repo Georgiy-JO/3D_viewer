@@ -24,6 +24,10 @@ public:
    private slots:
     void on_show_model_b_clicked(bool checked);
 
+    void on_tmpButton_clicked();
+
+    void on_sl_move_OX_sliderMoved(int position);
+
    private:
     Ui::MainWindow *ui;
 };
