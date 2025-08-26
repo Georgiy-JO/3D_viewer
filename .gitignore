@@ -4,7 +4,7 @@
 # Object files
 *.o
 *.ko
-*.obj
+# *.obj             #How else will we keep object examples? (each obj file is less than 10Mb)
 *.elf
 
 # Linker output
@@ -51,7 +51,9 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+#for MacOS
+.DS_Store
 
 # Extra
-build/
-.vscode/
+build
+.vscode
