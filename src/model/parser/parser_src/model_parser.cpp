@@ -31,4 +31,4 @@ void ParseModelFromFile(Model3D& model, const std::string& file_name) {
   parser::Parser prs(model, file_name);
   prs.ParseIt();
 }
-}   //s21::inbound_model
+}  // namespace s21::inbound_model

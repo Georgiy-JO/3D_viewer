@@ -1,26 +1,22 @@
 #include "../parser.h"
+
 #include <fstream>
 
 namespace s21::inbound_model::parser {
-  using namespace service_functions;
+using namespace service_functions;
 
-Parser::Parser(Model3D& model_,const std::string& file_name_):m_model(model_),m_file_name(file_name_){}
+Parser::Parser(Model3D& model_, const std::string& file_name_)
+    : m_model(model_), m_file_name(file_name_) {}
 
-void Parser::SetFileName(const std::string& file_name_){
-  m_file_name=file_name_;
+void Parser::SetFileName(const std::string& file_name_) {
+  m_file_name = file_name_;
 }
 
-void Parser::SetModelRef(Model3D& model_){
-  m_model=model_;
-}
+void Parser::SetModelRef(Model3D& model_) { m_model = model_; }
 
-std::string Parser::GetFilename() const{
-  return m_file_name;
-}
+std::string Parser::GetFilename() const { return m_file_name; }
 
-Model3D& Parser::GetModelRef(){
-  return m_model;
-}
+Model3D& Parser::GetModelRef() { return m_model; }
 
 Model3D& Parser::ParseIt() {
   std::ifstream ifs(m_file_name);
@@ -34,7 +30,8 @@ Model3D& Parser::ParseIt() {
 
   while (std::getline(ifs, line)) {
     LSpaceChTrim(line);
-    for (size_t i = 0; line.size() != 0 && !IsHash(line[0]) && i < prefix_array.size(); i++) {
+    for (size_t i = 0;
+         line.size() != 0 && !IsHash(line[0]) && i < prefix_array.size(); i++) {
       if (LineStartsWithPrefix(line, prefix_array[i])) {
         line.erase(0, prefix_array[i].length());
         if (prefix_array[i] == "v")
@@ -51,8 +48,8 @@ Model3D& Parser::ParseIt() {
       }
     }
   }
-  if (!prefix_o_flag){
-    std::string new_name= m_file_name;
+  if (!prefix_o_flag) {
+    std::string new_name = m_file_name;
     new_name.erase((new_name.size() - 4), 4);
     new_name.erase(
         new_name.begin(),
@@ -60,7 +57,7 @@ Model3D& Parser::ParseIt() {
           return IsSlash(ch);
         })).base());
     ModelNameSetter(new_name);
-  } 
+  }
   ifs.close();
 
   ModelNormalizer();
@@ -73,4 +70,4 @@ void Parser::ModelNormalizer() {
   m_model.ManageEdges();
 }
 
-}   //s21::inbound_model::parser
+}  // namespace s21::inbound_model::parser

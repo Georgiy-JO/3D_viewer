@@ -1,18 +1,18 @@
 #include "../parser.h"
 namespace s21::inbound_model::parser {
-  using namespace service_functions;
+using namespace service_functions;
 
 const std::vector<std::string>& Parser::CreatePrefixArray() {
   static const std::vector<std::string> array = {
-      "v",       // #0 Vertex coordinates
+      "v",  // #0 Vertex coordinates
       // "vt",      // #1 Vertex texture coordinate
       // "vn",      // #2 Vertex normal vector
       // "vp",      // #3 Parameter space vertex
-      "f",       // #4 Face (ref to verts. Ex.: f v1/vt1/vn1 v2/vt2/vn2 ...)
-      "l",       // #5 Line (sequence of verts or vert/texture pairs)
-      "p",       // #6 Point (used for point clouds)
+      "f",  // #4 Face (ref to verts. Ex.: f v1/vt1/vn1 v2/vt2/vn2 ...)
+      "l",  // #5 Line (sequence of verts or vert/texture pairs)
+      "p",  // #6 Point (used for point clouds)
       // "g",       // #7 Group name
-      "o"       // #8 Object name
+      "o"  // #8 Object name
       // "s",       // #9 Smoothing group
       // "mg",      // #10 Merging group
       // "mtlib",   // #11 Material library file (external .mtl file)
@@ -24,9 +24,8 @@ const std::vector<std::string>& Parser::CreatePrefixArray() {
       // "deg",     // #17 Degree of curve or surface
       // "bmat",    // #18 Basis matrix
       // "step",    // #19 Steps for curve/surface
-      // "cstype",  // #20 Curve or surface type (`bezier`, `bspline`, `rat` etc.)
-      // "trim",    // #21 Trimming loop
-      // "hole",    // #22 Hole in surface
+      // "cstype",  // #20 Curve or surface type (`bezier`, `bspline`, `rat`
+      // etc.) "trim",    // #21 Trimming loop "hole",    // #22 Hole in surface
       // "scrv",    // #23 Special curve
       // "sp",      // #24 Surface patch
       // "end"      // #25 End statement (for groupings or surface defs)
@@ -34,8 +33,10 @@ const std::vector<std::string>& Parser::CreatePrefixArray() {
   return array;
 }
 
-bool Parser::LineStartsWithPrefix(const std::string& line, const std::string& prefix) {
-  if (line.length() == 0 || prefix.length() == 0 || line[0]!=prefix[0]) return false;
+bool Parser::LineStartsWithPrefix(const std::string& line,
+                                  const std::string& prefix) {
+  if (line.length() == 0 || prefix.length() == 0 || line[0] != prefix[0])
+    return false;
   auto prefix_position = line.find(prefix);
   if (prefix_position == line.npos || prefix_position != 0) return false;
   auto next_ch_position = prefix.length();
@@ -85,8 +86,7 @@ void Parser::PrefixL(const std::string& line) {
   PrefixCommonLP(line, vertices);
 
   if (vertices.size() >= 2) {  // l prefix allow only 2+ vertices included
-    if (EdgesAdder(vertices))
-      m_model.RemoveEdge(m_model.GetEdgesAmount() - 1);
+    if (EdgesAdder(vertices)) m_model.RemoveEdge(m_model.GetEdgesAmount() - 1);
   }
 }
 
@@ -111,7 +111,8 @@ bool Parser::PrefixO(std::string& line) {
   return true;
 }
 
-void Parser::PrefixCommonLP(const std::string& line, std::vector<double>& vertices) {
+void Parser::PrefixCommonLP(const std::string& line,
+                            std::vector<double>& vertices) {
   std::istringstream iss(line);
   LSpaceChTrim(iss);
   int next_symbol = iss.peek();
@@ -123,8 +124,8 @@ void Parser::PrefixCommonLP(const std::string& line, std::vector<double>& vertic
 }
 
 // Allowed for vertex referencing: 3. = 3.0 = 3.
-bool Parser::ProcessCharF(std::istringstream& iss, std::vector<double>& vertices,
-                  int& next_symbol) {
+bool Parser::ProcessCharF(std::istringstream& iss,
+                          std::vector<double>& vertices, int& next_symbol) {
   double number = 0;
   if (IsHash(next_symbol) || !IsNotEOF(next_symbol)) return false;
 
@@ -169,8 +170,8 @@ bool Parser::ProcessCharF(std::istringstream& iss, std::vector<double>& vertices
 }
 
 // Allowed for vertex referencing: 3. = 3.0 = 3.
-bool Parser::ProcessCharLP(std::istringstream& iss, std::vector<double>& vertices,
-                   int& next_symbol) {
+bool Parser::ProcessCharLP(std::istringstream& iss,
+                           std::vector<double>& vertices, int& next_symbol) {
   double number = 0;
   if (IsNextNumber(iss)) {
     iss >> number;
@@ -191,6 +192,4 @@ bool Parser::ProcessCharLP(std::istringstream& iss, std::vector<double>& vertice
   return true;
 }
 
-
-
-}   //s21::inbound_model::parser
+}  // namespace s21::inbound_model::parser

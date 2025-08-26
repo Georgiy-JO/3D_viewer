@@ -5,7 +5,8 @@ namespace s21::inbound_model::parser {
  * Returns false if "from"==0 or negative index is over range.
  * "to" gets changes anyway though.
  */
-bool Parser::VerticeDecoder(const double& from, size_t& to, const size_t range) {
+bool Parser::VerticeDecoder(const double& from, size_t& to,
+                            const size_t range) {
   to = static_cast<size_t>(std::abs(from));
   if (to == 0) return false;
   to -= 1;
@@ -78,4 +79,4 @@ bool Parser::SingleVertEdgesAdder(const std::vector<double>& vertices) {
   }
   return false;
 }
-}   //s21::inbound_model::parser
+}  // namespace s21::inbound_model::parser

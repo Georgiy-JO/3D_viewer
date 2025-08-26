@@ -46,17 +46,15 @@ bool IsNextNumber(std::istringstream& iss) {
 }
 
 void RSpaceChTrim(std::string& line) {
-  line.erase(
-    std::find_if(line.rbegin(), line.rend(),
-      [](int ch) { return !IsSpaceCh(ch); }).base(),line.end());
+  line.erase(std::find_if(line.rbegin(), line.rend(),
+      [](int ch) { return !IsSpaceCh(ch); }).base(), line.end());
 }
 
 void LSpaceChTrim(std::string& line) {
-  line.erase(line.begin(), 
-    std::find_if(line.begin(), line.end(),
+  line.erase(line.begin(), std::find_if(line.begin(), line.end(),
       [](int ch) { return !IsSpaceCh(ch); }));
 }
 
 void LSpaceChTrim(std::istringstream& iss) { iss >> std::ws; }
 
-}  // namespace s21::inbound_model::parser::service_functions 
+}  // namespace s21::inbound_model::parser::service_functions
