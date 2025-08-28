@@ -28,7 +28,11 @@ public:
 
     void on_sl_move_OX_sliderMoved(int position);
 
+    void on_sl_rotate_OX_sliderMoved(int position);
+
    private:
     Ui::MainWindow *ui;
+    int position_tmp;
+    int rotation_tmp;
 };
 #endif // SRC_VIEW_UI_MAINWINDOW_H

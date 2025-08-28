@@ -28,11 +28,10 @@ namespace s21::matrix
 
     void Matrix4x4::Translate(const Vec3& vec){
         Matrix4x4 local;
-        local.SetToIdentity();
         local.m_matrix(0,3)=vec.x;
         local.m_matrix(1,3)=vec.y;
         local.m_matrix(2,3)=vec.z;
-        (*this)*=local;
+        (*this)+=local;
     }
 
     void Matrix4x4::Rotate(double angle, Vec3 vec){

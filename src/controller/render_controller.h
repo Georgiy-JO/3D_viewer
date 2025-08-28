@@ -15,7 +15,7 @@ class Render{
         s21::render::ShaderProgram& Program(){return m_program;}
         void SetUniforms(){ 
             m_program.UploadUniforms(m_transformation_matrix,m_camera_matrix,m_projection_matrix);
-            // m_transformation_matrix.Reset();//????
+            // m_transformation_matrix.Reset();
         }
 
     private:

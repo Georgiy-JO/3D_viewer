@@ -8,6 +8,16 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->sl_move_OX->setRange(0,100);
+    ui->sl_move_OX->setValue(50);
+    ui->sl_move_OX->setSingleStep(5);
+    position_tmp=ui->sl_move_OX->value();
+
+    ui->sl_rotate_OX->setRange(0,100);
+    ui->sl_rotate_OX->setValue(50);
+    ui->sl_rotate_OX->setSingleStep(5);
+    position_tmp=ui->sl_rotate_OX->value();
 }
 
 MainWindow::~MainWindow()
@@ -66,6 +76,19 @@ void MainWindow::on_tmpButton_clicked()
 
 void MainWindow::on_sl_move_OX_sliderMoved(int position)
 {
+    int delta=position-position_tmp;
+    ui->mv_widget->Translate(delta,0,0);
+    ui->mv_widget->update();
+    position_tmp=position;
+}
+
+
+void MainWindow::on_sl_rotate_OX_sliderMoved(int position)
+{
+    int delta=position-rotation_tmp;
+    ui->mv_widget->RotateX(delta);
+    ui->mv_widget->update();
+    rotation_tmp=position;
 
 }
 
