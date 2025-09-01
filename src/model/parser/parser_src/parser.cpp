@@ -8,9 +8,13 @@ namespace s21::inbound_model::parser {
 using namespace service_functions;
 
 Parser::Parser(Model3D& model_, const std::string& file_name_)
-    : m_model(model_), m_file_name(file_name_) {}
+    : m_model(model_){
+      SetFileName(file_name_);
+    }
 
 void Parser::SetFileName(const std::string& file_name_) {
+  if(!file_name_.ends_with(".obj"))        //C++20 function !!
+    throw std::ios_base::failure("Not .obj file is given: " + file_name_);
   m_file_name = file_name_;
 }
 

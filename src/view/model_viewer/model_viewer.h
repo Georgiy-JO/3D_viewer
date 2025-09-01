@@ -20,7 +20,15 @@ public:
     void RotateY(float degrees);
     void RotateZ(float degrees);
     void Translate(float x, float y, float z);
+    void TranslateX(float value);
+    void TranslateY(float value);
+    void TranslateZ(float value);
     void Scale(float scale);
+    void ResetTransformations();
+
+    QString GetModelName() const;
+    size_t GetVertsAmount() const;
+    size_t GetEdgesAmount() const;
 protected:
     /**
      * @note Called once when the OpenGL context is ready.
@@ -48,7 +56,7 @@ protected:
 
 private:
     static constexpr s21::vectors::Vec4 kBackgroundColor{0.1f, 0.1f, 0.1f, 1.0f}; // Background color: dark gray, transparency - solid
-    static constexpr double kLineWidth = 1.0f;
+    static constexpr double kLineWidth = 0.1f;
     s21::controller::Render m_render;
     s21::gui::MouseActions m_mouse;
 };

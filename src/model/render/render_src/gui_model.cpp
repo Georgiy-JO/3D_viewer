@@ -70,8 +70,9 @@ void GPU_Model::SetModelData(std::shared_ptr<s21::inbound_model::Model3D> model_
         throw std::invalid_argument("Model is empty or null");
 
     m_VerticesAmount = model_->GetVerticesAmount();
-    m_EdgesCount=model_->GetEdgesAmount();     //it is not actually edges amount it is more like count of edges ends
-    m_model_name=QString::fromStdString(model_->GetName());
+    m_EdgesCount=model_->GetEdgesAmount();  
+    m_EdgesAmount=model_->GetEdgesAmount();
+    m_model_name=model_->GetName();
 
     /**
      * @note We need do transfor the data from Model3D to save space and store data tightly.
@@ -135,5 +136,13 @@ size_t GPU_Model::GetEdgesCount() const{
 
 uint32_t GPU_Model::GetVerticesAmount() const{
     return m_VerticesAmount;
+}
+
+const std::string& GPU_Model::GetModelName() const{
+    return m_model_name;
+}
+
+size_t GPU_Model::GetEdgesAmount() const{
+    return m_EdgesAmount;
 }
 }   //s21::render

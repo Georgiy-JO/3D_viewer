@@ -39,11 +39,11 @@ class CameraMatrix: public UniformMatrix{
 
 class ProjectionMatrix: public UniformMatrix{
     public:
-        static constexpr double kFOVangle = 45.0f; 
+        static constexpr double kFovAngle = 45.0f; 
         static constexpr double kNearPlane =0.1f; 
         static constexpr double kFarPlane = 100.0f; 
         ProjectionMatrix();
-        void Reset(double w, double h, double fov_angle = kFOVangle, double near_plane =kNearPlane, double far_plane =kFarPlane);
+        void Reset(double w, double h, double fov_angle = kFovAngle, double near_plane =kNearPlane, double far_plane =kFarPlane);
 };
 
 }       //s21::render::uniforms

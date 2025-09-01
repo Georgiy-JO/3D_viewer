@@ -5,19 +5,14 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow),
+    m_model_controles(),
+    m_file_name(kDefaultFile)
 {
     ui->setupUi(this);
-
-    ui->sl_move_OX->setRange(0,100);
-    ui->sl_move_OX->setValue(50);
-    ui->sl_move_OX->setSingleStep(5);
-    position_tmp=ui->sl_move_OX->value();
-
-    ui->sl_rotate_OX->setRange(0,100);
-    ui->sl_rotate_OX->setValue(50);
-    ui->sl_rotate_OX->setSingleStep(5);
-    position_tmp=ui->sl_rotate_OX->value();
+    m_model_controles.Initialize(ui->sl_rotate_OX,ui->sl_rotate_OY,ui->sl_rotate_OZ,ui->sl_scale);
+    ui->sl_scale->setVisible(false);
+    ui->text_output->setWordWrap(true);
 }
 
 MainWindow::~MainWindow()
@@ -25,18 +20,125 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::TextMessageOutput(const QString& str){
+    ui->text_output->setText(str);
+}
+// void MainWindow::TextMessageOutput(const std::string& str){
+//     TextMessageOutput(QString::fromStdString(str));
+// }
 
-void MainWindow::on_show_model_b_clicked(bool checked)
+
+void MainWindow::on_sl_rotate_OX_valueChanged(int value)
 {
-    (void)checked; // Suppress unused parameter warning
-    TextMessageOutput(QString("button clicked"));
+    ui->mv_widget->RotateX(m_model_controles.GetRotateX(value));
+    ui->mv_widget->update();
+}
 
+
+void MainWindow::on_sl_rotate_OY_valueChanged(int value)
+{
+    ui->mv_widget->RotateY(m_model_controles.GetRotateY(value));
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_sl_rotate_OZ_valueChanged(int value)
+{
+    ui->mv_widget->RotateZ(m_model_controles.GetRotateZ(value));
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_sl_scale_valueChanged(int value)
+{
+    ui->mv_widget->Scale(m_model_controles.GetScale(value));
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_bt_translate_up_pressed()
+{
+    ui->mv_widget->TranslateY(m_model_controles.GetPositiveTranslate());
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_bt_translate_right_pressed()
+{
+    ui->mv_widget->TranslateX(m_model_controles.GetPositiveTranslate());
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_bt_translate_left_pressed()
+{
+    ui->mv_widget->TranslateX(m_model_controles.GetNegativeTranslate());
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_bt_translate_down_pressed()
+{
+    ui->mv_widget->TranslateY(m_model_controles.GetNegativeTranslate());
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_bt_translate_forward_pressed()
+{
+    ui->mv_widget->TranslateZ(m_model_controles.GetPositiveTranslate());
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_bt_translate_backward_pressed()
+{
+    ui->mv_widget->TranslateZ(m_model_controles.GetNegativeTranslate());
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_bt_scale_inc_pressed()
+{
+    ui->mv_widget->Scale(m_model_controles.GetPositiveScale());
+    ui->mv_widget->update();
+}
+
+
+void MainWindow::on_bt_scale_dec_pressed()
+{
+    ui->mv_widget->Scale(m_model_controles.GetNegativeScale());
+    ui->mv_widget->update();
+}
+
+void MainWindow::on_bt_reset_model_pressed()
+{
+    m_model_controles.Initialize(ui->sl_rotate_OX,ui->sl_rotate_OY,ui->sl_rotate_OZ,ui->sl_scale);
+    ui->mv_widget->ResetTransformations();
+    ui->mv_widget->update();
+}
+
+void MainWindow::on_bt_file_list_clicked()
+{
+    QString new_file_name = QFileDialog::getOpenFileName(
+        this,
+        tr("Choose object file"),
+        QDir::currentPath(),
+        tr("Object files (*.obj)")
+    );
+
+    if(!new_file_name.isEmpty())
+        m_file_name=new_file_name;
+}
+
+
+void MainWindow::on_bt_show_model_clicked()
+{
     using s21::controller::ModelParserWorker;
     using s21::inbound_model::Model3D;
 
-    QString file_name = "tests/models/skull.obj"; //temp
 
-    auto worker = new ModelParserWorker(file_name);
+    auto worker = new ModelParserWorker(m_file_name);
     QThread* thread = new QThread;
 
     worker->moveToThread(thread);
@@ -47,48 +149,23 @@ void MainWindow::on_show_model_b_clicked(bool checked)
         thread->wait();
         worker->deleteLater();
         thread->deleteLater();
-        TextMessageOutput("Parsed");
-        ui->mv_widget->SetModel(std::move(model));
+        try{
+            ui->mv_widget->SetModel(std::move(model));
+            TextMessageOutput(ui->mv_widget->GetModelName()+": "+ 
+                QString::number(static_cast<qulonglong> (ui->mv_widget->GetVertsAmount()))+" vertices, "+
+                QString::number(static_cast<qulonglong> (ui->mv_widget->GetEdgesAmount()))+" edges.");
+        }
+        catch(const std::exception& e){
+            TextMessageOutput("Not Parsed: "+ QString::fromStdString(e.what()));
+        }
         ui->mv_widget->update();
     });
     connect(worker, &ModelParserWorker::error, this, [this](const QString& msg) {
-        TextMessageOutput("Not Parsed:"+ msg);
+        TextMessageOutput("Not Parsed: "+ msg);
     });
-
-    thread->start();    
+    TextMessageOutput("Model is loading");
+    thread->start(); 
 }
 
 
-void MainWindow::TextMessageOutput(const QString& str){
-    ui->text_output->setText(str);
-}
-// void MainWindow::TextMessageOutput(const std::string& str){
-//     TextMessageOutput(QString::fromStdString(str));
-// }
-
-
-void MainWindow::on_tmpButton_clicked()
-{
-    ui->mv_widget->RotateX(2);
-    ui->mv_widget->update();
-}
-
-
-void MainWindow::on_sl_move_OX_sliderMoved(int position)
-{
-    int delta=position-position_tmp;
-    ui->mv_widget->Translate(delta,0,0);
-    ui->mv_widget->update();
-    position_tmp=position;
-}
-
-
-void MainWindow::on_sl_rotate_OX_sliderMoved(int position)
-{
-    int delta=position-rotation_tmp;
-    ui->mv_widget->RotateX(delta);
-    ui->mv_widget->update();
-    rotation_tmp=position;
-
-}
 

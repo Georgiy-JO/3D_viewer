@@ -9,10 +9,15 @@ class Render{
         Render():m_model(),m_transformation_matrix(),m_camera_matrix(),m_projection_matrix(),m_program(){}
         
         s21::render::GPU_Model& Model(){return m_model;}
+        const s21::render::GPU_Model& Model() const{return m_model;}
         s21::render::uniforms::TransformationMatrix& Transform(){return m_transformation_matrix;}
+        const s21::render::uniforms::TransformationMatrix& Transform() const{return m_transformation_matrix;}
         s21::render::uniforms::CameraMatrix& Camera(){return m_camera_matrix;}
+        const s21::render::uniforms::CameraMatrix& Camera() const{return m_camera_matrix;}
         s21::render::uniforms::ProjectionMatrix& Projection(){return m_projection_matrix;}
+        const s21::render::uniforms::ProjectionMatrix& Projection() const{return m_projection_matrix;}
         s21::render::ShaderProgram& Program(){return m_program;}
+        const s21::render::ShaderProgram& Program() const{return m_program;}
         void SetUniforms(){ 
             m_program.UploadUniforms(m_transformation_matrix,m_camera_matrix,m_projection_matrix);
             // m_transformation_matrix.Reset();

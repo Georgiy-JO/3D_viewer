@@ -15,6 +15,9 @@ class Parser {
  public:
   Parser(Model3D& model_, const std::string& file_name_);
 
+  /**
+   * @note We are parsing only .obj files!
+   */
   void SetFileName(const std::string& file_name_);
   void SetModelRef(Model3D& model_);
   std::string GetFilename() const;

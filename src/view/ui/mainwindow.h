@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <string>
+#include "../model_controles/model_controles.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,17 +23,28 @@ public:
     // void TextMessageOutput(const std::string& str);    //if won't be needed - delete
 
    private slots:
-    void on_show_model_b_clicked(bool checked);
+    void on_sl_rotate_OX_valueChanged(int value);
+    void on_sl_rotate_OY_valueChanged(int value);
+    void on_sl_rotate_OZ_valueChanged(int value);
+    void on_bt_translate_up_pressed();
+    void on_bt_translate_right_pressed();
+    void on_bt_translate_left_pressed();
+    void on_bt_translate_down_pressed();
+    void on_bt_translate_forward_pressed();
+    void on_bt_translate_backward_pressed();
+    void on_sl_scale_valueChanged(int value);
+    void on_bt_scale_inc_pressed();
+    void on_bt_scale_dec_pressed();
+    void on_bt_file_list_clicked();
+    void on_bt_show_model_clicked();
 
-    void on_tmpButton_clicked();
-
-    void on_sl_move_OX_sliderMoved(int position);
-
-    void on_sl_rotate_OX_sliderMoved(int position);
+    void on_bt_reset_model_pressed();
 
    private:
+    static constexpr const char* kDefaultFile ="models/skull.obj";
     Ui::MainWindow *ui;
-    int position_tmp;
-    int rotation_tmp;
+    s21::gui::controles::ModelControles m_model_controles;
+    QString m_file_name;
+
 };
 #endif // SRC_VIEW_UI_MAINWINDOW_H
