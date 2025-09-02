@@ -5,17 +5,15 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_compile_options(-O2 -DNDEBUG -Wall -Wextra)
-else()
-    add_compile_options(
-        -g 
-        -O0 
-        -Wall 
-        -Werror 
-        -Wextra 
-        -D_POSIX_C_SOURCE=201706L)
-endif()
+# if(CMAKE_BUILD_TYPE STREQUAL "Release")
+#     add_compile_options(-O2 -DNDEBUG)
+add_compile_options(
+    -g 
+    -O0 
+    -Wall 
+    -Werror 
+    -Wextra 
+    -D_POSIX_C_SOURCE=201706L)
 
 option(BUILD_TESTS "Build tests" ON)
 option(BUILD_COVERAGE "Enable code coverage" ON)
@@ -67,7 +65,6 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
 
     set(CORE_INCLUDE_DIRS
         ${CMAKE_CURRENT_SOURCE_DIR}/../core/math
-        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party
         ${THIRS_PARTY_INCLUDE_DIRS}
     )
     set(CORE_SRC
@@ -80,6 +77,36 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
     set(CORE_TEST_SRC
         core/core_tests.cpp
     )
+
+    find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Gui OpenGLWidgets)  
+    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui OpenGLWidgets)    
+    if(${QT_VERSION_MAJOR})
+        set(RENDER_INCLUDE_DIRS
+            ${CMAKE_CURRENT_SOURCE_DIR}/../model/render
+            ${CMAKE_CURRENT_SOURCE_DIR}/../model/render/uniforms
+            ${CMAKE_CURRENT_SOURCE_DIR}/../model/render/shaders
+            ${CMAKE_CURRENT_SOURCE_DIR}/../model/render/render_src
+            ${CORE_INCLUDE_DIRS}
+            ${INBOUND_MODEL_INCLUDE_DIRS}
+        )
+        set(RENDER_SRC
+            ../model/render/uniforms/uniforms.cpp
+            ../model/render/render_src/gui_model.cpp
+            ../model/render/render_src/shader_program.cpp
+            ${CORE_SRC}
+            ${INBOUND_MODEL_SRC}
+        )
+        set(RENDER_TEST_SRC
+            render/main.cpp
+            render/uniforms_tests.cpp
+            render/gui_model_tests.cpp
+            render/shader_program_tests.cpp
+        )
+        file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../model/render/shaders
+            DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+    else()
+        message(WARNING "No render tests will be possible, QT source files was not found.")
+    endif()
 
     include(FetchContent)
     FetchContent_Declare(
@@ -95,7 +122,7 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
 endif()
 
 if(BUILD_TESTS)
-    #Core tests
+    # Core tests
     add_executable(core_tests
         ${CORE_TEST_SRC}       # <- test code files
         ${CORE_SRC}
@@ -123,12 +150,11 @@ if(BUILD_TESTS)
                 --log-file=valgrind_core_tests.txt
                 $<TARGET_FILE:core_tests>
             DEPENDS core_tests
-            COMMENT "Running core_tests under Valgrind (see valgrind_core_tests.txt)"
+            COMMENT "Running core_tests under Valgrind (see valgrind_core_tests.txt)."
         )
     else()
         message(WARNING "Valgrind not found. valgrind_core_tests target will not be available.")
     endif()
-
 
     # Inbound model tests
     add_executable(inbound_model_tests
@@ -158,7 +184,7 @@ if(BUILD_TESTS)
                 --log-file=valgrind_inbound_model_tests.txt
                 $<TARGET_FILE:inbound_model_tests>
             DEPENDS inbound_model_tests
-            COMMENT "Running inbound_model_tests under Valgrind (see valgrind_inbound_model_tests.txt)"
+            COMMENT "Running inbound_model_tests under Valgrind (see valgrind_inbound_model_tests.txt)."
         )
     else()
         message(WARNING "Valgrind not found. valgrind_inbound_model_tests target will not be available.")
@@ -192,23 +218,92 @@ if(BUILD_TESTS)
                 --log-file=valgrind_third_party_tests.txt
                 $<TARGET_FILE:third_party_tests>
             DEPENDS third_party_tests
-            COMMENT "Running third_party_tests under Valgrind (see valgrind_third_party_tests.txt)"
+            COMMENT "Running third_party_tests under Valgrind (see valgrind_third_party_tests.txt)."
         )
     else()
         message(WARNING "Valgrind not found. valgrind_third_party_tests target will not be available.")
+    endif()
+
+    # Render tests
+    if(${QT_VERSION_MAJOR})
+        add_executable(render_tests
+            ${RENDER_TEST_SRC}       # <- test code files
+            ${RENDER_SRC}
+        )
+
+        target_include_directories(render_tests PRIVATE ${RENDER_INCLUDE_DIRS})
+        target_link_libraries(render_tests PRIVATE gtest pthread Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::OpenGLWidgets) 
+        set_property(TARGET render_tests PROPERTY CXX_STANDARD 20)
+        add_test(NAME RenderTests COMMAND render_tests)
+
+        add_custom_target(run_render_tests
+            COMMAND render_tests
+            DEPENDS render_tests
+            COMMENT "Running render_tests executable"
+        )
+
+        if(VALGRIND_EXECUTABLE)
+            add_custom_target(valgrind_render_tests
+                COMMAND valgrind 
+                    --tool=memcheck  
+                    --leak-check=full 
+                    --show-leak-kinds=all 
+                    --track-origins=yes 
+                    --verbose 
+                    --log-file=valgrind_render_tests.txt
+                    $<TARGET_FILE:render_tests>
+                DEPENDS render_tests
+                COMMENT "Running render_tests under Valgrind (see valgrind_render_tests.txt)."
+            )
+
+            add_custom_target(valgrind_global
+                COMMAND valgrind_third_party_tests
+                COMMAND valgrind_core_tests
+                COMMAND valgrind_inbound_model_tests
+                COMMAND valgrind_render_tests
+                DEPENDS valgrind_third_party_tests valgrind_core_tests valgrind_inbound_model_tests valgrind_render_tests
+                COMMENT "Running all tests via valgrind at once (see valgrind_third_party_tests.txt, valgrind_core_tests.txt, valgrind_inbound_model_tests.txt, valgrind_render_tests.txt)."
+            )
+        else()
+            message(WARNING "Valgrind not found. valgrind_render_tests target will not be available.")
+        endif()
     endif()
 
 endif()
 
 if(BUILD_COVERAGE AND LCOV_EXECUTABLE AND GENHTML_EXECUTABLE)
 
-    add_executable(test_cov
-        ${THIRS_PARTY_TEST_SRC}         # <- test code files
-        # ${INBOUND_MODEL_TEST_SRC}       # <- test code files
-        ${CORE_TEST_SRC}                # <- test code files
-        ${INBOUND_MODEL_SRC}
-        ${CORE_SRC}                     #included ${THIRS_PARTY_SRC}
-    )
+    if(${QT_VERSION_MAJOR})
+        add_executable(test_cov
+            ${THIRS_PARTY_TEST_SRC}         # <- test code files
+            ${INBOUND_MODEL_TEST_SRC}       # <- test code files
+            ${CORE_TEST_SRC}                # <- test code files
+            ${RENDER_TEST_SRC}              # <- test code files
+            ${RENDER_SRC}                   # include ${THIRS_PARTY_SRC} ${CORE_SRC} ${INBOUND_MODEL_SRC}
+        )
+        target_include_directories(test_cov PRIVATE 
+            ${RENDER_INCLUDE_DIRS}            # include ${THIRS_PARTY_INCLUDE_DIRS} ${INBOUND_MODEL_INCLUDE_DIRS} ${CORE_INCLUDE_DIRS}
+            )
+        target_link_libraries(test_cov PRIVATE 
+            gtest 
+            pthread 
+            Qt${QT_VERSION_MAJOR}::Gui 
+            Qt${QT_VERSION_MAJOR}::OpenGLWidgets 
+        )
+    else()
+        add_executable(test_cov
+            ${THIRS_PARTY_TEST_SRC}         # <- test code files
+            ${INBOUND_MODEL_TEST_SRC}       # <- test code files
+            ${CORE_TEST_SRC}                # <- test code files
+            ${INBOUND_MODEL_SRC}
+            ${CORE_SRC}                     # include ${THIRS_PARTY_SRC}
+        )
+        target_include_directories(test_cov PRIVATE 
+            ${INBOUND_MODEL_INCLUDE_DIRS}
+            ${CORE_INCLUDE_DIRS}            # include ${THIRS_PARTY_INCLUDE_DIRS} 
+            )
+        target_link_libraries(test_cov PRIVATE gtest_main pthread)
+    endif()
 
     set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY CMAKE_COVERAGE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
     
@@ -216,12 +311,7 @@ if(BUILD_COVERAGE AND LCOV_EXECUTABLE AND GENHTML_EXECUTABLE)
         -fprofile-arcs 
         -ftest-coverage
     )
-    target_include_directories(test_cov PRIVATE 
-        ${INBOUND_MODEL_INCLUDE_DIRS}
-        ${CORE_INCLUDE_DIRS}            # include ${THIRS_PARTY_INCLUDE_DIRS} 
-        )
-    target_link_libraries(test_cov PRIVATE gtest_main pthread --coverage)
-
+    target_link_options(test_cov PRIVATE --coverage)
 
     add_custom_target(coverage
         COMMAND ${CMAKE_COMMAND} -E remove_directory coverage

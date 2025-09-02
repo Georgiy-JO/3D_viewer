@@ -66,8 +66,7 @@ namespace s21::render::uniforms{
      * @note Using "magic numbers" can't be avoided here.
      */
     void ProjectionMatrix::Reset(double w, double h, double fov_angle, double near_plane, double far_plane){        
-        if(h<=0)
-            throw std::invalid_argument("ProjectionMatrix::Reset - height must be positive");
+        // if(h<=0) throw std::invalid_argument("ProjectionMatrix::Reset - height must be positive");   //not really needed
         fov_angle=s21::matrix::DegreesToRadians(fov_angle);
         double tan=std::tan(fov_angle/2.0f);
         double ratio=w/(h>0?h:1.0f);

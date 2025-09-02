@@ -25,6 +25,11 @@ The project contains a bunch of constants that set up the way the model is inter
 |s21::render::uniforms::ProjectionMatrix::kNearPlane|Projection's near plane|src/model/render/uniforms/uniforms.h|
 |s21::render::uniforms::ProjectionMatrix::kFarPlane|Projection's far plane|src/model/render/uniforms/uniforms.h|
 |s21::render::uniforms::CameraMatrix::kDefaultCamera|Default camera's position|src/model/render/uniforms/uniforms.h|
+|s21::render::ShaderProgram::kDefaultVertexShaderPath|Default vertex shader's file location|src/model/render/shader_program.h|
+|s21::render::ShaderProgram::kDefaultFragmentShaderPath|Default fragment shader's file location|src/model/render/shader_program.h|
+|s21::render::ShaderProgram::kTransformationUniform|Transformation matrix uniform's name for passing it to shaders|src/model/render/shader_program.h|
+|s21::render::ShaderProgram::kCameraUniform|Camera matrix uniform's name for passing it to shaders|src/model/render/shader_program.h|
+|s21::render::ShaderProgram::kProjectionUniform|Projection matrix uniform's name for passing it to shaders|src/model/render/shader_program.h|
 |gl_PointSize|Size of vertices of the model|src/model/render/shaders/shader.vert|
 |FragColor|Color of vertices and edges|src/model/render/shaders/shader.frag|
 |s21::gui::ModelViewer::kBackgroundColor|Background color of the viewer widget|src/view/model_viewer/model_viewer.h|

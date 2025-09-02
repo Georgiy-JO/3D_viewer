@@ -43,18 +43,20 @@ class TransformationMatrix: public UniformMatrix{
 
 class CameraMatrix: public UniformMatrix{
     public:
-        static constexpr s21::vectors::Vec3 kDefaultCamera {0.0f, 0.0f, -5.0f};
         CameraMatrix();
-        void Reset(s21::vectors::Vec3 vec=kDefaultCamera) ;
+        void Reset(s21::vectors::Vec3 vec=kDefaultCamera);
+    private:
+        static constexpr s21::vectors::Vec3 kDefaultCamera {0.0f, 0.0f, -5.0f};
 };
 
 class ProjectionMatrix: public UniformMatrix{
     public:
+        ProjectionMatrix();
+        void Reset(double w, double h, double fov_angle = kFovAngle, double near_plane =kNearPlane, double far_plane =kFarPlane);
+    private:
         static constexpr double kFovAngle = 45.0f; 
         static constexpr double kNearPlane =0.1f; 
         static constexpr double kFarPlane = 100.0f; 
-        ProjectionMatrix();
-        void Reset(double w, double h, double fov_angle = kFovAngle, double near_plane =kNearPlane, double far_plane =kFarPlane);
 };
 
 }       //s21::render::uniforms

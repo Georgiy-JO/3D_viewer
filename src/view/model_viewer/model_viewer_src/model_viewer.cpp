@@ -12,7 +12,10 @@ namespace s21::gui{
     }
 
     void ModelViewer::initializeGL(){
+        
+        // initialize function pointers for modern OpenGL (from QOpenGLFunctions_3_3_Core)
         initializeOpenGLFunctions();
+
         // Basic GL state
         glEnable(GL_DEPTH_TEST);    // enable z-buffer test for correct occlusion
 

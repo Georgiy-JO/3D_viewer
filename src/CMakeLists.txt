@@ -19,29 +19,9 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
 endif()
 
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)          #new
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGLWidgets Widgets)     #new
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Gui Widgets OpenGLWidgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Widgets OpenGLWidgets)
 find_package(OpenGL REQUIRED)
-
-# find_package(GLEW REQUIRED)   # for GLFW3 and GLEW
-# find_package(GLFW3 REQUIRED)  # for GLFW3 and GLEW
-
-#find_package(Qt6 COMPONENTS Core Gui Widgets OpenGLWidgets REQUIRED) # for qt6
-
-# set(QT_GL_LIBS                                                      # for qt6
-#   Qt6::Core
-#   Qt6::Gui
-#   Qt6::OpenGL                                                       # ??
-#   Qt6::Widgets                                                      # ??
-#   Qt6::OpenGLWidgets
-#   OpenGL::GL
-# )
-
-# set_target_properties(${PROJECT_NAME} PROPERTIES                    # for qt6
-#   AUTOMOC ON
-#   AUTOUIC ON
-#   AUTORCC ON
-# )
 
 set(INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}
@@ -131,6 +111,38 @@ add_custom_target(run_Viewer3D
     COMMENT "Running Viewer3D executable"
 )
 
+target_include_directories(Viewer3D PUBLIC
+    $<BUILD_INTERFACE:${INCLUDE_DIRS}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21_matrix>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(Viewer3D PRIVATE
+    Qt${QT_VERSION_MAJOR}::Gui
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::OpenGLWidgets
+    OpenGL::GLU
+    OpenGL::GL
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 find_program(CLANG_FORMAT_EXE
     NAMES clang-format clang-format-20 clang-format-14 clang-format-13
     DOC "Path to clang-format executable"
@@ -198,26 +210,6 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES
   ${SOURCES}
 )
 
-target_include_directories(Viewer3D PUBLIC
-    $<BUILD_INTERFACE:${INCLUDE_DIRS}>     #new
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21_matrix>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
-    $<INSTALL_INTERFACE:include>
-)
-
-target_link_libraries(Viewer3D PRIVATE
-    # s21_matrix
-    Qt${QT_VERSION_MAJOR}::Widgets     #new
-    Qt${QT_VERSION_MAJOR}::OpenGLWidgets      #new
-    OpenGL::GLU       #new
-    OpenGL::GL      #new
-    # ${MY_QT_LIBS}  # for qt6
-    # OpenGL::GL
-    # GLEW::GLEW
-    # glfw
-)
 
 
 

@@ -10,6 +10,10 @@ class GPU_Model: protected QOpenGLFunctions_3_3_Core {
         GPU_Model();
         ~GPU_Model();
 
+        /**
+         * @note Need to have active OpenGL context before calling. 
+         * @note And call initializeOpenGLFunctions() before calling.
+         */
         void InitializeModel();
         void SetModelData(std::shared_ptr<s21::inbound_model::Model3D> model_);
         const GLuint& GetVertexArrayObject()const;

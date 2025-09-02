@@ -26,9 +26,14 @@ GPU_Model::~GPU_Model(){
 
 void GPU_Model::InitializeModel()
 {
-     // initialize function pointers for modern OpenGL (from QOpenGLFunctions_3_3_Core)
-    initializeOpenGLFunctions();
+    // Check if a context is available
+    if (!QOpenGLContext::currentContext()) 
+        throw  std::runtime_error("InitializeModel called without a current OpenGL context!");
+    if(m_vao != 0)
+        return;
 
+    // initialize function pointers for modern OpenGL (from QOpenGLFunctions_3_3_Core)
+        initializeOpenGLFunctions();        //it should be initialized already before calling this function
 
     // Generate and bind a Vertex Array Object (VAO)
     glGenVertexArrays(1, &m_vao);          // create 1 VAO and store name in m_vao
