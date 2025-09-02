@@ -6,6 +6,6 @@ uniform mat4 projection;                                // projection matrix uni
 void main() {
     // compute clip-space position by multiplying matrices
     gl_Position = projection * view * model * vec4(aPos, 1.0);
-    // optionally set a constant point size if rendering GL_POINTS
+    //set a constant point size for rendering GL_POINTS
     gl_PointSize = 4.0;
 }

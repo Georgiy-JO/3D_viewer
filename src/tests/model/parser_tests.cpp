@@ -1,9 +1,7 @@
-#include "../../model/parser/parser.h"
-
 #include <gtest/gtest.h>
-
 #include <fstream>
 
+#include "../../model/parser/parser.h"
 #include "../../model/parser/model_parser.h"
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNum) {
@@ -490,7 +488,9 @@ TEST(Model_Parser, Parser_ModelNormalizer) {
   EXPECT_EQ(model.GetEdgesAmount(), 15);
   EXPECT_EQ(model.GetVerticesAmount(), 21);
 
-  s21::inbound_model::parser::Parser prs1(model, "nothing.txt");
+  EXPECT_THROW(s21::inbound_model::parser::Parser prs11(model, "nothing.txt"),std::ios_base::failure);
+  EXPECT_NO_THROW(s21::inbound_model::parser::Parser prs12(model, "nothing.obj"));
+  s21::inbound_model::parser::Parser prs1(model, "nothing.obj");
   prs1.ModelNormalizer();
   EXPECT_EQ(model.GetEdgesAmount(), 2);
   EXPECT_EQ(model.GetVerticesAmount(), 21);
@@ -527,14 +527,16 @@ TEST(Model_Parser, Parser_ParseIt) {
   using s21::inbound_model::Edge;
   using s21::inbound_model::parser::Parser;
 
-  std::string file_name;
+  std::string file_name{"model.obj"};
   s21::inbound_model::Model3D model;
   Parser prs(model, file_name);
 
   EXPECT_THROW(prs.ParseIt(), std::ios_base::failure);
   file_name = "models/test.txt";
-  prs.SetFileName(file_name);
+
+  EXPECT_THROW(prs.SetFileName(file_name), std::ios_base::failure);
   EXPECT_THROW(prs.ParseIt(), std::ios_base::failure);
+  
   file_name = "models/test_2.obj";
   prs.SetFileName(file_name);
   EXPECT_NO_THROW(prs.ParseIt());
@@ -798,6 +800,7 @@ TEST(Model_Parser, Parser_ParseIt) {
   model = prs.GetModelRef();
   EXPECT_EQ(model.GetEdgesAmount(), 0);
   EXPECT_EQ(model.GetVerticesAmount(), 0);
+
 }
 
 TEST(Model_Parser, ModelParser_ParseModelFromFile_pointer) {
@@ -1135,14 +1138,14 @@ TEST(Model_Parser, ObjectFiles_SimpleModel) {
 
 /**
  * Redundant test (unless new test / visualize method found).
-TEST(Model_Parser, ObjectFiles_cubecarcas){
+TEST(Model_Parser, ObjectFiles_cube_carcas){
     using s21::inbound_model::Parser;
     using s21::inbound_model::Edge;
 
     s21::inbound_model::Model3D model;
-    EXPECT_NO_THROW(Parser(model,"models/cubecarcas.obj"));
+    EXPECT_NO_THROW(Parser(model,"models/cube_carcas.obj"));
 
-    EXPECT_EQ(model.GetName(),"cubecarcas");
+    EXPECT_EQ(model.GetName(),"cube_carcas");
     EXPECT_DOUBLE_EQ(model.GetVerticesAmount(),72 );
 }
 */
@@ -1150,7 +1153,7 @@ TEST(Model_Parser, ObjectFiles_cubecarcas){
 /**
  * This test can be updated using ANY visualization way.
  * Object with medium vertices amount.
- * cuberubik.obj
+ * cube_rubik.obj
  * T ~ 0,6 seconds
  */
 TEST(Model_Parser, ObjectFiles_MiddleVerticesAmountModel) {
@@ -1158,16 +1161,16 @@ TEST(Model_Parser, ObjectFiles_MiddleVerticesAmountModel) {
   using s21::inbound_model::ParseModelFromFile;
 
   s21::inbound_model::Model3D model;
-  EXPECT_NO_THROW(ParseModelFromFile(model, "models/cuberubik.obj"));
+  EXPECT_NO_THROW(ParseModelFromFile(model, "models/cube_rubik.obj"));
 
-  EXPECT_EQ(model.GetName(), "cuberubik");
+  EXPECT_EQ(model.GetName(), "cube_rubik");
   EXPECT_DOUBLE_EQ(model.GetVerticesAmount(), 6696);
 }
 
 /**
  * This test can be updated using ANY visualization way.
  * Object with high vertices amount.
- * Dog.obj
+ * dog.obj
  * T ~ 28 seconds
  * @warning For valgrind testing this testcase
  * (ObjectFiles_HighVerticesAmountModel) must be commented
@@ -1178,9 +1181,9 @@ TEST(Model_Parser, ObjectFiles_HighVerticesAmountModel) {
   using s21::inbound_model::ParseModelFromFile;
 
   s21::inbound_model::Model3D model;
-  EXPECT_NO_THROW(ParseModelFromFile(model, "models/Dog.obj"));
+  EXPECT_NO_THROW(ParseModelFromFile(model, "models/dog.obj"));
 
-  EXPECT_EQ(model.GetName(), "Dog");
+  EXPECT_EQ(model.GetName(), "dog");
   EXPECT_DOUBLE_EQ(model.GetVerticesAmount(), 49714);
 }
 

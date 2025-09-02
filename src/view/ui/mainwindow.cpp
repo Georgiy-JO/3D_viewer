@@ -3,6 +3,7 @@
 #include "../model_viewer/model_viewer.h"
 #include "../../controller/model_parser_worker.h"
 
+namespace s21::gui{
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
@@ -27,95 +28,104 @@ void MainWindow::TextMessageOutput(const QString& str){
 //     TextMessageOutput(QString::fromStdString(str));
 // }
 
+void MainWindow::RefreshModelView(){
+    try{
+        ui->mv_widget->update();
+    }
+    catch(const std::exception& e){
+        TextMessageOutput("Error while showing the model: "+ QString::fromStdString(e.what()));
+    }
+}
+
 
 void MainWindow::on_sl_rotate_OX_valueChanged(int value)
 {
     ui->mv_widget->RotateX(m_model_controles.GetRotateX(value));
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_sl_rotate_OY_valueChanged(int value)
 {
     ui->mv_widget->RotateY(m_model_controles.GetRotateY(value));
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_sl_rotate_OZ_valueChanged(int value)
 {
     ui->mv_widget->RotateZ(m_model_controles.GetRotateZ(value));
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_sl_scale_valueChanged(int value)
 {
     ui->mv_widget->Scale(m_model_controles.GetScale(value));
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_bt_translate_up_pressed()
 {
     ui->mv_widget->TranslateY(m_model_controles.GetPositiveTranslate());
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_bt_translate_right_pressed()
 {
     ui->mv_widget->TranslateX(m_model_controles.GetPositiveTranslate());
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_bt_translate_left_pressed()
 {
     ui->mv_widget->TranslateX(m_model_controles.GetNegativeTranslate());
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_bt_translate_down_pressed()
 {
     ui->mv_widget->TranslateY(m_model_controles.GetNegativeTranslate());
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_bt_translate_forward_pressed()
 {
     ui->mv_widget->TranslateZ(m_model_controles.GetPositiveTranslate());
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_bt_translate_backward_pressed()
 {
     ui->mv_widget->TranslateZ(m_model_controles.GetNegativeTranslate());
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_bt_scale_inc_pressed()
 {
     ui->mv_widget->Scale(m_model_controles.GetPositiveScale());
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 
 void MainWindow::on_bt_scale_dec_pressed()
 {
     ui->mv_widget->Scale(m_model_controles.GetNegativeScale());
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 void MainWindow::on_bt_reset_model_pressed()
 {
     m_model_controles.Initialize(ui->sl_rotate_OX,ui->sl_rotate_OY,ui->sl_rotate_OZ,ui->sl_scale);
     ui->mv_widget->ResetTransformations();
-    ui->mv_widget->update();
+    RefreshModelView();
 }
 
 void MainWindow::on_bt_file_list_clicked()
@@ -158,7 +168,7 @@ void MainWindow::on_bt_show_model_clicked()
         catch(const std::exception& e){
             TextMessageOutput("Not Parsed: "+ QString::fromStdString(e.what()));
         }
-        ui->mv_widget->update();
+        RefreshModelView();
     });
     connect(worker, &ModelParserWorker::error, this, [this](const QString& msg) {
         TextMessageOutput("Not Parsed: "+ msg);
@@ -166,6 +176,6 @@ void MainWindow::on_bt_show_model_clicked()
     TextMessageOutput("Model is loading");
     thread->start(); 
 }
-
+} //s21::gui
 
 

@@ -17,7 +17,18 @@ class UniformMatrix{
         s21::matrix::Matrix4x4 m_matrix;
 };
 
-
+/**
+ * @note Interestingly it's not the best way of realization of this.
+ * The thing is that storing the Transformation matrix as matrix, changing it 
+ * every time result in floating-point error accumulation (best seen in scaling).
+ * Simply speaking multiplication over and over again result in collecting 
+ * floating-point numbers approximations. Best way to avoid it would be storing
+ * all changes as separate munbers (double rotX, double rotY, double rotZ, 
+ * s21::vectors::Vec3 translation, double scale) and every time the matrix 
+ * is needed Reset() it and do all the needed changes to it again. 
+ * @note Keeping this particular realization is not that troublemaking for this
+ * project, but these is a room to grow is better accuracy will be required.
+ */
 class TransformationMatrix: public UniformMatrix{
     public:
         TransformationMatrix()=default;

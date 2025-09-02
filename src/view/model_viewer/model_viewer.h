@@ -57,6 +57,7 @@ protected:
 private:
     static constexpr s21::vectors::Vec4 kBackgroundColor{0.1f, 0.1f, 0.1f, 1.0f}; // Background color: dark gray, transparency - solid
     static constexpr double kLineWidth = 0.1f;
+
     s21::controller::Render m_render;
     s21::gui::MouseActions m_mouse;
 };

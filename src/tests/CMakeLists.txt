@@ -35,7 +35,6 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
         ${CMAKE_CURRENT_SOURCE_DIR}/../model/parser
         ${CMAKE_CURRENT_SOURCE_DIR}/../model/parser/service_functions
     )
-
     set(INBOUND_MODEL_SRC
         ../model/model3d/model3d.cpp
         ../model/model3d/elements/axisbounds.cpp
@@ -49,10 +48,37 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
         ../model/parser/parser_src/prefix_handlers.cpp
         ../model/parser/service_functions/service_functions.cpp
     )
-
     set(INBOUND_MODEL_TEST_SRC
         model/model3d_tests.cpp
         model/parser_tests.cpp
+    )
+
+    set(THIRS_PARTY_INCLUDE_DIRS
+        ${CMAKE_CURRENT_SOURCE_DIR}/..
+        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party
+        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/s21_matrix
+    )
+    set(THIRS_PARTY_SRC
+        ../third_party/s21_matrix/matrix.cpp
+    )
+    set(THIRS_PARTY_TEST_SRC
+        third_party/s21_matrix_tests.cpp
+    )
+
+    set(CORE_INCLUDE_DIRS
+        ${CMAKE_CURRENT_SOURCE_DIR}/../core/math
+        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party
+        ${THIRS_PARTY_INCLUDE_DIRS}
+    )
+    set(CORE_SRC
+        ../core/math/vec3.cpp
+        ../core/math/vec2.cpp
+        ../core/math/vec4.cpp
+        ../core/math/matrix4x4.cpp
+        ${THIRS_PARTY_SRC}
+    )
+    set(CORE_TEST_SRC
+        core/core_tests.cpp
     )
 
     include(FetchContent)
@@ -63,36 +89,45 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
     )
     FetchContent_MakeAvailable(googletest)
 
-
     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../materials/models
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
 endif()
 
 if(BUILD_TESTS)
+    #Core tests
+    add_executable(core_tests
+        ${CORE_TEST_SRC}       # <- test code files
+        ${CORE_SRC}
+    )
 
-    # # mat4x4 tests
-    # set(INCLUDE_DIRS
-    #     ${CMAKE_CURRENT_SOURCE_DIR}/..
-    #     # ${CMAKE_CURRENT_SOURCE_DIR}/../s21matrix
-    #     ${CMAKE_CURRENT_SOURCE_DIR}/../core
-    #     ${CMAKE_CURRENT_SOURCE_DIR}/../core/math
-    #     ${gtest_SOURCE_DIR}/include
-    # )
+    target_include_directories(core_tests PRIVATE ${CORE_INCLUDE_DIRS})
+    target_link_libraries(core_tests PRIVATE gtest_main pthread)
+    set_property(TARGET core_tests PROPERTY CXX_STANDARD 20)
+    add_test(NAME CoreTests COMMAND core_tests)
 
-    # add_executable(mat4x4_glm_compatibility
-    #     mat4x4/mat4x4_glm_capability_tests.cpp
-    #     ../core/math/mat4x4.cpp
-    #     ../core/math/vec2.cpp
-    #     ../core/math/vec3.cpp
-    #     ../core/math/vec4.cpp
-    #     $<TARGET_OBJECTS:s21matrix>
-    # )
+    add_custom_target(run_core_tests
+        COMMAND core_tests
+        DEPENDS core_tests
+        COMMENT "Running core_tests executable"
+    )
 
-    # target_include_directories(mat4x4_glm_compatibility PRIVATE ${INCLUDE_DIRS})
-    # target_compile_options(mat4x4_glm_compatibility PRIVATE -O2)
-    # target_link_libraries(mat4x4_glm_compatibility gtest_main glm::glm pthread)
-    # add_test(NAME Mat4GLMTest COMMAND mat4x4_glm_compatibility)
+    if(VALGRIND_EXECUTABLE)
+        add_custom_target(valgrind_core_tests
+            COMMAND valgrind 
+                --tool=memcheck  
+                --leak-check=full 
+                --show-leak-kinds=all 
+                --track-origins=yes 
+                --verbose 
+                --log-file=valgrind_core_tests.txt
+                $<TARGET_FILE:core_tests>
+            DEPENDS core_tests
+            COMMENT "Running core_tests under Valgrind (see valgrind_core_tests.txt)"
+        )
+    else()
+        message(WARNING "Valgrind not found. valgrind_core_tests target will not be available.")
+    endif()
 
 
     # Inbound model tests
@@ -128,40 +163,81 @@ if(BUILD_TESTS)
     else()
         message(WARNING "Valgrind not found. valgrind_inbound_model_tests target will not be available.")
     endif()
+
+    # Third party tests
+    add_executable(third_party_tests
+        ${THIRS_PARTY_TEST_SRC}       # <- test code files
+        ${THIRS_PARTY_SRC}
+    )
+
+    target_include_directories(third_party_tests PRIVATE ${THIRD_PARTY_INCLUDE_DIRS})
+    target_link_libraries(third_party_tests PRIVATE gtest_main pthread)
+    set_property(TARGET third_party_tests PROPERTY CXX_STANDARD 20)
+    add_test(NAME ThirdPartyTests COMMAND third_party_tests)
+
+    add_custom_target(run_third_party_tests
+        COMMAND third_party_tests
+        DEPENDS third_party_tests
+        COMMENT "Running third_party_tests executable"
+    )
+
+    if(VALGRIND_EXECUTABLE)
+        add_custom_target(valgrind_third_party_tests
+            COMMAND valgrind 
+                --tool=memcheck  
+                --leak-check=full 
+                --show-leak-kinds=all 
+                --track-origins=yes 
+                --verbose 
+                --log-file=valgrind_third_party_tests.txt
+                $<TARGET_FILE:third_party_tests>
+            DEPENDS third_party_tests
+            COMMENT "Running third_party_tests under Valgrind (see valgrind_third_party_tests.txt)"
+        )
+    else()
+        message(WARNING "Valgrind not found. valgrind_third_party_tests target will not be available.")
+    endif()
+
 endif()
 
 if(BUILD_COVERAGE AND LCOV_EXECUTABLE AND GENHTML_EXECUTABLE)
 
-    add_executable(inbound_model_cov
-        ${INBOUND_MODEL_TEST_SRC}       # <- test code files
+    add_executable(test_cov
+        ${THIRS_PARTY_TEST_SRC}         # <- test code files
+        # ${INBOUND_MODEL_TEST_SRC}       # <- test code files
+        ${CORE_TEST_SRC}                # <- test code files
         ${INBOUND_MODEL_SRC}
+        ${CORE_SRC}                     #included ${THIRS_PARTY_SRC}
     )
 
     set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY CMAKE_COVERAGE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
     
-    target_compile_options(inbound_model_cov  PRIVATE
+    target_compile_options(test_cov  PRIVATE
         -fprofile-arcs 
         -ftest-coverage
     )
-    target_include_directories(inbound_model_cov PRIVATE ${INBOUND_MODEL_INCLUDE_DIRS})
-    target_link_libraries(inbound_model_cov PRIVATE gtest_main pthread --coverage)
+    target_include_directories(test_cov PRIVATE 
+        ${INBOUND_MODEL_INCLUDE_DIRS}
+        ${CORE_INCLUDE_DIRS}            # include ${THIRS_PARTY_INCLUDE_DIRS} 
+        )
+    target_link_libraries(test_cov PRIVATE gtest_main pthread --coverage)
 
 
     add_custom_target(coverage
         COMMAND ${CMAKE_COMMAND} -E remove_directory coverage
         COMMAND ${CMAKE_COMMAND} -E make_directory coverage
 
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/inbound_model_cov
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/test_cov
 
-        COMMAND ${LCOV_EXECUTABLE} --capture --directory ${CMAKE_CURRENT_BINARY_DIR}  --output-file coverage/coverage_1.info --ignore-errors mismatch --path ${CMAKE_CURRENT_BINARY_DIR}/..
+        COMMAND ${LCOV_EXECUTABLE} --capture --directory ${CMAKE_CURRENT_BINARY_DIR}  --output-file coverage/coverage_1.info --rc geninfo_unexecuted_blocks=1 --ignore-errors mismatch,mismatch --path ${CMAKE_CURRENT_BINARY_DIR}/..
         COMMAND ${LCOV_EXECUTABLE} --remove coverage/coverage_1.info '/usr/*' 'gtest/*' 'tests/*' --output-file coverage/coverage.info
         COMMAND ${CMAKE_COMMAND} -E remove -f coverage/coverage_1.info
         COMMAND ${GENHTML_EXECUTABLE} --output-directory=coverage coverage/coverage.info
 
         # COMMAND find ${CMAKE_CURRENT_BINARY_DIR} -name "*.gcda" -o -name "*.gcno" -delete         # isues may cause these
-        # COMMAND ${CMAKE_COMMAND} -E remove -f ${CMAKE_CURRENT_BINARY_DIR}/inbound_model_cov
+        # COMMAND ${CMAKE_COMMAND} -E remove -f ${CMAKE_CURRENT_BINARY_DIR}/test_cov
 
-        DEPENDS inbound_model_cov
+        DEPENDS test_cov
         COMMENT "Running tests + Generating HTML coverage report in ./coverage"
     )
 

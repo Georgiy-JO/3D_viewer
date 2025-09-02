@@ -53,7 +53,7 @@ void Model3D::Clear() {
 }
 
 const Vec3& Model3D::DefaultCenteringVector() const {
-  static const Vec3 def_vec{0.0, 0.0, 0.0};
+  static const Vec3 def_vec;
   return def_vec;
 }
 
@@ -103,7 +103,10 @@ void Model3D::SetScaleFactor() {
   if (max_delta > c_default_scale_factor)
     m_scale_factor = c_default_scale_factor / max_delta;
 }
-
+    
+/**
+ * @note Using "magic numbers" can't be avoided here.
+ */
 void Model3D::SetCenteringVector() {
   m_centering_vector =
       DefaultCenteringVector() - Vec3((m_bounds.x.max + m_bounds.x.min) / 2.0,
@@ -236,7 +239,10 @@ void Model3D::RemoveGhostEdges() {
     }
   }
 }
-
+    
+/**
+ * @note Using "magic numbers" can't be avoided here.
+ */
 void Model3D::ManageEdges() {
   m_edges.Sort();
 

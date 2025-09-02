@@ -1,4 +1,5 @@
 #include "uniforms.h"
+#include "../../../core/math/basis.h"
 
 #include <stdexcept>
 namespace s21::render::uniforms{
@@ -13,8 +14,8 @@ namespace s21::render::uniforms{
     
     QMatrix4x4 UniformMatrix::GetMatrixQT() const{
         QMatrix4x4 qmatrix;
-        for(int i=0;i<4;i++){
-            for(int j=0;j<4;j++){
+        for(int i=0;i<s21::matrix::Matrix4x4::kMatrixDimention;i++){
+            for(int j=0;j<s21::matrix::Matrix4x4::kMatrixDimention;j++){
                 qmatrix(i,j)=m_matrix(i,j);
             }
         }
@@ -27,15 +28,15 @@ namespace s21::render::uniforms{
     }
     
     void TransformationMatrix::RotateX(float degrees){
-        m_matrix.Rotate(degrees, s21::vectors::Vec3(1.0,0.0,0.0));
+        m_matrix.Rotate(degrees, s21::basis::kBasisVectorX);
     }
     
     void TransformationMatrix::RotateY(float degrees){
-        m_matrix.Rotate(degrees, s21::vectors::Vec3(0.0,1.0,0.0));
+        m_matrix.Rotate(degrees, s21::basis::kBasisVectorY);
     }
     
     void TransformationMatrix::RotateZ(float degrees){
-        m_matrix.Rotate(degrees, s21::vectors::Vec3(0.0,0.0,1.0));
+        m_matrix.Rotate(degrees, s21::basis::kBasisVectorZ);
     }
     
     void TransformationMatrix::Translate(float x, float y, float z){
@@ -56,19 +57,21 @@ namespace s21::render::uniforms{
         m_matrix.Translate(vec);
     }
 
- 
-
+    
     ProjectionMatrix::ProjectionMatrix(){
         m_matrix.SetToIdentity();
     }
-
+    
+    /**
+     * @note Using "magic numbers" can't be avoided here.
+     */
     void ProjectionMatrix::Reset(double w, double h, double fov_angle, double near_plane, double far_plane){        
         if(h<=0)
             throw std::invalid_argument("ProjectionMatrix::Reset - height must be positive");
         fov_angle=s21::matrix::DegreesToRadians(fov_angle);
         double tan=std::tan(fov_angle/2.0f);
         double ratio=w/(h>0?h:1.0f);
-        s21::matrix::Matrix local (4,4);
+        s21::matrix::Matrix local (s21::matrix::Matrix4x4::kMatrixDimention,s21::matrix::Matrix4x4::kMatrixDimention);
 
         local(0,0)=1.0f/(ratio*tan);
         local(0,1)=0;

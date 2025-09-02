@@ -60,23 +60,35 @@ bool Vec3::operator==(const Vec3 &vec) const {
 }
 
 bool Vec3::operator!=(const Vec3 &vec) const { return !(*this == vec); }
-
+    
+/**
+ * @note Using "magic numbers" can't be avoided here.
+ */
 Vec3 Vec3::operator--() {
   *this -= Vec3(1, 1, 1);
   return *this;
 }
 
+/**
+ * @note Using "magic numbers" can't be avoided here.
+ */
 Vec3 Vec3::operator++() {
   *this += Vec3(1, 1, 1);
   return *this;
 }
 
+/**
+ * @note Using "magic numbers" can't be avoided here.
+ */
 Vec3 Vec3::operator--(int) {
   Vec3 tmp = *this;
   *this -= Vec3(1, 1, 1);
   return tmp;
 }
 
+/**
+ * @note Using "magic numbers" can't be avoided here.
+ */
 Vec3 Vec3::operator++(int) {
   Vec3 tmp = *this;
   *this += Vec3(1, 1, 1);

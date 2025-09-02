@@ -6,9 +6,12 @@
 namespace s21::matrix
 {
     using namespace s21::vectors;
+    constexpr double kStraightAngle =180.0f;
     class Matrix4x4{
         public:
             static constexpr double kMinialScale =0.0001;
+            static constexpr int kMatrixDimention = 4;
+
             Matrix4x4();
             Matrix4x4(const Matrix4x4& other);
             Matrix4x4(const Matrix& other);
@@ -28,10 +31,12 @@ namespace s21::matrix
             Matrix4x4& operator=(const Matrix4x4& other);
             Matrix4x4& operator=(const Matrix& other);
             bool operator==(const Matrix4x4& other) const;
+            bool operator!=(const Matrix4x4& other) const;
             double operator()(int row, int col)const;
             
         private:
-            Matrix m_matrix;         
+            void MatrixDementionsCheck(const Matrix& other) const;
+            Matrix m_matrix;   
     };
 
     double DegreesToRadians(double degrees);

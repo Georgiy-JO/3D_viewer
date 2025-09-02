@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+    s21::gui::MainWindow w;
     w.show();
     return a.exec();
 }

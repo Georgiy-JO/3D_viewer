@@ -45,6 +45,8 @@ struct Vec3 {
   // double Length() const;
 };
 
+
+
 }  // namespace s21::vectors
 
 #endif  // SRC_CORE_MATH_VEC3_H

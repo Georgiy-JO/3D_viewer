@@ -1,6 +1,5 @@
-#include "../../model/model3d/model3d.h"
-
 #include <gtest/gtest.h>
+#include "../../model/model3d/model3d.h"
 
 /**
  * Comments referencing this function (and the function it self) are left
@@ -11,112 +10,6 @@
 
   }
 **/
-
-TEST(Model_Model3D, Extra_Vec3) {
-  using Vec3 = s21::vectors::Vec3;
-  Vec3 a;
-  Vec3 b(0, 0, 0);
-  EXPECT_DOUBLE_EQ(a.x, b.x);
-  EXPECT_DOUBLE_EQ(a.y, b.y);
-  EXPECT_DOUBLE_EQ(a.z, b.z);
-
-  Vec3 c{1, 2, 3};
-  Vec3 d(c);
-  Vec3 e(5);
-  EXPECT_DOUBLE_EQ(c.x, 1);
-  EXPECT_DOUBLE_EQ(c.y, 2);
-  EXPECT_DOUBLE_EQ(c.z, 3);
-  EXPECT_DOUBLE_EQ(d.x, 1);
-  EXPECT_DOUBLE_EQ(d.y, 2);
-  EXPECT_DOUBLE_EQ(d.z, 3);
-  EXPECT_DOUBLE_EQ(e.x, 5);
-  EXPECT_DOUBLE_EQ(e.y, 5);
-  EXPECT_DOUBLE_EQ(e.z, 5);
-
-  a = c * 5;
-  b = 5 * d;
-  EXPECT_DOUBLE_EQ(a.x, 5);
-  EXPECT_DOUBLE_EQ(a.y, 10);
-  EXPECT_DOUBLE_EQ(a.z, 15);
-  EXPECT_DOUBLE_EQ(b.x, 5);
-  EXPECT_DOUBLE_EQ(b.y, 10);
-  EXPECT_DOUBLE_EQ(b.z, 15);
-
-  e *= 5;
-  EXPECT_DOUBLE_EQ(e.x, 25);
-  EXPECT_DOUBLE_EQ(e.y, 25);
-  EXPECT_DOUBLE_EQ(e.z, 25);
-
-  b = e - a;
-  EXPECT_DOUBLE_EQ(b.x, 20);
-  EXPECT_DOUBLE_EQ(b.y, 15);
-  EXPECT_DOUBLE_EQ(b.z, 10);
-
-  b -= a;
-  EXPECT_DOUBLE_EQ(b.x, 15);
-  EXPECT_DOUBLE_EQ(b.y, 5);
-  EXPECT_DOUBLE_EQ(b.z, -5);
-
-  b = b + b;
-  EXPECT_DOUBLE_EQ(b.x, 30);
-  EXPECT_DOUBLE_EQ(b.y, 10);
-  EXPECT_DOUBLE_EQ(b.z, -10);
-
-  a += b;
-  EXPECT_DOUBLE_EQ(a.x, 35);
-  EXPECT_DOUBLE_EQ(a.y, 20);
-  EXPECT_DOUBLE_EQ(a.z, 5);
-
-  a = b;
-  EXPECT_DOUBLE_EQ(a.x, 30);
-  EXPECT_DOUBLE_EQ(a.y, 10);
-  EXPECT_DOUBLE_EQ(a.z, -10);
-
-  EXPECT_EQ(a, b);
-  EXPECT_DOUBLE_EQ(a == b, true);
-  EXPECT_DOUBLE_EQ(a == c, false);
-  EXPECT_DOUBLE_EQ(a == b, 1);
-
-  EXPECT_NE(a, c);
-  EXPECT_DOUBLE_EQ(a != b, false);
-  EXPECT_DOUBLE_EQ(a != c, true);
-  EXPECT_DOUBLE_EQ(a != c, 1);
-
-  --e;
-  EXPECT_DOUBLE_EQ(e.x, 24);
-  EXPECT_DOUBLE_EQ(e.y, 24);
-  EXPECT_DOUBLE_EQ(e.z, 24);
-  d = --e;
-  EXPECT_DOUBLE_EQ(e.x, 23);
-  EXPECT_DOUBLE_EQ(e.y, 23);
-  EXPECT_DOUBLE_EQ(e.z, 23);
-  EXPECT_DOUBLE_EQ(d.x, 23);
-  EXPECT_DOUBLE_EQ(d.y, 23);
-  EXPECT_DOUBLE_EQ(d.z, 23);
-
-  e--;
-  EXPECT_DOUBLE_EQ(e.x, 22);
-  EXPECT_DOUBLE_EQ(e.y, 22);
-  EXPECT_DOUBLE_EQ(e.z, 22);
-  d = e--;
-  EXPECT_DOUBLE_EQ(e.x, 21);
-  EXPECT_DOUBLE_EQ(e.y, 21);
-  EXPECT_DOUBLE_EQ(e.z, 21);
-  EXPECT_DOUBLE_EQ(d.x, 22);
-  EXPECT_DOUBLE_EQ(d.y, 22);
-  EXPECT_DOUBLE_EQ(d.z, 22);
-
-  for (int i = 0; i < 79; i++, e++) {
-  }
-  EXPECT_DOUBLE_EQ(e.x, 100);
-  EXPECT_DOUBLE_EQ(e.y, 100);
-  EXPECT_DOUBLE_EQ(e.z, 100);
-  for (int i = 0; i < 5; i++, ++e) {
-  }
-  EXPECT_DOUBLE_EQ(e.x, 105);
-  EXPECT_DOUBLE_EQ(e.y, 105);
-  EXPECT_DOUBLE_EQ(e.z, 105);
-}
 
 TEST(Model_Model3D, Vertices_Basic) {
   using Vec3 = s21::vectors::Vec3;

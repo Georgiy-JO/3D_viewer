@@ -19,7 +19,7 @@ namespace s21::gui{
         //do I need these?
         glEnable(GL_BLEND);
         glEnable(GL_LINE_SMOOTH);   // optional: smoother lines
-        glLineWidth(1.0f);          // default line width (you can tweak later)
+        glLineWidth(kLineWidth);
         
         m_render.Program().SetShaders();
         m_render.Model().InitializeModel();
@@ -122,7 +122,6 @@ namespace s21::gui{
         update();
     }
 
-
     QString ModelViewer::GetModelName() const{
         return QString::fromStdString(m_render.Model().GetModelName());
     }
@@ -138,6 +137,5 @@ namespace s21::gui{
     void ModelViewer::ResetTransformations(){
         m_render.Transform().Reset();
     }
-
 
 }   //s21::gui

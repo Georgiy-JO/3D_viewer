@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "../../third_party/s21_matrix/matrix.hpp"
+
 using std::cout, std::cin, std::endl;
 // elevator    begining
 
@@ -8,27 +9,27 @@ TEST(MatrixTest, print_matrix) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   matrix.print_matrix();
 }
 TEST(MatrixTest, DefaultConstructor) {
-  Matrix matrix;
+  s21::matrix::Matrix matrix;
   EXPECT_EQ(matrix.getRows(), 0);
   EXPECT_EQ(matrix.getCols(), 0);
   EXPECT_EQ(matrix.getMatrix(), nullptr);
 }
 TEST(MatrixTest, spaceConstructor_1) {
-  Matrix matrix(4, 5);
+  s21::matrix::Matrix matrix(4, 5);
   EXPECT_EQ(matrix.getRows(), 4);
   EXPECT_EQ(matrix.getCols(), 5);
   EXPECT_EQ(matrix.getElement(2, 2), 0);
   EXPECT_NE(matrix.getMatrix(), nullptr);
 }
 TEST(MatrixTest, spaceConstructor_Exception) {
-  EXPECT_THROW(Matrix matrix(-4, 5), DimentionError);
+  EXPECT_THROW(s21::matrix::Matrix matrix(-4, 5), s21::matrix::DimentionError);
 }
 TEST(MatrixTest, desstructor) {
-  Matrix matrix(4, 5);
+  s21::matrix::Matrix matrix(4, 5);
   EXPECT_EQ(matrix.getRows(), 4);
   EXPECT_EQ(matrix.getCols(), 5);
   EXPECT_NE(matrix.getMatrix(), nullptr);
@@ -38,12 +39,12 @@ TEST(MatrixTest, desstructor) {
   EXPECT_EQ(matrix.getMatrix(), nullptr);
 }
 TEST(MatrixTest, getElement) {
-  Matrix matrix(4, 5);
+  s21::matrix::Matrix matrix(4, 5);
   EXPECT_EQ(matrix.getElement(0, 0), 0);
   EXPECT_EQ(matrix.getElement(3, 4), 0);
 }
 TEST(MatrixTest, setMatrix) {
-  Matrix matrix(4, 4);
+  s21::matrix::Matrix matrix(4, 4);
   double ar[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -5, 23, 33, 0, 4, -7777};
   int n = sizeof(ar) / sizeof(ar[0]);
   matrix.setMatrix(n, ar);
@@ -53,7 +54,7 @@ TEST(MatrixTest, setMatrix) {
   EXPECT_EQ(matrix.getElement(2, 2), -5);
 }
 TEST(MatrixTest, setMatrix_2) {
-  Matrix matrix(4, 5);
+  s21::matrix::Matrix matrix(4, 5);
   double ar[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -5, 23, 33, 0, 4, -7777};
   int n = sizeof(ar) / sizeof(ar[0]);
   matrix.setMatrix(n, ar);
@@ -65,29 +66,29 @@ TEST(MatrixTest, setMatrix_2) {
   EXPECT_EQ(matrix.getElement(3, 1), 0);
 }
 TEST(MatrixTest, setMatrix_Exception) {
-  Matrix matrix;
+  s21::matrix::Matrix matrix;
   double ar[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -5, 23, 33, 0, 4, -7777};
   int n = sizeof(ar) / sizeof(ar[0]);
-  EXPECT_THROW(matrix.setMatrix(n, ar), MatrixSetError);
-  Matrix matrix_1(4, 4);
-  EXPECT_THROW(matrix_1.setMatrix(-5, ar), InputError);
-  EXPECT_THROW(matrix_1.setMatrix(20, ar), OutOfRangeError);
-  EXPECT_THROW(matrix_1.setMatrix(17, ar), OutOfRangeError);
+  EXPECT_THROW(matrix.setMatrix(n, ar), s21::matrix::MatrixSetError);
+  s21::matrix::Matrix matrix_1(4, 4);
+  EXPECT_THROW(matrix_1.setMatrix(-5, ar), s21::matrix::InputError);
+  EXPECT_THROW(matrix_1.setMatrix(20, ar), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix_1.setMatrix(17, ar), s21::matrix::OutOfRangeError);
   ar[5] = NAN;
-  EXPECT_THROW(matrix_1.setMatrix(16, ar), DataError);
+  EXPECT_THROW(matrix_1.setMatrix(16, ar), s21::matrix::DataError);
   ar[5] = INFINITY;
-  EXPECT_THROW(matrix_1.setMatrix(16, ar), DataError);
+  EXPECT_THROW(matrix_1.setMatrix(16, ar), s21::matrix::DataError);
   double* ar_2 = nullptr;
-  EXPECT_THROW(matrix_1.setMatrix(5, ar_2), InputError);
+  EXPECT_THROW(matrix_1.setMatrix(5, ar_2), s21::matrix::InputError);
 }
 TEST(MatrixTest, complexConstructor) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   EXPECT_EQ(matrix.getElement(0, 1), 2);
   EXPECT_EQ(matrix.getElement(2, 2), 9);
-  EXPECT_THROW(matrix.setMatrix(-5, ar), InputError);
+  EXPECT_THROW(matrix.setMatrix(-5, ar), s21::matrix::InputError);
   ar[3] = 1000;
   matrix.setMatrix(n, ar);
   EXPECT_EQ(matrix.getElement(0, 3), 1000);
@@ -96,20 +97,20 @@ TEST(MatrixTest, getElement_Exception) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  EXPECT_THROW(matrix.getElement(-2, 0), OutOfRangeError);
-  EXPECT_THROW(matrix.getElement(0, -50), OutOfRangeError);
-  EXPECT_THROW(matrix.getElement(10, 0), OutOfRangeError);
-  EXPECT_THROW(matrix.getElement(0, 10), OutOfRangeError);
-  EXPECT_THROW(matrix.getElement(0, 4), OutOfRangeError);
-  EXPECT_THROW(matrix.getElement(3, 0), OutOfRangeError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  EXPECT_THROW(matrix.getElement(-2, 0), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix.getElement(0, -50), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix.getElement(10, 0), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix.getElement(0, 10), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix.getElement(0, 4), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix.getElement(3, 0), s21::matrix::OutOfRangeError);
 }
 TEST(MatrixTest, copyConstructor) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix_1(matrix);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix_1(matrix);
   EXPECT_EQ(matrix.getElement(0, 1), 2);
   EXPECT_EQ(matrix.getElement(2, 2), 9);
   EXPECT_EQ(matrix_1.getElement(0, 1), 2);
@@ -123,12 +124,12 @@ TEST(MatrixTest, moveConstructor) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   EXPECT_EQ(matrix.getElement(0, 1), 2);
   EXPECT_EQ(matrix.getElement(2, 2), 9);
   EXPECT_EQ(matrix.getRows(), 3);
   EXPECT_EQ(matrix.getCols(), 4);
-  Matrix matrix_1 = std::move(matrix);
+  s21::matrix::Matrix matrix_1 = std::move(matrix);
   EXPECT_EQ(matrix.getMatrix(), nullptr);
   EXPECT_EQ(matrix_1.getElement(0, 1), 2);
   EXPECT_EQ(matrix_1.getElement(2, 2), 9);
@@ -141,7 +142,7 @@ TEST(MatrixTest, getDimentions) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   matrix.getDimentions(b, a);
   EXPECT_EQ(b, 3);
   EXPECT_EQ(a, 4);
@@ -150,7 +151,7 @@ TEST(MatrixTest, getMatrix) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   const double** matr = matrix.getMatrix();
   EXPECT_EQ(matr[0][1], 2);
   EXPECT_EQ(matr[2][3], 999);
@@ -159,9 +160,9 @@ TEST(MatrixTest, getArrayFromMatrix) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix_2;
-  EXPECT_THROW(matrix_2.getArrayFromMatrix(), MatrixSetError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix_2;
+  EXPECT_THROW(matrix_2.getArrayFromMatrix(), s21::matrix::MatrixSetError);
   std::unique_ptr<double[]> ptr = matrix.getArrayFromMatrix();
   for (int i = 0; i < a * b; i++) EXPECT_EQ(ptr[i], ar[i]);
 }
@@ -169,18 +170,18 @@ TEST(MatrixTest, setElement_Exception) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  EXPECT_THROW(matrix.setElement(5, 2, 10), OutOfRangeError);
-  EXPECT_THROW(matrix.setElement(3, 2, 10), OutOfRangeError);
-  EXPECT_THROW(matrix.setElement(2, -2, 10), OutOfRangeError);
-  EXPECT_THROW(matrix.setElement(1, 1, NAN), DataError);
-  EXPECT_THROW(matrix.setElement(1, 1, INFINITY), DataError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  EXPECT_THROW(matrix.setElement(5, 2, 10), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix.setElement(3, 2, 10), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix.setElement(2, -2, 10), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix.setElement(1, 1, NAN), s21::matrix::DataError);
+  EXPECT_THROW(matrix.setElement(1, 1, INFINITY), s21::matrix::DataError);
 }
 TEST(MatrixTest, setElement) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   matrix.setElement(2, 2, 5000.55);
   EXPECT_EQ(matrix.getElement(2, 2), 5000.55);
 }
@@ -188,16 +189,16 @@ TEST(MatrixTest, setDimentions_Exception) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  EXPECT_THROW(matrix.setDimentions(-5, 2), OutOfRangeError);
-  EXPECT_THROW(matrix.setElement(2, 5, 10), OutOfRangeError);
-  EXPECT_THROW(matrix.setElement(5, 2, 10), OutOfRangeError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  EXPECT_THROW(matrix.setDimentions(-5, 2), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix.setElement(2, 5, 10), s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix.setElement(5, 2, 10), s21::matrix::OutOfRangeError);
 }
 TEST(MatrixTest, setDimentions) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   matrix.setDimentions(5, 5);
   EXPECT_EQ(matrix.getElement(2, 2), 9);
   EXPECT_EQ(matrix.getElement(0, 3), 8);
@@ -211,7 +212,7 @@ TEST(MatrixTest, setDimentions_2) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   matrix.setDimentions(3, 4);
   EXPECT_EQ(matrix.getElement(2, 2), 9);
   EXPECT_EQ(matrix.getElement(0, 3), 8);
@@ -222,7 +223,7 @@ TEST(MatrixTest, setRows) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   matrix.setRows(5);
   EXPECT_EQ(matrix.getElement(2, 2), 9);
   EXPECT_EQ(matrix.getElement(0, 3), 8);
@@ -234,7 +235,7 @@ TEST(MatrixTest, setCols) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   matrix.setCols(5);
   EXPECT_EQ(matrix.getElement(2, 2), 9);
   EXPECT_EQ(matrix.getElement(0, 3), 8);
@@ -246,7 +247,7 @@ TEST(MatrixTest, setFull) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix;
+  s21::matrix::Matrix matrix;
   matrix.setFull(a, b, n, ar);
   EXPECT_EQ(matrix.getElement(2, 2), 9);
   EXPECT_EQ(matrix.getElement(0, 3), 8);
@@ -259,10 +260,10 @@ TEST(MatrixTest, matrixDimentionEq) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(a, b);
-  Matrix matrix3(b, a);
-  Matrix matrix5(a, a);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(a, b);
+  s21::matrix::Matrix matrix3(b, a);
+  s21::matrix::Matrix matrix5(a, a);
   EXPECT_EQ(matrix.matrixDimentionEq(matrix2), true);
   EXPECT_EQ(matrix.matrixDimentionEq(matrix3), false);
   EXPECT_EQ(matrix.matrixDimentionEq(matrix5), false);
@@ -271,42 +272,42 @@ TEST(MatrixTest, matrixDimentionEq_Exception) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix4;
-  EXPECT_THROW(matrix.matrixDimentionEq(matrix4), MatrixSetError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix4;
+  EXPECT_THROW(matrix.matrixDimentionEq(matrix4), s21::matrix::MatrixSetError);
 }
 TEST(MatrixTest, doubleServiceMethods) {
   double a = 0.00000001, b = 0, c = 5.0, d = 5, e = NAN, f = INFINITY;
-  EXPECT_EQ(MatrixService::doubleEq(a, b), true);
-  EXPECT_EQ(MatrixService::doubleEq(a, c), false);
-  EXPECT_EQ(MatrixService::doubleEq(c, d), true);
-  EXPECT_EQ(MatrixService::doubleEqComplex(a, b), true);
-  EXPECT_EQ(MatrixService::doubleEqComplex(a, c), false);
-  EXPECT_EQ(MatrixService::doubleEqComplex(c, d), true);
-  EXPECT_THROW(MatrixService::doubleEqComplex(e, d), DataError);
-  EXPECT_THROW(MatrixService::doubleEqComplex(-f, -f), DataError);
-  EXPECT_THROW(MatrixService::doubleEqComplex(f, f), DataError);
-  EXPECT_EQ(MatrixService::doubleEqComplex(f, -f), false);
-  EXPECT_EQ(MatrixService::doubleEqComplex(-f, f), false);
-  EXPECT_EQ(MatrixService::doubleEqComplex(c, -f), false);
-  EXPECT_EQ(MatrixService::doubleEqComplex(f, a), false);
-  EXPECT_EQ(MatrixService::doubleEqComplex(a, f), false);
-  EXPECT_NO_THROW(MatrixService::doubleEqComplex(f, a));
-  EXPECT_NO_THROW(MatrixService::doubleEqComplex(a, f));
-  EXPECT_NO_THROW(MatrixService::doubleLegit(a));
-  EXPECT_NO_THROW(MatrixService::doubleLegit(b));
-  EXPECT_NO_THROW(MatrixService::doubleLegit(c));
-  EXPECT_NO_THROW(MatrixService::doubleLegit(d));
-  EXPECT_THROW(MatrixService::doubleLegit(e), DataError);
-  EXPECT_THROW(MatrixService::doubleLegit(f), DataError);
-  EXPECT_THROW(MatrixService::doubleLegit(-f), DataError);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEq(a, b), true);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEq(a, c), false);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEq(c, d), true);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(a, b), true);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(a, c), false);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(c, d), true);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleEqComplex(e, d), s21::matrix::DataError);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleEqComplex(-f, -f), s21::matrix::DataError);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleEqComplex(f, f), s21::matrix::DataError);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(f, -f), false);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(-f, f), false);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(c, -f), false);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(f, a), false);
+  EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(a, f), false);
+  EXPECT_NO_THROW(s21::matrix::MatrixService::doubleEqComplex(f, a));
+  EXPECT_NO_THROW(s21::matrix::MatrixService::doubleEqComplex(a, f));
+  EXPECT_NO_THROW(s21::matrix::MatrixService::doubleLegit(a));
+  EXPECT_NO_THROW(s21::matrix::MatrixService::doubleLegit(b));
+  EXPECT_NO_THROW(s21::matrix::MatrixService::doubleLegit(c));
+  EXPECT_NO_THROW(s21::matrix::MatrixService::doubleLegit(d));
+  EXPECT_THROW(s21::matrix::MatrixService::doubleLegit(e), s21::matrix::DataError);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleLegit(f), s21::matrix::DataError);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleLegit(-f), s21::matrix::DataError);
 }
 TEST(MatrixTest, EqMatrix) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(a, b, n, ar);
   EXPECT_EQ(matrix.EqMatrix(matrix2), true);
   ar[3] = 100;
   ar[14] = 5.5;
@@ -321,8 +322,8 @@ TEST(MatrixTest, EQoperator) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(a, b, n, ar);
   EXPECT_EQ((matrix == matrix2), true);
   ar[3] = 100;
   ar[14] = 5.5;
@@ -337,11 +338,11 @@ TEST(MatrixTest, SumMatrix) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double ar2[]{55.5,   32.0,   -555, -7.777, 123,     323.22,
                123.55, 5555.5, -0.1, -55.55, -0.0001, 12};
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   for (int i = 0; i < a * b; i++) ar[i] += ar2[i];
   matrix.SumMatrix(matrix2);
   std::unique_ptr<double[]> ar3 = matrix.getArrayFromMatrix();
@@ -351,27 +352,27 @@ TEST(MatrixTest, SumMatrix_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(a, a);
-  EXPECT_THROW(matrix.SumMatrix(matrix2), DimentionEqualityError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(a, a);
+  EXPECT_THROW(matrix.SumMatrix(matrix2), s21::matrix::DimentionEqualityError);
 }
 TEST(MatrixTest, SubMatrix_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(a, a);
-  EXPECT_THROW(matrix.SubMatrix(matrix2), DimentionEqualityError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(a, a);
+  EXPECT_THROW(matrix.SubMatrix(matrix2), s21::matrix::DimentionEqualityError);
 }
 TEST(MatrixTest, SudMatrix) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double ar2[]{55.5,   32.0,   -555, -7.777, 123,     323.22,
                123.55, 5555.5, -0.1, -55.55, -0.0001, 12};
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   for (int i = 0; i < a * b; i++) ar[i] -= ar2[i];
   matrix.SubMatrix(matrix2);
   std::unique_ptr<double[]> ar3 = matrix.getArrayFromMatrix();
@@ -381,13 +382,13 @@ TEST(MatrixTest, ADDoperator) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double ar2[]{55.5,   32.0,   -555, -7.777, 123,     323.22,
                123.55, 5555.5, -0.1, -55.55, -0.0001, 12};
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   for (int i = 0; i < a * b; i++) ar[i] += ar2[i];
-  Matrix matrix3 = matrix + matrix2;
+  s21::matrix::Matrix matrix3 = matrix + matrix2;
   std::unique_ptr<double[]> ar3 = matrix3.getArrayFromMatrix();
   for (int i = 0; i < a * b; i++) EXPECT_EQ(ar[i], ar3[i]);
 }
@@ -395,11 +396,11 @@ TEST(MatrixTest, ADDoperator_2) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double ar2[]{55.5,   32.0,   -555, -7.777, 123,     323.22,
                123.55, 5555.5, -0.1, -55.55, -0.0001, 12};
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   for (int i = 0; i < a * b; i++) ar[i] += ar2[i];
   matrix = matrix + matrix2;
   std::unique_ptr<double[]> ar3 = matrix.getArrayFromMatrix();
@@ -409,21 +410,21 @@ TEST(MatrixTest, ADDoperator_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(b, b, n, ar);
-  EXPECT_THROW((matrix + matrix2), DimentionEqualityError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(b, b, n, ar);
+  EXPECT_THROW((matrix + matrix2), s21::matrix::DimentionEqualityError);
 }
 TEST(MatrixTest, SUBoperator) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double ar2[]{55.5,   32.0,   -555, -7.777, 123,     323.22,
                123.55, 5555.5, -0.1, -55.55, -0.0001, 12};
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   for (int i = 0; i < a * b; i++) ar[i] -= ar2[i];
-  Matrix matrix3 = matrix - matrix2;
+  s21::matrix::Matrix matrix3 = matrix - matrix2;
   std::unique_ptr<double[]> ar3 = matrix3.getArrayFromMatrix();
   for (int i = 0; i < a * b; i++) EXPECT_EQ(ar[i], ar3[i]);
 }
@@ -431,11 +432,11 @@ TEST(MatrixTest, SUBoperator_2) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double ar2[]{55.5,   32.0,   -555, -7.777, 123,     323.22,
                123.55, 5555.5, -0.1, -55.55, -0.0001, 12};
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   for (int i = 0; i < a * b; i++) ar[i] -= ar2[i];
   matrix = matrix - matrix2;
   std::unique_ptr<double[]> ar3 = matrix.getArrayFromMatrix();
@@ -445,19 +446,19 @@ TEST(MatrixTest, SUBoperator_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(b, b, n, ar);
-  EXPECT_THROW((matrix - matrix2), DimentionEqualityError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(b, b, n, ar);
+  EXPECT_THROW((matrix - matrix2), s21::matrix::DimentionEqualityError);
 }
 TEST(MatrixTest, ADD_EQoperator) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double ar2[]{55.5,   32.0,   -555, -7.777, 123,     323.22,
                123.55, 5555.5, -0.1, -55.55, -0.0001, 12};
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   for (int i = 0; i < a * b; i++) ar[i] += ar2[i];
   matrix += matrix2;
   std::unique_ptr<double[]> ar3 = matrix.getArrayFromMatrix();
@@ -467,11 +468,11 @@ TEST(MatrixTest, SUB_EQoperator) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double ar2[]{55.5,   32.0,   -555, -7.777, 123,     323.22,
                123.55, 5555.5, -0.1, -55.55, -0.0001, 12};
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   for (int i = 0; i < a * b; i++) ar[i] -= ar2[i];
   matrix -= matrix2;
   std::unique_ptr<double[]> ar3 = matrix.getArrayFromMatrix();
@@ -481,24 +482,24 @@ TEST(MatrixTest, SUB_EQoperator_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(b, b, n, ar);
-  EXPECT_THROW((matrix -= matrix2), DimentionEqualityError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(b, b, n, ar);
+  EXPECT_THROW((matrix -= matrix2), s21::matrix::DimentionEqualityError);
 }
 TEST(MatrixTest, ADD_EQoperator_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(b, b, n, ar);
-  EXPECT_THROW((matrix += matrix2), DimentionEqualityError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(b, b, n, ar);
+  EXPECT_THROW((matrix += matrix2), s21::matrix::DimentionEqualityError);
 }
 TEST(MatrixTest, replaceMatrix) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(b, b);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(b, b);
   matrix.replaceMatrix(matrix2);
   EXPECT_EQ(matrix2.getMatrix(), nullptr);
   EXPECT_EQ(matrix.getRows(), b);
@@ -511,8 +512,8 @@ TEST(MatrixTest, CP_ASSoperator) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2(a, a);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2(a, a);
   matrix2 = matrix;
   EXPECT_EQ(matrix2.getElement(2, 2), 9);
   EXPECT_EQ(matrix2.getElement(0, 3), 8.9);
@@ -529,10 +530,10 @@ TEST(MatrixTest, numMULToperator) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double e = 5.5;
   for (int i = 0; i < a * b; i++) ar[i] *= e;
-  Matrix matrix3 = matrix * e;
+  s21::matrix::Matrix matrix3 = matrix * e;
   std::unique_ptr<double[]> ar3 = matrix3.getArrayFromMatrix();
   for (int i = 0; i < a * b; i++) EXPECT_EQ(ar[i], ar3[i]);
 }
@@ -540,10 +541,10 @@ TEST(MatrixTest, numMULToperator_2) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   int e = 5;
   for (int i = 0; i < a * b; i++) ar[i] *= e;
-  Matrix matrix3 = matrix * e;
+  s21::matrix::Matrix matrix3 = matrix * e;
   std::unique_ptr<double[]> ar3 = matrix3.getArrayFromMatrix();
   for (int i = 0; i < a * b; i++) EXPECT_EQ(ar[i], ar3[i]);
 }
@@ -551,7 +552,7 @@ TEST(MatrixTest, numMULToperator_3) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double e = 5.5;
   for (int i = 0; i < a * b; i++) ar[i] *= e;
   matrix = matrix * e;
@@ -562,14 +563,14 @@ TEST(MatrixTest, numMULToperator_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double e = NAN;
-  EXPECT_THROW((matrix * e), DataError);
+  EXPECT_THROW((matrix * e), s21::matrix::DataError);
   e = INFINITY;
-  EXPECT_THROW((matrix * e), DataError);
+  EXPECT_THROW((matrix * e), s21::matrix::DataError);
   e = 5;
-  Matrix matrix2;
-  EXPECT_THROW((matrix2 * e), MatrixSetError);
+  s21::matrix::Matrix matrix2;
+  EXPECT_THROW((matrix2 * e), s21::matrix::MatrixSetError);
 }
 TEST(MatrixTest, matrixMULToperator) {
   double ar[]{1.1, 2, 3, 8.5, 4.005, 5.2, 6, -5, 7, 8, 9, 999};
@@ -577,12 +578,12 @@ TEST(MatrixTest, matrixMULToperator) {
   double ar_res[]{-4410.75, 455.05, 3636.2775, 1509.46, -553073.4, -4684.95};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   a = 4;
   b = 2;
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
-  Matrix matrix3 = matrix * matrix2;
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix3 = matrix * matrix2;
   std::unique_ptr<double[]> ar3 = matrix3.getArrayFromMatrix();
   n = sizeof(ar_res) / sizeof(ar_res[0]);
   for (int i = 0; i < n; i++) EXPECT_DOUBLE_EQ(ar_res[i], ar3[i]);
@@ -593,11 +594,11 @@ TEST(MatrixTest, matrixMULToperator_2) {
   double ar_res[]{-4410.75, 455.05, 3636.2775, 1509.46, -553073.4, -4684.95};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   a = 4;
   b = 2;
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   matrix = matrix * matrix2;
   std::unique_ptr<double[]> ar3 = matrix.getArrayFromMatrix();
   n = sizeof(ar_res) / sizeof(ar_res[0]);
@@ -607,12 +608,12 @@ TEST(MatrixTest, matrixMULToperator_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2;
-  EXPECT_THROW((matrix * matrix2), MatrixSetError);
-  EXPECT_THROW((matrix2 * matrix), MatrixSetError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2;
+  EXPECT_THROW((matrix * matrix2), s21::matrix::MatrixSetError);
+  EXPECT_THROW((matrix2 * matrix), s21::matrix::MatrixSetError);
   matrix2.setFull(a, b, n, ar);
-  EXPECT_THROW((matrix * matrix2), DimentionAlignmentError);
+  EXPECT_THROW((matrix * matrix2), s21::matrix::DimentionAlignmentError);
 }
 TEST(MatrixTest, MulMatrix) {
   double ar[]{1.1, 2, 3, 8.5, 4.005, 5.2, 6, -5, 7, 8, 9, 999};
@@ -620,11 +621,11 @@ TEST(MatrixTest, MulMatrix) {
   double ar_res[]{-4410.75, 455.05, 3636.2775, 1509.46, -553073.4, -4684.95};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   a = 4;
   b = 2;
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   matrix.MulMatrix(matrix2);
   std::unique_ptr<double[]> ar3 = matrix.getArrayFromMatrix();
   n = sizeof(ar_res) / sizeof(ar_res[0]);
@@ -634,18 +635,18 @@ TEST(MatrixTest, MulMatrix_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2;
-  EXPECT_THROW(matrix.MulMatrix(matrix2), MatrixSetError);
-  EXPECT_THROW(matrix.MulMatrix(matrix2), MatrixSetError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2;
+  EXPECT_THROW(matrix.MulMatrix(matrix2), s21::matrix::MatrixSetError);
+  EXPECT_THROW(matrix.MulMatrix(matrix2), s21::matrix::MatrixSetError);
   matrix2.setFull(a, b, n, ar);
-  EXPECT_THROW(matrix.MulMatrix(matrix2), DimentionAlignmentError);
+  EXPECT_THROW(matrix.MulMatrix(matrix2), s21::matrix::DimentionAlignmentError);
 }
 TEST(MatrixTest, MulNumber) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double e = 5.5;
   for (int i = 0; i < a * b; i++) ar[i] *= e;
   matrix.MulNumber(e);
@@ -656,7 +657,7 @@ TEST(MatrixTest, MulNumber_2) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   int e = 5;
   for (int i = 0; i < a * b; i++) ar[i] *= e;
   matrix.MulNumber(e);
@@ -667,14 +668,14 @@ TEST(MatrixTest, MulNumber_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double e = NAN;
-  EXPECT_THROW(matrix.MulNumber(e);, DataError);
+  EXPECT_THROW(matrix.MulNumber(e);, s21::matrix::DataError);
   e = INFINITY;
-  EXPECT_THROW(matrix.MulNumber(e), DataError);
+  EXPECT_THROW(matrix.MulNumber(e), s21::matrix::DataError);
   e = 5;
-  Matrix matrix2;
-  EXPECT_THROW(matrix2.MulNumber(e), MatrixSetError);
+  s21::matrix::Matrix matrix2;
+  EXPECT_THROW(matrix2.MulNumber(e), s21::matrix::MatrixSetError);
 }
 TEST(MatrixTest, matrixMULT_EQoperator) {
   double ar[]{1.1, 2, 3, 8.5, 4.005, 5.2, 6, -5, 7, 8, 9, 999};
@@ -682,11 +683,11 @@ TEST(MatrixTest, matrixMULT_EQoperator) {
   double ar_res[]{-4410.75, 455.05, 3636.2775, 1509.46, -553073.4, -4684.95};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   a = 4;
   b = 2;
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix2(a, b, n, ar2);
+  s21::matrix::Matrix matrix2(a, b, n, ar2);
   matrix *= matrix2;
   std::unique_ptr<double[]> ar3 = matrix.getArrayFromMatrix();
   n = sizeof(ar_res) / sizeof(ar_res[0]);
@@ -696,18 +697,18 @@ TEST(MatrixTest, matrixMULT_EQoperator_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2;
-  EXPECT_THROW(matrix *= matrix2;, MatrixSetError);
-  EXPECT_THROW(matrix *= matrix2;, MatrixSetError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2;
+  EXPECT_THROW(matrix *= matrix2;, s21::matrix::MatrixSetError);
+  EXPECT_THROW(matrix *= matrix2;, s21::matrix::MatrixSetError);
   matrix2.setFull(a, b, n, ar);
-  EXPECT_THROW(matrix *= matrix2;, DimentionAlignmentError);
+  EXPECT_THROW(matrix *= matrix2;, s21::matrix::DimentionAlignmentError);
 }
 TEST(MatrixTest, numMULT_EQoperator) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double e = 5.5;
   for (int i = 0; i < a * b; i++) ar[i] *= e;
   matrix *= e;
@@ -718,7 +719,7 @@ TEST(MatrixTest, numMULT_EQoperator_2) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   int e = 5;
   for (int i = 0; i < a * b; i++) ar[i] *= e;
   matrix *= e;
@@ -729,20 +730,20 @@ TEST(MatrixTest, numMULT_EQoperator_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double e = NAN;
-  EXPECT_THROW(matrix *= e;, DataError);
+  EXPECT_THROW(matrix *= e;, s21::matrix::DataError);
   e = INFINITY;
-  EXPECT_THROW(matrix *= e, DataError);
+  EXPECT_THROW(matrix *= e, s21::matrix::DataError);
   e = 5;
-  Matrix matrix2;
-  EXPECT_THROW(matrix2 *= e, MatrixSetError);
+  s21::matrix::Matrix matrix2;
+  EXPECT_THROW(matrix2 *= e, s21::matrix::MatrixSetError);
 }
 TEST(MatrixTest, Indexation_get) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   EXPECT_EQ(matrix(0, 0), 1.1);
   EXPECT_EQ(matrix(0, 1), 2);
   EXPECT_EQ(matrix(0, 2), 3);
@@ -753,7 +754,7 @@ TEST(MatrixTest, Indexation_set) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   EXPECT_EQ(matrix(2, 2), 9);
   matrix(2, 2) = 1000;
   EXPECT_EQ(matrix(2, 2), 1000);
@@ -764,20 +765,20 @@ TEST(MatrixTest, Indexation_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  EXPECT_THROW(matrix(0, 0) = INFINITY, DataError);
-  EXPECT_THROW(matrix(8, 0) = INFINITY, OutOfRangeError);
-  EXPECT_THROW(matrix(-8, 0) = INFINITY, OutOfRangeError);
-  Matrix matrix2;
-  EXPECT_THROW(matrix2(0, 0), MatrixSetError);
-  EXPECT_THROW(matrix2(0, 0) = 5, MatrixSetError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  EXPECT_THROW(matrix(0, 0) = INFINITY, s21::matrix::DataError);
+  EXPECT_THROW(matrix(8, 0) = INFINITY, s21::matrix::OutOfRangeError);
+  EXPECT_THROW(matrix(-8, 0) = INFINITY, s21::matrix::OutOfRangeError);
+  s21::matrix::Matrix matrix2;
+  EXPECT_THROW(matrix2(0, 0), s21::matrix::MatrixSetError);
+  EXPECT_THROW(matrix2(0, 0) = 5, s21::matrix::MatrixSetError);
 }
 TEST(MatrixTest, Transpose) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2 = matrix.Transpose();
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2 = matrix.Transpose();
   EXPECT_EQ(matrix2(0, 0), 1.1);
   EXPECT_EQ(matrix2(1, 0), 2);
   EXPECT_EQ(matrix(0, 2), 3);
@@ -787,15 +788,15 @@ TEST(MatrixTest, Transpose) {
   EXPECT_EQ(matrix2.getCols(), a);
 }
 TEST(MatrixTest, Transpose_Exception) {
-  Matrix matrix;
-  EXPECT_THROW(matrix.Transpose(), MatrixSetError);
+  s21::matrix::Matrix matrix;
+  EXPECT_THROW(matrix.Transpose(), s21::matrix::MatrixSetError);
 }
 TEST(MatrixTest, Determinant) {
   double ar[]{5, 2, 2,   1,    10,   100, -200, 8,  10, -20, 1, 55,  0,
               0, 0, 0.5, -0.5, 0.25, -10, 5,    -2, 0,  0.5, 0, -0.5};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 5, b = 5;
-  Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix(a, b, n, ar);
   double det = matrix.Determinant(), res = 496724.24999999;
   EXPECT_NEAR(det, res, 0.000001);
 }
@@ -803,7 +804,7 @@ TEST(MatrixTest, Determinant_2) {
   double ar[]{1, 2, 3, 3, 2, 1, 2, 1, 3};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = sqrt(n);
-  Matrix matrix(a, a, n, ar);
+  s21::matrix::Matrix matrix(a, a, n, ar);
   double det = matrix.Determinant(), res = -12;
   EXPECT_EQ(det, res);
   EXPECT_DOUBLE_EQ(det, res);
@@ -812,37 +813,37 @@ TEST(MatrixTest, Determinant_Exception) {
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  Matrix matrix2;
-  EXPECT_THROW(matrix.Determinant(), SquarenessError);
-  EXPECT_THROW(matrix2.Determinant(), MatrixSetError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  s21::matrix::Matrix matrix2;
+  EXPECT_THROW(matrix.Determinant(), s21::matrix::SquarenessError);
+  EXPECT_THROW(matrix2.Determinant(), s21::matrix::MatrixSetError);
 }
 TEST(MatrixTest, CalcComplements) {
   double ar[]{1, 2, 3, 3, 2, 1, 2, 1, 3};
   double ar2[]{5, -7, -1, -3, -3, 3, -4, 8, -4};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = sqrt(n);
-  Matrix matrix(a, a, n, ar);
-  Matrix matrix2(a, a, n, ar2);
+  s21::matrix::Matrix matrix(a, a, n, ar);
+  s21::matrix::Matrix matrix2(a, a, n, ar2);
   matrix = matrix.CalcComplements();
   EXPECT_EQ(matrix == matrix2, true);
 }
 TEST(MatrixTest, CalcComplements_Exception) {
-  Matrix matrix2;
-  EXPECT_THROW(matrix2.CalcComplements(), MatrixSetError);
+  s21::matrix::Matrix matrix2;
+  EXPECT_THROW(matrix2.CalcComplements(), s21::matrix::MatrixSetError);
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  EXPECT_THROW(matrix.Determinant(), SquarenessError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  EXPECT_THROW(matrix.Determinant(), s21::matrix::SquarenessError);
 }
 TEST(MatrixTest, InverseMatrix) {
   double ar[]{2, 5, 0, 4, 8, 0, 1, 5, 10};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = sqrt(n);
-  Matrix matrix(a, a, n, ar);
+  s21::matrix::Matrix matrix(a, a, n, ar);
   matrix = matrix.InverseMatrix();
-  Matrix matrix2(a, a);
+  s21::matrix::Matrix matrix2(a, a);
   matrix2(0, 0) = -2;
   matrix2(0, 1) = 5.0 / 4;
   matrix2(0, 2) = 0;
@@ -858,43 +859,43 @@ TEST(MatrixTest, InverseMatrix_2) {
   double ar[]{1, 2, 0, 5, 0, 1, -5, 0.5, 0, 0, 0, 2, 1, 0, 0, 1};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = sqrt(n);
-  Matrix matrix(a, a, n, ar);
+  s21::matrix::Matrix matrix(a, a, n, ar);
   double ar2[]{0,   0,    -0.5,  1,    0.5, 0, -1,  -0.5,
                0.1, -0.2, -0.15, -0.1, 0,   0, 0.5, 0};
-  Matrix matrix2(a, a, n, ar2);
+  s21::matrix::Matrix matrix2(a, a, n, ar2);
   matrix = matrix.InverseMatrix();
   EXPECT_EQ(matrix == matrix2, true);
 }
 TEST(MatrixTest, InverseMatrix_Exception) {
-  Matrix matrix2;
-  EXPECT_THROW(matrix2.InverseMatrix(), MatrixSetError);
+  s21::matrix::Matrix matrix2;
+  EXPECT_THROW(matrix2.InverseMatrix(), s21::matrix::MatrixSetError);
   double ar[]{1.1, 2, 3, 8.9, 4.005, 5.666, 6, -5, 7.000001, 8, 9, 999};
   int n = sizeof(ar) / sizeof(ar[0]);
   int a = 3, b = 4;
-  Matrix matrix(a, b, n, ar);
-  EXPECT_THROW(matrix.InverseMatrix(), SquarenessError);
+  s21::matrix::Matrix matrix(a, b, n, ar);
+  EXPECT_THROW(matrix.InverseMatrix(), s21::matrix::SquarenessError);
   double ar2[]{7676.88, 5656.6, -0.5,  1,    0.5, 10000, -1, -0.5,
                0.1,     -0.2,   -0.15, -0.1, 0,   0,     0,  0};
   a = 4;
   n = sizeof(ar2) / sizeof(ar2[0]);
-  Matrix matrix3(a, a, n, ar2);
-  EXPECT_THROW(matrix3.InverseMatrix(), NonInvertibleError);
+  s21::matrix::Matrix matrix3(a, a, n, ar2);
+  EXPECT_THROW(matrix3.InverseMatrix(), s21::matrix::NonInvertibleError);
 }
 TEST(MatrixTest, SingularMatrix) {
-  Matrix mat(1, 1);
+  s21::matrix::Matrix mat(1, 1);
   EXPECT_EQ(mat.getRows(), 1);
   EXPECT_EQ(mat.getCols(), 1);
   EXPECT_EQ(mat.getElement(0, 0), 0);
   double ar[] = {5};
-  Matrix mat2(1, 1, 1, ar);
+  s21::matrix::Matrix mat2(1, 1, 1, ar);
   EXPECT_EQ(mat2.getRows(), 1);
   EXPECT_EQ(mat2.getCols(), 1);
   EXPECT_EQ(mat2.getElement(0, 0), 5);
-  Matrix mat3(mat2);
+  s21::matrix::Matrix mat3(mat2);
   EXPECT_EQ(mat3.getRows(), 1);
   EXPECT_EQ(mat3.getCols(), 1);
   EXPECT_EQ(mat3.getElement(0, 0), 5);
-  Matrix mat4 = std::move(mat3);
+  s21::matrix::Matrix mat4 = std::move(mat3);
   EXPECT_EQ(mat4.getRows(), 1);
   EXPECT_EQ(mat4.getCols(), 1);
   EXPECT_EQ(mat4.getElement(0, 0), 5);
@@ -906,7 +907,7 @@ TEST(MatrixTest, SingularMatrix) {
   mat2(0, 0) = 10;
   mat -= mat2;
   EXPECT_EQ(mat(0, 0), -5);
-  Matrix mat5(1, 5);
+  s21::matrix::Matrix mat5(1, 5);
   mat5(0, 0) = 1;
   mat5(0, 1) = 2;
   mat5(0, 2) = 3;

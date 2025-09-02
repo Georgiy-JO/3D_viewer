@@ -11,6 +11,7 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+namespace s21::gui{
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -18,9 +19,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
-    void TextMessageOutput(const QString& str);
-    // void TextMessageOutput(const std::string& str);    //if won't be needed - delete
 
    private slots:
     void on_sl_rotate_OX_valueChanged(int value);
@@ -37,8 +35,11 @@ public:
     void on_bt_scale_dec_pressed();
     void on_bt_file_list_clicked();
     void on_bt_show_model_clicked();
-
     void on_bt_reset_model_pressed();
+
+    void TextMessageOutput(const QString& str);
+    // void TextMessageOutput(const std::string& str);    //if won't be needed - delete
+    void RefreshModelView();
 
    private:
     static constexpr const char* kDefaultFile ="models/skull.obj";
@@ -47,4 +48,5 @@ public:
     QString m_file_name;
 
 };
+} //s21::gui
 #endif // SRC_VIEW_UI_MAINWINDOW_H
