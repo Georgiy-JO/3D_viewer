@@ -13,17 +13,17 @@ const std::vector<std::string>& Parser::CreatePrefixArray() {
       "p",  // #6 Point (used for point clouds)
       // "g",       // #7 Group name
       "o"  // #8 Object name
-      // "s",       // #9 Smoothing group
-      // "mg",      // #10 Merging group
-      // "mtlib",   // #11 Material library file (external .mtl file)
-      // "usemtl",  // #12 Use material (refers to a material in .mtl file)
-      // "curv",    // #13 Curve
-      // "curv2",   // #14 2D curve
-      // "surf",    // #15 Surface
-      // "parm",    // #16 Parameter values
-      // "deg",     // #17 Degree of curve or surface
-      // "bmat",    // #18 Basis matrix
-      // "step",    // #19 Steps for curve/surface
+           // "s",       // #9 Smoothing group
+           // "mg",      // #10 Merging group
+           // "mtlib",   // #11 Material library file (external .mtl file)
+           // "usemtl",  // #12 Use material (refers to a material in .mtl file)
+           // "curv",    // #13 Curve
+           // "curv2",   // #14 2D curve
+           // "surf",    // #15 Surface
+           // "parm",    // #16 Parameter values
+           // "deg",     // #17 Degree of curve or surface
+           // "bmat",    // #18 Basis matrix
+           // "step",    // #19 Steps for curve/surface
       // "cstype",  // #20 Curve or surface type (`bezier`, `bspline`, `rat`
       // etc.) "trim",    // #21 Trimming loop "hole",    // #22 Hole in surface
       // "scrv",    // #23 Special curve

@@ -1,4 +1,5 @@
 #include "vec3.h"
+
 #include <cmath>
 
 namespace s21::vectors {
@@ -60,7 +61,7 @@ bool Vec3::operator==(const Vec3 &vec) const {
 }
 
 bool Vec3::operator!=(const Vec3 &vec) const { return !(*this == vec); }
-    
+
 /**
  * @note Using "magic numbers" can't be avoided here.
  */
@@ -95,9 +96,9 @@ Vec3 Vec3::operator++(int) {
   return tmp;
 }
 
-void Vec3::Normalize(){
-  double length = std::sqrt(x*x+y*y+z*z);
-  if(length!=0){
+void Vec3::Normalize() {
+  double length = std::sqrt(x * x + y * y + z * z);
+  if (length != 0) {
     x /= length;
     y /= length;
     z /= length;

@@ -1,9 +1,9 @@
 #ifndef SRC_THIRD_PARTY_S21_MATRIX_MATRIX_EXCEPTIONS_HPP
 #define SRC_THIRD_PARTY_S21_MATRIX_MATRIX_EXCEPTIONS_HPP
+#include <string>
 
-namespace s21::matrix
-{
-    
+namespace s21::matrix {
+
 /**
  * @brief Base class for matrix-related exceptions.
  * @note This class extends std::exception to provide a custom error message for
@@ -166,6 +166,6 @@ class InputError : public MatrixError {
   InputError(const char* error = "Input parameter or data error.")
       : MatrixError(error) {}
 };
-} // namespace s21::matrix
+}  // namespace s21::matrix
 
 #endif  // SRC_THIRD_PARTY_S21_MATRIX_MATRIX_EXCEPTIONS_HPP

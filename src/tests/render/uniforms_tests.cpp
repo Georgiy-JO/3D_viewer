@@ -139,7 +139,7 @@ TEST(Render_Uniforms, CameraMatrix) {
 
 TEST(Render_Uniforms, ProjectionMatrix) {
     s21::render::uniforms::ProjectionMatrix pm;
-    pm.Reset(10,5);
+    pm.ResetCentral(10,5);
     s21::matrix::Matrix4x4 m4(pm.GetMatrix());
     s21::matrix::Matrix m(4,4);
 
@@ -168,4 +168,40 @@ TEST(Render_Uniforms, ProjectionMatrix) {
     EXPECT_NEAR(m(3,1),0,1e-8);
     EXPECT_NEAR(m(3,2),-1,1e-8);
     EXPECT_NEAR(m(3,3),0,1e-8);
+
+    pm.ResetOrthographic(10,5);
+    s21::matrix::Matrix4x4 m5(pm.GetMatrix());
+
+    for(int i=0;i<s21::matrix::Matrix4x4::kMatrixDimention;i++){
+        for(int j=0;j<s21::matrix::Matrix4x4::kMatrixDimention;j++){
+            m(i,j)=m5(i,j);
+        }
+    }
+    double right=2*1;
+    double left=-right;
+    double top=1;
+    double bottom=-top;
+    s21::matrix::Matrix local(s21::matrix::Matrix4x4::kMatrixDimention,
+                                s21::matrix::Matrix4x4::kMatrixDimention);
+            
+    EXPECT_NEAR(m(0, 0),2.0f / (right-left),1e-8);
+    EXPECT_NEAR(m(0, 1),0,1e-8);
+    EXPECT_NEAR(m(0, 2),0,1e-8);
+    EXPECT_NEAR(m(0, 3),(right+left)/(left-right),1e-8);
+
+    EXPECT_NEAR(m(1, 0),0,1e-8);
+    EXPECT_NEAR(m(1, 1),2.0f / (top-bottom),1e-8);
+    EXPECT_NEAR(m(1, 2),0,1e-8);
+    EXPECT_NEAR(m(1, 3),(top+bottom)/(bottom-top),1e-8);
+
+    EXPECT_NEAR(m(2, 0),0,1e-8);
+    EXPECT_NEAR(m(2, 1),0,1e-8);
+    EXPECT_NEAR(m(2, 2),2.0f / (0.1 - 100.0),1e-8);
+    EXPECT_NEAR(m(2, 3),(100.0 + 0.1) / (0.1 - 100.0),1e-8);
+
+    EXPECT_NEAR(m(3, 0),0,1e-8);
+    EXPECT_NEAR(m(3, 1),0,1e-8);
+    EXPECT_NEAR(m(3, 2),0,1e-8);
+    EXPECT_NEAR(m(3, 3),1.0f,1e-8);
+
 }

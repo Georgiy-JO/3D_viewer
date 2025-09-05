@@ -3,8 +3,7 @@
 // #include <variant>
 #include "matrix.hpp"
 #include "matrix_exceptions.hpp"
-namespace s21::matrix
-{
+namespace s21::matrix {
 Matrix::Matrix(const int rows, const int cols) {
   if (rows <= 0 || cols <= 0) throw DimentionError();
   rows_ = rows;
@@ -110,7 +109,8 @@ bool Matrix::EqMatrix(const Matrix& other) const {
   for (int i = 0; output && i < rows_; i++) {
     for (int j = 0; output && j < cols_; j++) {
       if (matrix_[i][j] != other.matrix_[i][j])
-        output = MatrixService::doubleEqComplex(matrix_[i][j], other.matrix_[i][j]);
+        output =
+            MatrixService::doubleEqComplex(matrix_[i][j], other.matrix_[i][j]);
     }
   }
   return output;
@@ -149,7 +149,7 @@ void Matrix::replaceMatrix(Matrix& other) noexcept {
 }
 
 Matrix Matrix::matrixSumSub(const Matrix& other,
-                                  SumSub mod) const {  // check??
+                            SumSub mod) const {  // check??
   Matrix result;
   if (!matrixDimentionEq(other)) throw DimentionEqualityError();
   result.setDimentions(this->rows_, this->cols_);
@@ -201,15 +201,14 @@ Matrix Matrix::operator*(const Matrix& other) const {
   return result;
 }
 
-Matrix::MatrixElement Matrix::operator()(const int row,
-                                               const int col) const {
+Matrix::MatrixElement Matrix::operator()(const int row, const int col) const {
   if (!matrix_) throw MatrixSetError();
   if (row < 0 || col < 0 || row >= rows_ || col >= cols_)
     throw OutOfRangeError();
   return MatrixElement(*this, row, col);
 }
 
-double Matrix::MatrixElement::operator=(const double input) { 
+double Matrix::MatrixElement::operator=(const double input) {
   if (!ptr) throw MatrixSetError();
   MatrixService::doubleLegit(input);
   *ptr = input;
@@ -260,7 +259,7 @@ Matrix Matrix::minorMaker(const int row, const int col) const {
       cols_ == 1)
     throw OutOfRangeError();
   int n = (rows_ - 1) * (cols_ - 1);
-  double* ar=new double[n]();
+  double* ar = new double[n]();
   for (int i = 0, k = 0; i < rows_; i++) {
     for (int j = 0; j < cols_; j++) {
       if (i != row && j != col) ar[k++] = matrix_[i][j];
@@ -294,4 +293,4 @@ Matrix Matrix::InverseMatrix() const {
   return CalcComplements().Transpose() * inverse_determinamt;
 }
 
-} // namespace s21::matrix
+}  // namespace s21::matrix

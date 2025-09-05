@@ -1,8 +1,8 @@
 #ifndef SRC_MODEL_MODEL3D_ELEMENTS_MESH_H
 #define SRC_MODEL_MODEL3D_ELEMENTS_MESH_H
 
+#include <cstdint>
 #include <vector>
-#include <cstdint> 
 
 #include "../../../core/math/vec3.h"
 

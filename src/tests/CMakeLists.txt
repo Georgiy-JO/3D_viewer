@@ -7,13 +7,17 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # if(CMAKE_BUILD_TYPE STREQUAL "Release")
 #     add_compile_options(-O2 -DNDEBUG)
-add_compile_options(
-    -g 
-    -O0 
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+  add_compile_options(
     -Wall 
-    -Werror 
     -Wextra 
-    -D_POSIX_C_SOURCE=201706L)
+    -Wpedantic
+    -Werror
+    -g
+    -D_POSIX_C_SOURCE=201706L
+    -O0 
+    )
+endif()
 
 option(BUILD_TESTS "Build tests" ON)
 option(BUILD_COVERAGE "Enable code coverage" ON)
@@ -65,17 +69,21 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
 
     set(CORE_INCLUDE_DIRS
         ${CMAKE_CURRENT_SOURCE_DIR}/../core/math
+        ${CMAKE_CURRENT_SOURCE_DIR}/../core/parameters
+        ${CMAKE_CURRENT_SOURCE_DIR}/../core/service
         ${THIRS_PARTY_INCLUDE_DIRS}
     )
     set(CORE_SRC
         ../core/math/vec3.cpp
-        ../core/math/vec2.cpp
         ../core/math/vec4.cpp
         ../core/math/matrix4x4.cpp
+        ../core/service/service.cpp
+        ../core/parameters/view_parameters.cpp
         ${THIRS_PARTY_SRC}
     )
     set(CORE_TEST_SRC
         core/core_tests.cpp
+        core/view_parameters_tests.cpp
     )
 
     find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Gui OpenGLWidgets)  
@@ -91,7 +99,7 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
         )
         set(RENDER_SRC
             ../model/render/uniforms/uniforms.cpp
-            ../model/render/render_src/gui_model.cpp
+            ../model/render/render_src/gui_model.cpp        
             ../model/render/render_src/shader_program.cpp
             ${CORE_SRC}
             ${INBOUND_MODEL_SRC}
@@ -101,6 +109,13 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
             render/uniforms_tests.cpp
             render/gui_model_tests.cpp
             render/shader_program_tests.cpp
+        )
+        set(RENDER_VALG_SRC
+            ../model/render/uniforms/uniforms.cpp
+            ${CORE_SRC}
+        )
+        set(RENDER_VALG_TEST_SRC
+            render/uniforms_tests.cpp
         )
         file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../model/render/shaders
             DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
@@ -243,6 +258,16 @@ if(BUILD_TESTS)
         )
 
         if(VALGRIND_EXECUTABLE)
+            add_executable(render_valg_tests
+                ${RENDER_VALG_TEST_SRC}       # <- test code files
+                ${RENDER_VALG_SRC}
+            )
+
+            target_include_directories(render_valg_tests PRIVATE ${RENDER_INCLUDE_DIRS})
+            target_link_libraries(render_valg_tests PRIVATE gtest_main pthread Qt${QT_VERSION_MAJOR}::Gui) 
+            set_property(TARGET render_valg_tests PROPERTY CXX_STANDARD 20)
+
+
             add_custom_target(valgrind_render_tests
                 COMMAND valgrind 
                     --tool=memcheck  
@@ -251,22 +276,42 @@ if(BUILD_TESTS)
                     --track-origins=yes 
                     --verbose 
                     --log-file=valgrind_render_tests.txt
-                    $<TARGET_FILE:render_tests>
-                DEPENDS render_tests
-                COMMENT "Running render_tests under Valgrind (see valgrind_render_tests.txt)."
+                    $<TARGET_FILE:render_valg_tests>
+                DEPENDS render_valg_tests
+                COMMENT "Running render_valg_tests under Valgrind (see valgrind_render_tests.txt)."
             )
 
             add_custom_target(valgrind_global
-                COMMAND valgrind_third_party_tests
-                COMMAND valgrind_core_tests
-                COMMAND valgrind_inbound_model_tests
-                COMMAND valgrind_render_tests
-                DEPENDS valgrind_third_party_tests valgrind_core_tests valgrind_inbound_model_tests valgrind_render_tests
+                DEPENDS
+                    valgrind_third_party_tests 
+                    valgrind_core_tests 
+                    valgrind_inbound_model_tests 
+                    valgrind_render_tests
                 COMMENT "Running all tests via valgrind at once (see valgrind_third_party_tests.txt, valgrind_core_tests.txt, valgrind_inbound_model_tests.txt, valgrind_render_tests.txt)."
             )
         else()
-            message(WARNING "Valgrind not found. valgrind_render_tests target will not be available.")
+            message(WARNING "Valgrind not found. valgrind_render_tests and valgrind_global targets will not be available.")
         endif()
+    endif()
+
+    # All tests
+    if(${QT_VERSION_MAJOR})
+        add_custom_target(tests
+            DEPENDS
+                run_third_party_tests
+                run_core_tests
+                run_inbound_model_tests
+                run_render_tests
+            COMMENT "Running all tests at once."
+        )
+    else()
+        add_custom_target(tests
+            DEPENDS
+                run_third_party_tests
+                run_core_tests
+                run_inbound_model_tests
+            COMMENT "Running all tests at once."
+        )
     endif()
 
 endif()

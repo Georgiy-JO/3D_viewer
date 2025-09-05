@@ -4,6 +4,7 @@
 #include "../../core/math/vec4.h"
 #include "../../core/math/basis.h"
 #include "../../core/math/matrix4x4.h"
+#include "../../core/service/service.h"
 
 TEST(Core_Vectors, Vec3_1) {
   using Vec3 = s21::vectors::Vec3;
@@ -1314,4 +1315,18 @@ TEST(Core_Vectors, Matrix4x4_2) {
     EXPECT_THROW(a(-1,0), std::exception);
     EXPECT_THROW(a(5,0), std::exception);
     EXPECT_THROW(a(4,0), std::exception);
+}
+
+TEST(Core_Service, Service_1) {
+    double d{5.5};
+    EXPECT_NEAR (s21::service::converters::DoubleToFloat(d),5.5,1e-7);
+    d=std::numeric_limits<float>::max()*1.5;
+    EXPECT_NEAR (s21::service::converters::DoubleToFloat(d),std::numeric_limits<float>::max(),1e-7);
+    d=std::numeric_limits<float>::lowest()*1.5;
+    EXPECT_NEAR (s21::service::converters::DoubleToFloat(d),std::numeric_limits<float>::lowest(),1e-7);
+    d=std::numeric_limits<float>::min()/2;
+    EXPECT_NEAR (s21::service::converters::DoubleToFloat(d),std::numeric_limits<float>::min(),1e-7);
+    d=-std::numeric_limits<float>::min()/2;
+    EXPECT_NEAR (s21::service::converters::DoubleToFloat(d),-std::numeric_limits<float>::min(),1e-7);
+
 }

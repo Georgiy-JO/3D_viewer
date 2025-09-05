@@ -4,8 +4,7 @@
 
 #include "matrix_exceptions.hpp"
 
-namespace s21::matrix
-{
+namespace s21::matrix {
 using std::isinf, std::isnan;
 
 // Represents the value of zero as a double.
@@ -18,41 +17,41 @@ constexpr double EPSILON(1e-7);
  * comparisons of double values.
  */
 namespace MatrixService {
-  /**
-   * @brief Compares two double values for equality within a small epsilon
-   * margin.
-   * @param a The first double value.
-   * @param b The second double value.
-   * @return True if the values are equal within the epsilon margin, false
-   * otherwise.
-   */
-  inline static bool doubleEq(const double& a, const double& b) noexcept {
-    return fabs(a - b) < EPSILON;
-  }
-  /**
-   * @brief Compares two double values for equality, considering complex cases
-   * like NaN and infinity.
-   * @param a The first double value.
-   * @param b The second double value.
-   * @return True if the values are considered equal, false otherwise.
-   */
-  inline static bool doubleEqComplex(const double& a, const double& b) {
-    if (isnan(a) || isnan(b) ||
-        (isinf(a) && isinf(b) &&
-         ((a < DOUBLE_ZERO && b < DOUBLE_ZERO) ||
-          (a > DOUBLE_ZERO && b > DOUBLE_ZERO))))
-      throw DataError();
-    return doubleEq(a, b);
-  }
-  /**
-   * @brief Validates a double value, ensuring it is neither NaN nor infinite.
-   * @param a The double value to validate.
-   * @throws DataError if the value is NaN or infinite.
-   */
-  inline static void doubleLegit(const double& a) {
-    if (isnan(a) || isinf(a)) throw DataError();
-  }
-}   // namespace s21::matrix::MatrixService
+/**
+ * @brief Compares two double values for equality within a small epsilon
+ * margin.
+ * @param a The first double value.
+ * @param b The second double value.
+ * @return True if the values are equal within the epsilon margin, false
+ * otherwise.
+ */
+inline static bool doubleEq(const double& a, const double& b) noexcept {
+  return fabs(a - b) < EPSILON;
+}
+/**
+ * @brief Compares two double values for equality, considering complex cases
+ * like NaN and infinity.
+ * @param a The first double value.
+ * @param b The second double value.
+ * @return True if the values are considered equal, false otherwise.
+ */
+inline static bool doubleEqComplex(const double& a, const double& b) {
+  if (isnan(a) || isnan(b) ||
+      (isinf(a) && isinf(b) &&
+       ((a < DOUBLE_ZERO && b < DOUBLE_ZERO) ||
+        (a > DOUBLE_ZERO && b > DOUBLE_ZERO))))
+    throw DataError();
+  return doubleEq(a, b);
+}
+/**
+ * @brief Validates a double value, ensuring it is neither NaN nor infinite.
+ * @param a The double value to validate.
+ * @throws DataError if the value is NaN or infinite.
+ */
+inline static void doubleLegit(const double& a) {
+  if (isnan(a) || isinf(a)) throw DataError();
+}
+}  // namespace MatrixService
 
-} // namespace s21::matrix
+}  // namespace s21::matrix
 #endif  // SRC_THIRD_PARTY_S21_MATRIX_MATRIX_SERVICE_HPP

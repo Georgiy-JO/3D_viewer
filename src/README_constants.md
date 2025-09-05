@@ -30,10 +30,10 @@ The project contains a bunch of constants that set up the way the model is inter
 |s21::render::ShaderProgram::kTransformationUniform|Transformation matrix uniform's name for passing it to shaders|src/model/render/shader_program.h|
 |s21::render::ShaderProgram::kCameraUniform|Camera matrix uniform's name for passing it to shaders|src/model/render/shader_program.h|
 |s21::render::ShaderProgram::kProjectionUniform|Projection matrix uniform's name for passing it to shaders|src/model/render/shader_program.h|
-|gl_PointSize|Size of vertices of the model|src/model/render/shaders/shader.vert|
-|FragColor|Color of vertices and edges|src/model/render/shaders/shader.frag|
-|s21::gui::ModelViewer::kBackgroundColor|Background color of the viewer widget|src/view/model_viewer/model_viewer.h|
-|s21::gui::ModelViewer::kLineWidth|Width of edges of the model|src/view/model_viewer/model_viewer.h|
+--------------------|gl_PointSize|Size of vertices of the model|src/model/render/shaders/shader.vert|
+--------------------|FragColor|Color of vertices and edges|src/model/render/shaders/shader.frag|
+--------------------|s21::gui::ModelViewer::kBackgroundColor|Background color of the viewer widget|src/view/model_viewer/model_viewer.h|
+--------------------|s21::gui::ModelViewer::kLineWidth|Width of edges of the model|src/view/model_viewer/model_viewer.h|
 
 ## Mouse controls
 

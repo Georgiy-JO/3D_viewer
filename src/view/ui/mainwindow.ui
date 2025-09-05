@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>941</width>
-    <height>844</height>
+    <height>878</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>660</y>
+      <y>680</y>
       <width>91</width>
       <height>41</height>
      </rect>
@@ -53,14 +53,14 @@
      </font>
     </property>
     <property name="text">
-     <string/>
+     <string>text_output</string>
     </property>
    </widget>
    <widget class="QSlider" name="sl_rotate_OY">
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>680</y>
+      <y>700</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -73,7 +73,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>640</y>
+      <y>660</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -86,7 +86,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>720</y>
+      <y>740</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -99,7 +99,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>610</y>
+      <y>630</y>
       <width>91</width>
       <height>41</height>
      </rect>
@@ -112,7 +112,7 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>619</y>
+      <y>639</y>
       <width>20</width>
       <height>121</height>
      </rect>
@@ -125,7 +125,7 @@
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>610</y>
+      <y>630</y>
       <width>51</width>
       <height>31</height>
      </rect>
@@ -138,7 +138,7 @@
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>670</y>
+      <y>690</y>
       <width>51</width>
       <height>31</height>
      </rect>
@@ -151,7 +151,7 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>640</y>
+      <y>660</y>
       <width>51</width>
       <height>31</height>
      </rect>
@@ -164,7 +164,7 @@
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>640</y>
+      <y>660</y>
       <width>51</width>
       <height>31</height>
      </rect>
@@ -177,7 +177,7 @@
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>710</y>
+      <y>730</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -190,7 +190,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>710</y>
+      <y>730</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -203,7 +203,7 @@
     <property name="geometry">
      <rect>
       <x>460</x>
-      <y>610</y>
+      <y>630</y>
       <width>81</width>
       <height>61</height>
      </rect>
@@ -216,7 +216,7 @@
     <property name="geometry">
      <rect>
       <x>460</x>
-      <y>680</y>
+      <y>700</y>
       <width>81</width>
       <height>61</height>
      </rect>
@@ -229,7 +229,7 @@
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>620</y>
+      <y>640</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -247,7 +247,7 @@
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>660</y>
+      <y>680</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -265,7 +265,7 @@
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>700</y>
+      <y>720</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -283,13 +283,26 @@
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>640</y>
+      <y>660</y>
       <width>51</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Reset</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="filename_output">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>610</y>
+      <width>921</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>filename_output</string>
     </property>
    </widget>
   </widget>

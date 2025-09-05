@@ -8,10 +8,10 @@ struct Vec3 {
   double y = 0.0f;
   double z = 0.0f;
 
-  constexpr Vec3()=default;
+  constexpr Vec3() = default;
   constexpr explicit Vec3(double value) : x(value), y(value), z(value) {}
-  constexpr Vec3(double x_, double y_, double z_): x(x_), y(y_), z(z_) {}
-  constexpr Vec3(const Vec3 &vec): x(vec.x), y(vec.y), z(vec.z) {}
+  constexpr Vec3(double x_, double y_, double z_) : x(x_), y(y_), z(z_) {}
+  constexpr Vec3(const Vec3 &vec) : x(vec.x), y(vec.y), z(vec.z) {}
   ~Vec3() = default;
 
   void Normalize();
@@ -44,8 +44,6 @@ struct Vec3 {
   // Vec3& operator*=(const Vec3& vec);
   // double Length() const;
 };
-
-
 
 }  // namespace s21::vectors
 

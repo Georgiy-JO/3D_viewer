@@ -5,9 +5,8 @@
 #include "matrix_exceptions.hpp"
 #include "matrix_service.hpp"
 
-namespace s21::matrix
-{
-    
+namespace s21::matrix {
+
 /**
  * @brief Enumeration to indicate addition or subtraction operations.
  * @note Sum  ///< Represents addition.
@@ -37,7 +36,8 @@ class Matrix {
      * @param row Row index of the element.
      * @param col Column index of the element.
      */
-    MatrixElement(const Matrix& matrix, const int row,const int col) noexcept: ptr{&(matrix.matrix_[row][col])} {}
+    MatrixElement(const Matrix& matrix, const int row, const int col) noexcept
+        : ptr{&(matrix.matrix_[row][col])} {}
     /**
      * @brief Assigns a value to the matrix element.
      * @param input The value to assign.
@@ -50,6 +50,7 @@ class Matrix {
      */
     operator double() const { return *ptr; }
   };
+
  public:
   /**
    * @brief Default constructor.
@@ -69,7 +70,9 @@ class Matrix {
    * @param arr Array of values to initialize the matrix.
    */
   Matrix(const int rows, const int cols, const int n, const double arr[])
-      : Matrix(rows, cols) { setMatrix(n, arr); }
+      : Matrix(rows, cols) {
+    setMatrix(n, arr);
+  }
   /**
    * @brief Copy constructor.
    * @param other The matrix to copy.
@@ -258,9 +261,7 @@ class Matrix {
    * @param other The matrix to compare with.
    * @return True if the matrices are equal, false otherwise.
    */
-  bool operator==(const Matrix& other) const {
-    return this->EqMatrix(other);
-  }
+  bool operator==(const Matrix& other) const { return this->EqMatrix(other); }
   /**
    * @brief Overloading the "=" (set) operator.
    * @param other The matrix to take values from with.
@@ -372,7 +373,6 @@ class Matrix {
    * @return The minor matrix.
    */
   Matrix minorMaker(const int row, const int col) const;
-
 };
-} // namespace s21::matrix
+}  // namespace s21::matrix
 #endif  // SRC_THIRD_PARTY_S21_MATRIX_MATRIX_HPP

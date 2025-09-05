@@ -1176,16 +1176,16 @@ TEST(Model_Parser, ObjectFiles_MiddleVerticesAmountModel) {
  * (ObjectFiles_HighVerticesAmountModel) must be commented
  * or removed.
  */
-TEST(Model_Parser, ObjectFiles_HighVerticesAmountModel) {
-  using s21::inbound_model::Edge;
-  using s21::inbound_model::ParseModelFromFile;
+// TEST(Model_Parser, ObjectFiles_HighVerticesAmountModel) {
+//   using s21::inbound_model::Edge;
+//   using s21::inbound_model::ParseModelFromFile;
 
-  s21::inbound_model::Model3D model;
-  EXPECT_NO_THROW(ParseModelFromFile(model, "models/dog.obj"));
+//   s21::inbound_model::Model3D model;
+//   EXPECT_NO_THROW(ParseModelFromFile(model, "models/dog.obj"));
 
-  EXPECT_EQ(model.GetName(), "dog");
-  EXPECT_DOUBLE_EQ(model.GetVerticesAmount(), 49714);
-}
+//   EXPECT_EQ(model.GetName(), "dog");
+//   EXPECT_DOUBLE_EQ(model.GetVerticesAmount(), 49714);
+// }
 
 /**
  * This test can be updated using ANY visualization way.

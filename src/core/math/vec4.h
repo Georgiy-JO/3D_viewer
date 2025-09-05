@@ -8,10 +8,12 @@ struct Vec4 {
   double z = 0.0f;
   double w = 0.0f;
 
-  constexpr Vec4()=default;
-  constexpr explicit Vec4(double value): x(value), y(value), z(value), w(value) {}
-  constexpr Vec4(double x_, double y_, double z_, double w_) : x(x_), y(y_), z(z_), w(w_) {}
-  constexpr Vec4(const Vec4 &vec): x(vec.x), y(vec.y), z(vec.z), w(vec.w) {}
+  constexpr Vec4() = default;
+  constexpr explicit Vec4(double value)
+      : x(value), y(value), z(value), w(value) {}
+  constexpr Vec4(double x_, double y_, double z_, double w_)
+      : x(x_), y(y_), z(z_), w(w_) {}
+  constexpr Vec4(const Vec4 &vec) : x(vec.x), y(vec.y), z(vec.z), w(vec.w) {}
   ~Vec4() = default;
 
   Vec4 operator*(double number) const;

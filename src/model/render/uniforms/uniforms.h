@@ -52,11 +52,13 @@ class CameraMatrix: public UniformMatrix{
 class ProjectionMatrix: public UniformMatrix{
     public:
         ProjectionMatrix();
-        void Reset(double w, double h, double fov_angle = kFovAngle, double near_plane =kNearPlane, double far_plane =kFarPlane);
+        void ResetCentral(double w, double h, double fov_angle = kFovAngle, double near_plane =kNearPlane, double far_plane =kFarPlane);
+        void ResetOrthographic(double w, double h, double projection_zone_size = kProjectionCubeSize, double near_plane =kNearPlane, double far_plane =kFarPlane);
     private:
         static constexpr double kFovAngle = 45.0f; 
         static constexpr double kNearPlane =0.1f; 
         static constexpr double kFarPlane = 100.0f; 
+        static constexpr double kProjectionCubeSize=1.0f;
 };
 
 }       //s21::render::uniforms

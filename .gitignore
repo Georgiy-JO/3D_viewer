@@ -58,3 +58,4 @@ dkms.conf
 build
 .vscode
 src/CMakeLists.txt.user
+*/qt6-supp_notfinished.txt

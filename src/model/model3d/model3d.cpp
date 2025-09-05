@@ -1,9 +1,10 @@
 #include "model3d.h"
-#include <limits>
-#include <initializer_list>
-#include <stdexcept>
+
 #include <algorithm>
 #include <cmath>
+#include <initializer_list>
+#include <limits>
+#include <stdexcept>
 
 namespace s21::inbound_model {
 
@@ -11,7 +12,7 @@ void Model3D::AddVert(double x_, double y_, double z_) {
   Unscale();
   Uncenter();
 
-  if(GetVerticesAmount()<std::numeric_limits<uint32_t>::max())
+  if (GetVerticesAmount() < std::numeric_limits<uint32_t>::max())
     (*m_vertices).push_back(Vec3(x_, y_, z_));
   UpdateBounds();
 }
@@ -25,7 +26,8 @@ void Model3D::RemoveVert(uint32_t number) {
 }
 
 void Model3D::AddEdge(size_t beg_, size_t end_) {
-  if(beg_<=std::numeric_limits<uint32_t>::max() && end_<=std::numeric_limits<uint32_t>::max())
+  if (beg_ <= std::numeric_limits<uint32_t>::max() &&
+      end_ <= std::numeric_limits<uint32_t>::max())
     (*m_edges).push_back(Edge(beg_, end_));
 }
 
@@ -103,7 +105,7 @@ void Model3D::SetScaleFactor() {
   if (max_delta > c_default_scale_factor)
     m_scale_factor = c_default_scale_factor / max_delta;
 }
-    
+
 /**
  * @note Using "magic numbers" can't be avoided here.
  */
@@ -239,7 +241,7 @@ void Model3D::RemoveGhostEdges() {
     }
   }
 }
-    
+
 /**
  * @note Using "magic numbers" can't be avoided here.
  */

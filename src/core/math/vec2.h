@@ -4,12 +4,12 @@
 namespace s21::vectors {
 
 struct Vec2 {
-  double x=0.0f;
-  double y=0.0f;
+  double x = 0.0f;
+  double y = 0.0f;
 
-  constexpr Vec2()=default;
-  constexpr Vec2(double x_,double y_):x(x_),y(y_){}
-  ~Vec2()=default;
+  constexpr Vec2() = default;
+  constexpr Vec2(double x_, double y_) : x(x_), y(y_) {}
+  ~Vec2() = default;
 };
 
 }  // namespace s21::vectors
