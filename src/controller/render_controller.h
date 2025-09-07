@@ -45,14 +45,21 @@ class Render {
   s21::parameters::ViewParameters& Parameters(){return m_parameters;}
   const s21::parameters::ViewParameters& Parameters() const{return m_parameters;}
 
-  void SetUniforms(const RenderMode mode) {
+  void SetUniforms(const s21::vectors::Vec2& view_dementions) {
     m_program.UploadUniforms(
-    m_transformation_matrix, m_camera_matrix,
-    m_projection_matrix,m_parameters.GetVertexSize(),
-    m_parameters.GetEdgeWidth(), m_parameters.GetModelColor(), 
-    (mode==RenderMode::kVertices), 
-    (m_parameters.GetEdgeKind()==EdgeKinds::kDotted),
-    (m_parameters.GetVertexKind()==VertexKinds::kCircle));
+      m_transformation_matrix, m_camera_matrix,
+      m_projection_matrix, m_parameters.GetModelColor(),
+      m_parameters.GetVertexSize(),m_parameters.GetEdgeWidth(), 
+      (m_parameters.GetEdgeKind()==EdgeKinds::kDotted),
+      (m_parameters.GetVertexKind()==VertexKinds::kCircle),view_dementions);
+  }
+  void SetVertexProgram(const s21::vectors::Vec2& view_dementions){
+    m_program.SetVertexShaders();
+    SetUniforms(view_dementions);
+  }
+  void SetEdgeProgram(const s21::vectors::Vec2& view_dementions){
+    m_program.SetEdgeShaders();
+    SetUniforms(view_dementions);
   }
   void ResetProjection(double w, double h){
     (m_parameters.GetProjectionKind()==ProjectionKinds::kOrthographic)?

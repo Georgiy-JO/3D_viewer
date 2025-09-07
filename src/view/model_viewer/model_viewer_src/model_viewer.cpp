@@ -10,7 +10,6 @@ void ModelViewer::SetModel(
     std::shared_ptr<s21::inbound_model::Model3D> model_) {
   m_render.Model().SetModelData(std::move(model_));
   ResetTransformations();
-  update();
 }
 
 void ModelViewer::initializeGL() {
@@ -27,7 +26,7 @@ void ModelViewer::initializeGL() {
   // glEnable(GL_MULTISAMPLE);
   glEnable(GL_BLEND);
 
-  m_render.Program().SetShaders();
+  m_render.Program().SetVertexShaders();
   m_render.Model().InitializeModel();
 
   m_render.Camera().Reset();
@@ -48,45 +47,52 @@ void ModelViewer::resizeGL(int w, int h) {
 }
 
 void ModelViewer::paintGL() {
-  // set background (clear) color
-  glClearColor(
-    s21::service::converters::DoubleToFloat
-        (m_render.Parameters().GetBackgroundColor().x),
-    s21::service::converters::DoubleToFloat
-        (m_render.Parameters().GetBackgroundColor().y),
-    s21::service::converters::DoubleToFloat
-        (m_render.Parameters().GetBackgroundColor().z),
-    s21::service::converters::DoubleToFloat
-        (m_render.Parameters().GetBackgroundColor().w));
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  try{
+    // set background (clear) color
+    glClearColor(
+      s21::service::converters::DoubleToFloat
+          (m_render.Parameters().GetBackgroundColor().x),
+      s21::service::converters::DoubleToFloat
+          (m_render.Parameters().GetBackgroundColor().y),
+      s21::service::converters::DoubleToFloat
+          (m_render.Parameters().GetBackgroundColor().z),
+      s21::service::converters::DoubleToFloat
+          (m_render.Parameters().GetBackgroundColor().w));
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  if (m_render.Model().GetVertexArrayObject() == 0) return;
+    if (m_render.Model().GetVertexArrayObject() == 0) return;
+            
+    // enabling vertice sizing and setting edges width
+    glEnable(GL_PROGRAM_POINT_SIZE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glLineWidth(s21::service::converters::DoubleToFloat(m_render.Parameters().GetEdgeWidth()));
 
-  // enabling vertice sizing and setting edges width
-  glEnable(GL_PROGRAM_POINT_SIZE);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  glLineWidth(s21::service::converters::DoubleToFloat(m_render.Parameters().GetEdgeWidth()));
+    // Bind VAO (which also binds VBO/EBO layouts)
+    glBindVertexArray(m_render.Model().GetVertexArrayObject());
 
-  // Bind VAO (which also binds VBO/EBO layouts)
-  glBindVertexArray(m_render.Model().GetVertexArrayObject());
+    if (m_render.Model().GetEdgesCount() != 0 && m_render.Parameters().GetEdgeKind()!=s21::controller::Render::EdgeKinds::kNone) {
+      m_render.SetEdgeProgram(s21::vectors::Vec2(width(),height()));
+      m_render.Program().GetProgram().bind();   // Bind shader program
+      // Draw the edges stored in the EBO as lines.
+      // GL_LINES: each pair of indices defines a line segment.
+      glDrawElements(GL_LINES, m_render.Model().GetEdgesCount(), 
+                                            GL_UNSIGNED_INT,nullptr);
+    }
+    if(m_render.Parameters().GetVertexKind()!=s21::controller::Render::VertexKinds::kNone){
+      m_render.SetVertexProgram(s21::vectors::Vec2(width(),height()));
+      m_render.Program().GetProgram().bind();
+      glDrawArrays(GL_POINTS, 0, m_render.Model().GetVerticesAmount());
+    }
 
-  if (m_render.Model().GetEdgesCount() != 0 && m_render.Parameters().GetEdgeKind()!=s21::controller::Render::EdgeKinds::kNone) {
-    m_render.SetUniforms(s21::controller::Render::RenderMode::kEdges);
-    m_render.Program().GetProgram().bind();   // Bind shader program
-    // Draw the edges stored in the EBO as lines.
-    // GL_LINES: each pair of indices defines a line segment.
-    glDrawElements(GL_LINES, m_render.Model().GetEdgesCount(), 
-                                          GL_UNSIGNED_INT,nullptr);
+    // Unbind program and VAO 
+    m_render.Program().GetProgram().release();
+    glBindVertexArray(0);
+  } catch (const std::exception& e ){ 
+    emit SignalPrintingError( QString("Model printing -> ") + e.what());
   }
-  if(m_render.Parameters().GetVertexKind()!=s21::controller::Render::VertexKinds::kNone){
-    m_render.SetUniforms(s21::controller::Render::RenderMode::kVertices);
-    m_render.Program().GetProgram().bind();
-    glDrawArrays(GL_POINTS, 0, m_render.Model().GetVerticesAmount());
+  catch(...){
+    emit SignalPrintingError("Unknown error while printing.");
   }
-
-  // Unbind program and VAO 
-  m_render.Program().GetProgram().release();
-  glBindVertexArray(0);
 }
 
 void ModelViewer::mousePressEvent(QMouseEvent *event) {

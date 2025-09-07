@@ -21,6 +21,8 @@ class MainWindow : public QMainWindow {
   MainWindow(QWidget* parent = nullptr);
   ~MainWindow();
 
+ public slots:
+  void ErrorOccured(const QString& message);
  private slots:
   void on_sl_rotate_OX_valueChanged(int value);
   void on_sl_rotate_OY_valueChanged(int value);
@@ -51,7 +53,6 @@ class MainWindow : public QMainWindow {
   // void TextMessageOutput(const std::string& str);    //if won't be needed -
   // delete
   void FileNameOutput();
-
 
  private:
   template <typename Func>

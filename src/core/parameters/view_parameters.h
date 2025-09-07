@@ -191,7 +191,7 @@ class ViewParameters {
   s21::parameters::ViewParameter<double,          // parameter type
                                  double,          // parameter type
                                  4.0,             // default
-                                 1.0, 30.0,       // parameter min max
+                                 1.0, 80.0,       // parameter min max
                                  kVertexSizeTag>  // parameter's tag
       m_vertex_size;
   s21::parameters::ViewParameter<

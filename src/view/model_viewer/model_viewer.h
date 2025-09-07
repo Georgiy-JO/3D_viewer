@@ -48,6 +48,8 @@ class ModelViewer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
   QColor GetBackgroundColor() const;
   void ResetParameters();
 
+ signals:
+  void SignalPrintingError(const QString& message);
  protected:
   /**
    * @note Called once when the OpenGL context is ready.

@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget* parent)
   ui->filename_output->setWordWrap(true);
   FileNameOutput();
   TextMessageOutput("");
-
+  connect(ui->mv_widget,&s21::gui::ModelViewer::SignalPrintingError,this,&s21::gui::MainWindow::ErrorOccured);
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -87,15 +87,23 @@ void MainWindow::FileNameOutput(){
   ui->filename_output->setText("File: "+ m_file_name);
 }
 
+void MainWindow::ErrorOccured(const QString& message){
+  TextMessageOutput("ERROR! "+ message);
+}
+
 template <typename Func>
 void MainWindow::ChangeModel(Func f) {
   try {
     f();
+    /**
+     * @note This one only schedules painting process, not does it right now 
+     * due to that this try-catch won't handle exceptions from  painting 
+     * the model, only changing (aka f()).
+     */
     ui->mv_widget->update();
   } catch (const std::exception& e) {
-    TextMessageOutput("Error while showing the model: " +
-                      QString::fromStdString(e.what()));
-  }
+    ErrorOccured(QString("Model changing -> ")+e.what());
+  } 
 }
 
 void MainWindow::on_sl_rotate_OX_valueChanged(int value) {
@@ -189,12 +197,12 @@ void MainWindow::on_bt_show_model_clicked() {
                                 ui->mv_widget->GetEdgesAmount())) +
                             " edges.");
         } catch (const std::exception& e) {
-          TextMessageOutput("Not Parsed: " + QString::fromStdString(e.what()));
+          ErrorOccured("Model not set: " + QString::fromStdString(e.what()));
         }
         ChangeModel([this]{});
       });
   connect(worker, &ModelParserWorker::error, this, [this](const QString& msg) {
-    TextMessageOutput("Not Parsed: " + msg);
+    ErrorOccured("Not Parsed: " + msg);
   });
   TextMessageOutput("Model is loading");
   thread->start();
