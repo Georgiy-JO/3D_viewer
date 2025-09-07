@@ -58,7 +58,7 @@ class ProjectionMatrix: public UniformMatrix{
         static constexpr double kFovAngle = 45.0f; 
         static constexpr double kNearPlane =0.1f; 
         static constexpr double kFarPlane = 100.0f; 
-        static constexpr double kProjectionCubeSize=1.0f;
+        static constexpr double kProjectionCubeSize=2.0f;
 };
 
 }       //s21::render::uniforms

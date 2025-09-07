@@ -44,8 +44,8 @@ set(INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/model/render
   ${CMAKE_CURRENT_SOURCE_DIR}/model/render/uniforms
   ${CMAKE_CURRENT_SOURCE_DIR}/view
-  ${CMAKE_CURRENT_SOURCE_DIR}/view/model_controles
-  ${CMAKE_CURRENT_SOURCE_DIR}/view/model_controles/slider
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/controls
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/controls/elements
   ${CMAKE_CURRENT_SOURCE_DIR}/view/model_viewer
   ${CMAKE_CURRENT_SOURCE_DIR}/view/ui
 )
@@ -71,7 +71,8 @@ set(SOURCES
   view/ui/mainwindow.ui
   view/model_viewer/model_viewer_src/model_viewer.cpp
   view/model_viewer/model_viewer_src/mouse_actions.cpp
-  view/model_controles/elements/slider.cpp
+  view/controls/elements/slider.cpp
+  view/controls/model_settings.cpp
   controller/model_parser_worker.cpp
   main.cpp
 )
@@ -95,8 +96,9 @@ set(HEADERS
   view/ui/mainwindow.h
   view/model_viewer/model_viewer.h
   view/model_viewer/mouse_actions.h
-  view/model_controles/model_controles.h
-  view/model_controles/elements/slider.h
+  view/controls/model_controls.h
+  view/controls/model_settings.h
+  view/controls/elements/slider.h
   controller/model_parser_worker.h
   controller/render_controller.h
 )

@@ -49,9 +49,10 @@ class Render {
     m_program.UploadUniforms(
     m_transformation_matrix, m_camera_matrix,
     m_projection_matrix,m_parameters.GetVertexSize(),
-    m_parameters.GetModelColor(), static_cast<bool>(mode),
-    (m_parameters.GetEdgeKind()==EdgeKinds::kDotted)?1:0,
-    (m_parameters.GetVertexKind()==VertexKinds::kCircle)?1:0);
+    m_parameters.GetEdgeWidth(), m_parameters.GetModelColor(), 
+    (mode==RenderMode::kVertices), 
+    (m_parameters.GetEdgeKind()==EdgeKinds::kDotted),
+    (m_parameters.GetVertexKind()==VertexKinds::kCircle));
   }
   void ResetProjection(double w, double h){
     (m_parameters.GetProjectionKind()==ProjectionKinds::kOrthographic)?

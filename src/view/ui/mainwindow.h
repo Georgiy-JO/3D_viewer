@@ -4,7 +4,8 @@
 #include <QMainWindow>
 #include <string>
 
-#include "../model_controles/model_controles.h"
+#include "../controls/model_controls.h"
+#include "../controls/model_settings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -36,17 +37,30 @@ class MainWindow : public QMainWindow {
   void on_bt_file_list_clicked();
   void on_bt_show_model_clicked();
   void on_bt_reset_model_pressed();
+  
+  void on_cb_projection_kind_currentIndexChanged(int index);
+  void on_cb_edge_kind_currentIndexChanged(int index);
+  void on_cb_vertex_kind_currentIndexChanged(int index);
+  void on_sl_edge_width_valueChanged(int value);
+  void on_sl_vertex_size_valueChanged(int value);
+  void on_bt_model_color_clicked();
+  void on_bt_background_color_clicked();
+  void on_bt_reset_parameters_clicked();
 
   void TextMessageOutput(const QString& str);
   // void TextMessageOutput(const std::string& str);    //if won't be needed -
   // delete
   void FileNameOutput();
-  void RefreshModelView();
+
 
  private:
+  template <typename Func>
+  void ChangeModel(Func f);
+
   static constexpr const char* kDefaultFile = "models/skull.obj";
   Ui::MainWindow* ui;
-  s21::gui::controles::ModelControles m_model_controles;
+  s21::gui::controls::ModelControls m_model_controls;
+  s21::gui::controls::ModelSettings m_model_settings;
   QString m_file_name;
 };
 }  // namespace s21::gui

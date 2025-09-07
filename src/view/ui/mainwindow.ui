@@ -305,6 +305,137 @@
      <string>filename_output</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="cb_projection_kind">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>630</y>
+      <width>341</width>
+      <height>26</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="cb_edge_kind">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>660</y>
+      <width>171</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QSlider" name="sl_edge_width">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>680</y>
+      <width>160</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Orientation::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lb_edge_width">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>660</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <italic>true</italic>
+     </font>
+    </property>
+    <property name="text">
+     <string>Edges width</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="sl_vertex_size">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>730</y>
+      <width>160</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Orientation::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="cb_vertex_kind">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>710</y>
+      <width>171</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lb_vertex_size">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>710</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <italic>true</italic>
+     </font>
+    </property>
+    <property name="text">
+     <string>Vertices size</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bt_model_color">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>760</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Model Color</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bt_background_color">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>760</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Background Color</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bt_reset_parameters">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>800</y>
+      <width>341</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset Parameters</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

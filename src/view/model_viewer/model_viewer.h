@@ -30,6 +30,24 @@ class ModelViewer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
   size_t GetVertsAmount() const;
   size_t GetEdgesAmount() const;
 
+  void SetProjectionKind(const int input);
+  int GetProjectionKind() const;
+  void SetEdgeKind(const int input);
+  int GetEdgeKind() const;
+  void SetVertexKind(const int input);
+  int GetVertexKind() const;
+  void SetVertexSize(const double input);
+  double GetVertexSize() const;
+  std::pair<double,double> GetVertexSizeRange() const;
+  void SetEdgeWidth(const double input);
+  double GetEdgeWidth() const;
+  std::pair<double,double> GetEdgeWidthRange() const;
+  void SetModelColor(QColor input);
+  QColor GetModelColor() const;
+  void SetBackgroundColor(QColor input);
+  QColor GetBackgroundColor() const;
+  void ResetParameters();
+
  protected:
   /**
    * @note Called once when the OpenGL context is ready.

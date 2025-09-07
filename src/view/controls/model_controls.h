@@ -1,9 +1,9 @@
-#ifndef SRC_VIEW_MODEL_CONTROLES_MODEL_CONTROLES_H
-#define SRC_VIEW_MODEL_CONTROLES_MODEL_CONTROLES_H
+#ifndef SRC_VIEW_CONTROLS_MODEL_CONTROLS_H
+#define SRC_VIEW_CONTROLS_MODEL_CONTROLS_H
 #include "elements/slider.h"
 
-namespace s21::gui::controles {
-class ModelControles {
+namespace s21::gui::controls {
+class ModelControls {
  public:
   inline void Initialize(QSlider* ox_, QSlider* oy_, QSlider* oz_,
                          QSlider* scale_) {
@@ -11,6 +11,7 @@ class ModelControles {
     m_sl_y.Reset(oy_, kRotateRange, kDefaultRotatePosition, kRotateStep);
     m_sl_z.Reset(oz_, kRotateRange, kDefaultRotatePosition, kRotateStep);
     m_scale.Reset(scale_, kScaleRange, kDefaultScalePosition, kScaleStep);
+    scale_->setVisible(false);
   }
   inline float GetPositiveTranslate() const { return kTranslateStep; }
   inline float GetNegativeTranslate() const { return -kTranslateStep; }
@@ -27,7 +28,7 @@ class ModelControles {
   inline float GetNegativeScale() const { return kScaleBase - kScaleBigStep; }
 
   inline double GetScale(int position) {
-    return 1.0 - 0.1 * static_cast<double>(m_scale.ResetPosition(position));
+    return kScaleBase - kScaleStep * static_cast<double>(m_scale.ResetPosition(position));
   }
 
  private:
@@ -36,7 +37,7 @@ class ModelControles {
   static constexpr int kRotateStep{5};
   static constexpr std::pair<int, int> kScaleRange{-20, 30};
   static constexpr int kDefaultScalePosition{0};
-  static constexpr float kScaleBase{1};
+  static constexpr float kScaleBase{1.0f};
   static constexpr float kScaleStep{0.1};
   static constexpr float kScaleBigStep{0.5};
   static constexpr float kTranslateStep{0.5};
@@ -46,6 +47,6 @@ class ModelControles {
   Slider m_sl_z;
   Slider m_scale;
 };
-}  // namespace s21::gui::controles
+}  // namespace s21::gui::controls
 
-#endif  // SRC_VIEW_MODEL_CONTROLES_MODEL_CONTROLES_H
+#endif  // SRC_VIEW_CONTROLS_MODEL_CONTROLS_H

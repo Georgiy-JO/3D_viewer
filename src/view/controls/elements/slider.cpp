@@ -1,6 +1,6 @@
 #include "slider.h"
 
-namespace s21::gui::controles {
+namespace s21::gui::controls {
 void Slider::Reset(QSlider* slider, const std::pair<int, int> range,
                    const int tick_position, const int slide_step) {
   slider->setRange(range.first, range.second);
@@ -14,4 +14,4 @@ int Slider::ResetPosition(int position) {
   m_position = position;
   return delta;
 }
-}  // namespace s21::gui::controles
+}  // namespace s21::gui::controls

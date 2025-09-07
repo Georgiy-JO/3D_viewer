@@ -13,13 +13,13 @@ class ShaderProgram{
          * @note Need to have active OpenGL context before calling. 
          */
         void SetShaders();
-        void SetShaders(const std::string& vertex_shader_path, const std::string& fragment_shader_path);
+        void SetShaders(const std::string& vertex_shader_path, const std::string& geometry_shader_path, const std::string& fragment_shader_path);
         void UploadUniforms(const s21::render::uniforms::TransformationMatrix& trans_marix, 
             const s21::render::uniforms::CameraMatrix& cam_marix, 
             const s21::render::uniforms::ProjectionMatrix& project_matrix,
-            const double vertex_size, const s21::vectors::Vec4& model_color,
-            const bool render_mode_switch, const bool dotted_edge_switch, 
-            const bool circle_vertex_switch);
+            const double vertex_size, const double edge_width,
+            const s21::vectors::Vec4& model_color, const bool render_mode_switch, 
+            const bool dotted_edge_switch, const bool circle_vertex_switch);
         bool Bind();
         void Unbind();
 
@@ -27,15 +27,17 @@ class ShaderProgram{
 
     private:
         static constexpr const char* kDefaultVertexShaderPath = "shaders/shader.vert";
+        static constexpr const char* kDefaultGeometryShaderPath = "shaders/shader.geom";
         static constexpr const char* kDefaultFragmentShaderPath = "shaders/shader.frag";
-        static constexpr const char* kTransformationUniform = "transformation";
-        static constexpr const char* kCameraUniform = "camera";
-        static constexpr const char* kProjectionUniform = "projection";
-        static constexpr const char* kVertexSizeUniform = "vertex_size";
-        static constexpr const char* kModelColorUniform = "model_color";
-        static constexpr const char* kRenderModeUniform = "edges_vertex_switch";
-        static constexpr const char* kDottedEdgeUniform = "dotted_edge";
-        static constexpr const char* kCircleVertexUniform = "circle_vertex";
+        static constexpr const char* kTransformationUniform = "mTransformation";
+        static constexpr const char* kCameraUniform = "mCamera";
+        static constexpr const char* kProjectionUniform = "mProjection";
+        static constexpr const char* kVertexSizeUniform = "dVertexSize";
+        static constexpr const char* kEdgeWidthUniform = "dEdgeWidth";
+        static constexpr const char* kModelColorUniform = "vModelColor";
+        static constexpr const char* kRenderModeUniform = "sVertexMode";
+        static constexpr const char* kDottedEdgeUniform = "sDottedEdge";
+        static constexpr const char* kCircleVertexUniform = "sCircleVertex";
 
         QOpenGLShaderProgram m_program;
 };
