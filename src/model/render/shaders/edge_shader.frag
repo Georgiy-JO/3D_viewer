@@ -8,8 +8,6 @@ uniform bool sCircleVertex;            // swtich from square to circle vetrices
 
 
 void main() {
-    
-    //----- Edges dotted drawing -----
     if(sDottedEdge){
         if(int(gl_FragCoord.x + gl_FragCoord.y) % 10 < 5){
             discard;

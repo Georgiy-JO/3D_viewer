@@ -3,15 +3,6 @@
 #include <cmath>
 
 namespace s21::vectors {
-
-// Vec3::Vec3() : x(0), y(0), z(0) {}
-
-// Vec3::Vec3(double value) : x(value), y(value), z(value) {}
-
-// Vec3::Vec3(double x_, double y_, double z_) : x(x_), y(y_), z(z_) {}
-
-// Vec3::Vec3(const Vec3 &vec) : x(vec.x), y(vec.y), z(vec.z) {}
-
 Vec3 Vec3::operator*(double number) const {
   return Vec3(x * number, y * number, z * number);
 }

@@ -21,6 +21,8 @@ class MainWindow : public QMainWindow {
   MainWindow(QWidget* parent = nullptr);
   ~MainWindow();
 
+ public slots:
+  void ErrorOccured(const QString& message);
  private slots:
   void on_sl_rotate_OX_valueChanged(int value);
   void on_sl_rotate_OY_valueChanged(int value);
@@ -37,7 +39,7 @@ class MainWindow : public QMainWindow {
   void on_bt_file_list_clicked();
   void on_bt_show_model_clicked();
   void on_bt_reset_model_pressed();
-  
+
   void on_cb_projection_kind_currentIndexChanged(int index);
   void on_cb_edge_kind_currentIndexChanged(int index);
   void on_cb_vertex_kind_currentIndexChanged(int index);
@@ -48,12 +50,10 @@ class MainWindow : public QMainWindow {
   void on_bt_reset_parameters_clicked();
 
   void TextMessageOutput(const QString& str);
-  // void TextMessageOutput(const std::string& str);    //if won't be needed -
-  // delete
   void FileNameOutput();
 
-
  private:
+  void OpenGLSetting();
   template <typename Func>
   void ChangeModel(Func f);
 

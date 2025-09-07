@@ -436,6 +436,52 @@
      <string>Reset Parameters</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="cb_screen_format">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>780</y>
+      <width>86</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>bmp</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>jpeg</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="bt_scree">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>780</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Screen Shot</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bt_gif">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>780</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Make GIF</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

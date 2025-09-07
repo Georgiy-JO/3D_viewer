@@ -27,22 +27,10 @@ struct Vec3 {
   bool operator==(const Vec3 &vec) const;
   bool operator!=(const Vec3 &vec) const;
 
-  /**
-   * @note If following 4 methods won't be needed,
-   * they can be deleted later.
-   */
   Vec3 operator--();
   Vec3 operator++();
   Vec3 operator--(int);
   Vec3 operator++(int);
-
-  /**
-   * @note If following 3 methods will be needed,
-   * they can be add later.
-   */
-  // Vec3 operator*(const Vec3& vec) const;
-  // Vec3& operator*=(const Vec3& vec);
-  // double Length() const;
 };
 
 }  // namespace s21::vectors

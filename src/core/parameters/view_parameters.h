@@ -59,7 +59,7 @@ class ViewParameters {
   };
 
  public:
-  inline ViewParameters(){ ReadFromSettingsFile(); }
+  inline ViewParameters() { ReadFromSettingsFile(); }
   inline ~ViewParameters() { SaveToSettingsFile(); }
 
   bool ReadFromSettingsFile(const std::string& file_name = kSettingsFile);
@@ -144,11 +144,11 @@ class ViewParameters {
   bool SetEdgeKind(const int input);
 
  private:
-  static constexpr const char* kSettingsFile = "settings.txt";
+  static constexpr const char* kSettingsFile = "view_parameters.txt";
   static constexpr const char* kSettingsFileHead =
       "# The file structure is important, it should not changed manually "
       "otherwise it may end up in settings not to be activly set.";
-  static constexpr uintmax_t kMaxSettingsFileSize = 2000;
+  static constexpr uintmax_t kMaxSettingsFileSize = 2000;  // in bytes
 
   static constexpr const char kBackgroundColorTag[]{"bc"};
   static constexpr const char kModelColorTag[]{"mc"};
@@ -191,7 +191,7 @@ class ViewParameters {
   s21::parameters::ViewParameter<double,          // parameter type
                                  double,          // parameter type
                                  4.0,             // default
-                                 1.0, 30.0,       // parameter min max
+                                 1.0, 50.0,       // parameter min max
                                  kVertexSizeTag>  // parameter's tag
       m_vertex_size;
   s21::parameters::ViewParameter<
@@ -214,32 +214,7 @@ class ViewParameters {
       0, 2,                                               // parameter min max
       kEdgeKindTag>                                       // parameter's tag
       m_edge_kind;
-
-  // /**
-  //  * @brief Default parameters in case there is not settings file
-  //  */
-  // // Background color: dark gray, transparency - solid
-  // static constexpr s21::vectors::Vec4 kDefaultBackgroundColor{0.1f, 0.1f,
-  // 0.1f,1.0f};
-  // // tan-like color RGBA
-  // static constexpr s21::vectors::Vec4 kDefaultModelColor{0.9f, 0.8f,
-  // 0.6f, 1.0f}; static constexpr s21::ViewParameters::ProjectionKind
-  // kDefaultProjectionkind = s21::ViewParameters::ProjectionKind::kOrthographic;
-  // static constexpr double kDefaultVertexSize {4.0f};
-  // static constexpr s21::ViewParameters::VertexKind kDefaultVertexKind
-  // =s21::ViewParameters::VertexKind::kSquare; static constexpr double
-  // kEdgeWidth {0.1f}; static constexpr s21::ViewParameters::EdgeKind
-  // kDefaultEdgeKind = s21::ViewParameters::EdgeKind::kSolid;
-
-  // s21::vectors::Vec4 m_background_color;
-  // s21::vectors::Vec4 m_model_color;
-  // s21::ViewParameters::ProjectionKind m_projection_kind;
-  // double m_vertex_size;
-  // s21::ViewParameters::VertexKind m_vertex_kind;
-  // double m_edge_width;
-  // s21::ViewParameters::EdgeKind m_edge_kind;
 };
-
 
 }  // namespace s21::parameters
 

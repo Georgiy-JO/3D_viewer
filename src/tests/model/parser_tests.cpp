@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
+
 #include <fstream>
 
-#include "../../model/parser/parser.h"
 #include "../../model/parser/model_parser.h"
+#include "../../model/parser/parser.h"
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNum) {
   int ch = 'k';
@@ -488,8 +489,10 @@ TEST(Model_Parser, Parser_ModelNormalizer) {
   EXPECT_EQ(model.GetEdgesAmount(), 15);
   EXPECT_EQ(model.GetVerticesAmount(), 21);
 
-  EXPECT_THROW(s21::inbound_model::parser::Parser prs11(model, "nothing.txt"),std::ios_base::failure);
-  EXPECT_NO_THROW(s21::inbound_model::parser::Parser prs12(model, "nothing.obj"));
+  EXPECT_THROW(s21::inbound_model::parser::Parser prs11(model, "nothing.txt"),
+               std::ios_base::failure);
+  EXPECT_NO_THROW(
+      s21::inbound_model::parser::Parser prs12(model, "nothing.obj"));
   s21::inbound_model::parser::Parser prs1(model, "nothing.obj");
   prs1.ModelNormalizer();
   EXPECT_EQ(model.GetEdgesAmount(), 2);
@@ -536,7 +539,7 @@ TEST(Model_Parser, Parser_ParseIt) {
 
   EXPECT_THROW(prs.SetFileName(file_name), std::ios_base::failure);
   EXPECT_THROW(prs.ParseIt(), std::ios_base::failure);
-  
+
   file_name = "models/test_2.obj";
   prs.SetFileName(file_name);
   EXPECT_NO_THROW(prs.ParseIt());
@@ -800,7 +803,6 @@ TEST(Model_Parser, Parser_ParseIt) {
   model = prs.GetModelRef();
   EXPECT_EQ(model.GetEdgesAmount(), 0);
   EXPECT_EQ(model.GetVerticesAmount(), 0);
-
 }
 
 TEST(Model_Parser, ModelParser_ParseModelFromFile_pointer) {

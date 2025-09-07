@@ -38,15 +38,18 @@ class ModelViewer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
   int GetVertexKind() const;
   void SetVertexSize(const double input);
   double GetVertexSize() const;
-  std::pair<double,double> GetVertexSizeRange() const;
+  std::pair<double, double> GetVertexSizeRange() const;
   void SetEdgeWidth(const double input);
   double GetEdgeWidth() const;
-  std::pair<double,double> GetEdgeWidthRange() const;
+  std::pair<double, double> GetEdgeWidthRange() const;
   void SetModelColor(QColor input);
   QColor GetModelColor() const;
   void SetBackgroundColor(QColor input);
   QColor GetBackgroundColor() const;
   void ResetParameters();
+
+ signals:
+  void SignalPrintingError(const QString &message);
 
  protected:
   /**

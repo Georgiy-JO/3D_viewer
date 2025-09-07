@@ -3,205 +3,209 @@
 #include "../../model/render/uniforms/uniforms.h"
 
 TEST(Render_Uniforms, TransformationMatrix_Basic) {
-    s21::render::uniforms::TransformationMatrix tm;
+  s21::render::uniforms::TransformationMatrix tm;
 
-    s21::matrix::Matrix4x4 m;
-    m.SetToIdentity();
-    EXPECT_EQ(m,tm.GetMatrix());
+  s21::matrix::Matrix4x4 m;
+  m.SetToIdentity();
+  EXPECT_EQ(m, tm.GetMatrix());
 
-    QMatrix4x4 qm;
-    qm.setToIdentity();
-    EXPECT_EQ(qm,tm.GetMatrixQT());
+  QMatrix4x4 qm;
+  qm.setToIdentity();
+  EXPECT_EQ(qm, tm.GetMatrixQT());
 }
 
 TEST(Render_Uniforms, TransformationMatrix_Transformations) {
-    s21::render::uniforms::TransformationMatrix tm;
+  s21::render::uniforms::TransformationMatrix tm;
 
-    s21::matrix::Matrix v(4,1);
-    v(0,0)=5.5;
-    v(1,0)=10.5;
-    v(2,0)=0;
-    v(3,0)=1;
+  s21::matrix::Matrix v(4, 1);
+  v(0, 0) = 5.5;
+  v(1, 0) = 10.5;
+  v(2, 0) = 0;
+  v(3, 0) = 1;
 
-    tm.RotateZ(90);
-    tm.Scale(2);
-    tm.Translate(-2.5,0,-10);
+  tm.RotateZ(90);
+  tm.Scale(2);
+  tm.Translate(-2.5, 0, -10);
 
-    s21::matrix::Matrix4x4 m4(tm.GetMatrix());
+  s21::matrix::Matrix4x4 m4(tm.GetMatrix());
 
-    s21::matrix::Matrix m(4,4);
+  s21::matrix::Matrix m(4, 4);
 
-    for(int i=0;i<s21::matrix::Matrix4x4::kMatrixDimention;i++){
-        for(int j=0;j<s21::matrix::Matrix4x4::kMatrixDimention;j++){
-            m(i,j)=m4(i,j);
-        }
+  for (int i = 0; i < s21::matrix::Matrix4x4::kMatrixDimention; i++) {
+    for (int j = 0; j < s21::matrix::Matrix4x4::kMatrixDimention; j++) {
+      m(i, j) = m4(i, j);
     }
+  }
 
-    v=m*v;
-    EXPECT_EQ(v.getCols(),1);
-    EXPECT_EQ(v.getRows(),4);
-    EXPECT_NEAR(v(0,0),-23.5,1e-8);
-    EXPECT_NEAR(v(1,0),11,1e-8);
-    EXPECT_NEAR(v(2,0),-10,1e-8);
-    EXPECT_NEAR(v(3,0),1,1e-8);
+  v = m * v;
+  EXPECT_EQ(v.getCols(), 1);
+  EXPECT_EQ(v.getRows(), 4);
+  EXPECT_NEAR(v(0, 0), -23.5, 1e-8);
+  EXPECT_NEAR(v(1, 0), 11, 1e-8);
+  EXPECT_NEAR(v(2, 0), -10, 1e-8);
+  EXPECT_NEAR(v(3, 0), 1, 1e-8);
 
-    tm.Reset();
-    m4=tm.GetMatrix();
-    for(int i=0;i<s21::matrix::Matrix4x4::kMatrixDimention;i++){
-        for(int j=0;j<s21::matrix::Matrix4x4::kMatrixDimention;j++){
-            m(i,j)=m4(i,j);
-        }
+  tm.Reset();
+  m4 = tm.GetMatrix();
+  for (int i = 0; i < s21::matrix::Matrix4x4::kMatrixDimention; i++) {
+    for (int j = 0; j < s21::matrix::Matrix4x4::kMatrixDimention; j++) {
+      m(i, j) = m4(i, j);
     }
-    v=m*v;
-    EXPECT_EQ(v.getCols(),1);
-    EXPECT_EQ(v.getRows(),4);
-    EXPECT_NEAR(v(0,0),-23.5,1e-8);
-    EXPECT_NEAR(v(1,0),11,1e-8);
-    EXPECT_NEAR(v(2,0),-10,1e-8);
-    EXPECT_NEAR(v(3,0),1,1e-8);
+  }
+  v = m * v;
+  EXPECT_EQ(v.getCols(), 1);
+  EXPECT_EQ(v.getRows(), 4);
+  EXPECT_NEAR(v(0, 0), -23.5, 1e-8);
+  EXPECT_NEAR(v(1, 0), 11, 1e-8);
+  EXPECT_NEAR(v(2, 0), -10, 1e-8);
+  EXPECT_NEAR(v(3, 0), 1, 1e-8);
 
-    tm.Reset();
-    tm.RotateY(180);
-    m4=tm.GetMatrix();
-    for(int i=0;i<s21::matrix::Matrix4x4::kMatrixDimention;i++){
-        for(int j=0;j<s21::matrix::Matrix4x4::kMatrixDimention;j++){
-            m(i,j)=m4(i,j);
-        }
+  tm.Reset();
+  tm.RotateY(180);
+  m4 = tm.GetMatrix();
+  for (int i = 0; i < s21::matrix::Matrix4x4::kMatrixDimention; i++) {
+    for (int j = 0; j < s21::matrix::Matrix4x4::kMatrixDimention; j++) {
+      m(i, j) = m4(i, j);
     }
-    v=m*v;
-    EXPECT_EQ(v.getCols(),1);
-    EXPECT_EQ(v.getRows(),4);
-    EXPECT_NEAR(v(0,0),23.5,1e-8);
-    EXPECT_NEAR(v(1,0),11,1e-8);
-    EXPECT_NEAR(v(2,0),10,1e-8);
-    EXPECT_NEAR(v(3,0),1,1e-8);
+  }
+  v = m * v;
+  EXPECT_EQ(v.getCols(), 1);
+  EXPECT_EQ(v.getRows(), 4);
+  EXPECT_NEAR(v(0, 0), 23.5, 1e-8);
+  EXPECT_NEAR(v(1, 0), 11, 1e-8);
+  EXPECT_NEAR(v(2, 0), 10, 1e-8);
+  EXPECT_NEAR(v(3, 0), 1, 1e-8);
 
-    tm.Reset();
-    tm.RotateZ(360);
-    m4=tm.GetMatrix();
-    for(int i=0;i<s21::matrix::Matrix4x4::kMatrixDimention;i++){
-        for(int j=0;j<s21::matrix::Matrix4x4::kMatrixDimention;j++){
-            m(i,j)=m4(i,j);
-        }
+  tm.Reset();
+  tm.RotateZ(360);
+  m4 = tm.GetMatrix();
+  for (int i = 0; i < s21::matrix::Matrix4x4::kMatrixDimention; i++) {
+    for (int j = 0; j < s21::matrix::Matrix4x4::kMatrixDimention; j++) {
+      m(i, j) = m4(i, j);
     }
-    v=m*v;
-    EXPECT_EQ(v.getCols(),1);
-    EXPECT_EQ(v.getRows(),4);
-    EXPECT_NEAR(v(0,0),23.5,1e-8);
-    EXPECT_NEAR(v(1,0),11,1e-8);
-    EXPECT_NEAR(v(2,0),10,1e-8);
-    EXPECT_NEAR(v(3,0),1,1e-8);
+  }
+  v = m * v;
+  EXPECT_EQ(v.getCols(), 1);
+  EXPECT_EQ(v.getRows(), 4);
+  EXPECT_NEAR(v(0, 0), 23.5, 1e-8);
+  EXPECT_NEAR(v(1, 0), 11, 1e-8);
+  EXPECT_NEAR(v(2, 0), 10, 1e-8);
+  EXPECT_NEAR(v(3, 0), 1, 1e-8);
 
-    tm.Reset();
-    tm.RotateX(360);
-    m4=tm.GetMatrix();
-    for(int i=0;i<s21::matrix::Matrix4x4::kMatrixDimention;i++){
-        for(int j=0;j<s21::matrix::Matrix4x4::kMatrixDimention;j++){
-            m(i,j)=m4(i,j);
-        }
+  tm.Reset();
+  tm.RotateX(360);
+  m4 = tm.GetMatrix();
+  for (int i = 0; i < s21::matrix::Matrix4x4::kMatrixDimention; i++) {
+    for (int j = 0; j < s21::matrix::Matrix4x4::kMatrixDimention; j++) {
+      m(i, j) = m4(i, j);
     }
-    v=m*v;
-    EXPECT_EQ(v.getCols(),1);
-    EXPECT_EQ(v.getRows(),4);
-    EXPECT_NEAR(v(0,0),23.5,1e-8);
-    EXPECT_NEAR(v(1,0),11,1e-8);
-    EXPECT_NEAR(v(2,0),10,1e-8);
-    EXPECT_NEAR(v(3,0),1,1e-8);
-
+  }
+  v = m * v;
+  EXPECT_EQ(v.getCols(), 1);
+  EXPECT_EQ(v.getRows(), 4);
+  EXPECT_NEAR(v(0, 0), 23.5, 1e-8);
+  EXPECT_NEAR(v(1, 0), 11, 1e-8);
+  EXPECT_NEAR(v(2, 0), 10, 1e-8);
+  EXPECT_NEAR(v(3, 0), 1, 1e-8);
 }
 
 TEST(Render_Uniforms, CameraMatrix) {
-    s21::render::uniforms::CameraMatrix cm;
+  s21::render::uniforms::CameraMatrix cm;
 
-    s21::matrix::Matrix m(4,4);
-    m(0,0)=1;
-    m(0,1)=0;
-    m(0,2)=0;
-    m(0,3)=0;
+  s21::matrix::Matrix m(4, 4);
+  m(0, 0) = 1;
+  m(0, 1) = 0;
+  m(0, 2) = 0;
+  m(0, 3) = 0;
 
-    m(1,0)=0;
-    m(1,1)=1;
-    m(1,2)=0;
-    m(1,3)=0;
+  m(1, 0) = 0;
+  m(1, 1) = 1;
+  m(1, 2) = 0;
+  m(1, 3) = 0;
 
-    m(2,0)=0;
-    m(2,1)=0;
-    m(2,2)=1;
-    m(2,3)=-5.0;
+  m(2, 0) = 0;
+  m(2, 1) = 0;
+  m(2, 2) = 1;
+  m(2, 3) = -5.0;
 
-    m(3,0)=0;
-    m(3,1)=0;
-    m(3,2)=0;
-    m(3,3)=1;
-    
-    EXPECT_EQ(s21::matrix::Matrix4x4(m),cm.GetMatrix());
+  m(3, 0) = 0;
+  m(3, 1) = 0;
+  m(3, 2) = 0;
+  m(3, 3) = 1;
+
+  EXPECT_EQ(s21::matrix::Matrix4x4(m), cm.GetMatrix());
 }
 
 TEST(Render_Uniforms, ProjectionMatrix) {
-    s21::render::uniforms::ProjectionMatrix pm;
-    pm.ResetCentral(10,5);
-    s21::matrix::Matrix4x4 m4(pm.GetMatrix());
-    s21::matrix::Matrix m(4,4);
+  s21::render::uniforms::ProjectionMatrix pm;
+  pm.ResetCentral(10, 5);
+  s21::matrix::Matrix4x4 m4(pm.GetMatrix());
+  s21::matrix::Matrix m(4, 4);
 
-    for(int i=0;i<s21::matrix::Matrix4x4::kMatrixDimention;i++){
-        for(int j=0;j<s21::matrix::Matrix4x4::kMatrixDimention;j++){
-            m(i,j)=m4(i,j);
-        }
+  for (int i = 0; i < s21::matrix::Matrix4x4::kMatrixDimention; i++) {
+    for (int j = 0; j < s21::matrix::Matrix4x4::kMatrixDimention; j++) {
+      m(i, j) = m4(i, j);
     }
-    
-    EXPECT_NEAR(m(0,0),1.0f/(10.0/5.0*std::tan(s21::matrix::DegreesToRadians (45.0)/2.0)),1e-8);
-    EXPECT_NEAR(m(0,1),0,1e-8);
-    EXPECT_NEAR(m(0,2),0,1e-8);
-    EXPECT_NEAR(m(0,3),0,1e-8);
+  }
 
-    EXPECT_NEAR(m(1,0),0,1e-8);
-    EXPECT_NEAR(m(1,1),1.0f/(std::tan(s21::matrix::DegreesToRadians (45.0)/2.0)),1e-8);
-    EXPECT_NEAR(m(1,2),0,1e-8);
-    EXPECT_NEAR(m(1,3),0,1e-8);
+  EXPECT_NEAR(
+      m(0, 0),
+      1.0f / (10.0 / 5.0 * std::tan(s21::matrix::DegreesToRadians(45.0) / 2.0)),
+      1e-8);
+  EXPECT_NEAR(m(0, 1), 0, 1e-8);
+  EXPECT_NEAR(m(0, 2), 0, 1e-8);
+  EXPECT_NEAR(m(0, 3), 0, 1e-8);
 
-    EXPECT_NEAR(m(2,0),0,1e-8);
-    EXPECT_NEAR(m(2,1),0,1e-8);
-    EXPECT_NEAR(m(2,2),(100.0+0.1)/(0.1-100.0),1e-8);
-    EXPECT_NEAR(m(2,3),2*100.0*0.1/(0.1-100.0),1e-8);
+  EXPECT_NEAR(m(1, 0), 0, 1e-8);
+  EXPECT_NEAR(m(1, 1),
+              1.0f / (std::tan(s21::matrix::DegreesToRadians(45.0) / 2.0)),
+              1e-8);
+  EXPECT_NEAR(m(1, 2), 0, 1e-8);
+  EXPECT_NEAR(m(1, 3), 0, 1e-8);
 
-    EXPECT_NEAR(m(3,0),0,1e-8);
-    EXPECT_NEAR(m(3,1),0,1e-8);
-    EXPECT_NEAR(m(3,2),-1,1e-8);
-    EXPECT_NEAR(m(3,3),0,1e-8);
+  EXPECT_NEAR(m(2, 0), 0, 1e-8);
+  EXPECT_NEAR(m(2, 1), 0, 1e-8);
+  EXPECT_NEAR(m(2, 2), (100.0 + 0.1) / (0.1 - 100.0), 1e-8);
+  EXPECT_NEAR(m(2, 3), 2 * 100.0 * 0.1 / (0.1 - 100.0), 1e-8);
 
-    pm.ResetOrthographic(10,5);
-    s21::matrix::Matrix4x4 m5(pm.GetMatrix());
+  EXPECT_NEAR(m(3, 0), 0, 1e-8);
+  EXPECT_NEAR(m(3, 1), 0, 1e-8);
+  EXPECT_NEAR(m(3, 2), -1, 1e-8);
+  EXPECT_NEAR(m(3, 3), 0, 1e-8);
 
-    for(int i=0;i<s21::matrix::Matrix4x4::kMatrixDimention;i++){
-        for(int j=0;j<s21::matrix::Matrix4x4::kMatrixDimention;j++){
-            m(i,j)=m5(i,j);
-        }
+  pm.ResetOrthographic(10, 5);
+  s21::matrix::Matrix4x4 m5(pm.GetMatrix());
+
+  for (int i = 0; i < s21::matrix::Matrix4x4::kMatrixDimention; i++) {
+    for (int j = 0; j < s21::matrix::Matrix4x4::kMatrixDimention; j++) {
+      m(i, j) = m5(i, j);
     }
-    double right=2*1;
-    double left=-right;
-    double top=1;
-    double bottom=-top;
-    s21::matrix::Matrix local(s21::matrix::Matrix4x4::kMatrixDimention,
-                                s21::matrix::Matrix4x4::kMatrixDimention);
-            
-    EXPECT_NEAR(m(0, 0),2.0f / (right-left),1e-8);
-    EXPECT_NEAR(m(0, 1),0,1e-8);
-    EXPECT_NEAR(m(0, 2),0,1e-8);
-    EXPECT_NEAR(m(0, 3),(right+left)/(left-right),1e-8);
+  }
+  double size = 2;
+  double right = 2 * size;
+  double left = -right;
+  double top = size;
+  double bottom = -top;
+  s21::matrix::Matrix local(s21::matrix::Matrix4x4::kMatrixDimention,
+                            s21::matrix::Matrix4x4::kMatrixDimention);
 
-    EXPECT_NEAR(m(1, 0),0,1e-8);
-    EXPECT_NEAR(m(1, 1),2.0f / (top-bottom),1e-8);
-    EXPECT_NEAR(m(1, 2),0,1e-8);
-    EXPECT_NEAR(m(1, 3),(top+bottom)/(bottom-top),1e-8);
+  EXPECT_NEAR(m(0, 0), 2.0f / (right - left), 1e-8);
+  EXPECT_NEAR(m(0, 1), 0, 1e-8);
+  EXPECT_NEAR(m(0, 2), 0, 1e-8);
+  EXPECT_NEAR(m(0, 3), (right + left) / (left - right), 1e-8);
 
-    EXPECT_NEAR(m(2, 0),0,1e-8);
-    EXPECT_NEAR(m(2, 1),0,1e-8);
-    EXPECT_NEAR(m(2, 2),2.0f / (0.1 - 100.0),1e-8);
-    EXPECT_NEAR(m(2, 3),(100.0 + 0.1) / (0.1 - 100.0),1e-8);
+  EXPECT_NEAR(m(1, 0), 0, 1e-8);
+  EXPECT_NEAR(m(1, 1), 2.0f / (top - bottom), 1e-8);
+  EXPECT_NEAR(m(1, 2), 0, 1e-8);
+  EXPECT_NEAR(m(1, 3), (top + bottom) / (bottom - top), 1e-8);
 
-    EXPECT_NEAR(m(3, 0),0,1e-8);
-    EXPECT_NEAR(m(3, 1),0,1e-8);
-    EXPECT_NEAR(m(3, 2),0,1e-8);
-    EXPECT_NEAR(m(3, 3),1.0f,1e-8);
+  EXPECT_NEAR(m(2, 0), 0, 1e-8);
+  EXPECT_NEAR(m(2, 1), 0, 1e-8);
+  EXPECT_NEAR(m(2, 2), 2.0f / (0.1 - 100.0), 1e-8);
+  EXPECT_NEAR(m(2, 3), (100.0 + 0.1) / (0.1 - 100.0), 1e-8);
 
+  EXPECT_NEAR(m(3, 0), 0, 1e-8);
+  EXPECT_NEAR(m(3, 1), 0, 1e-8);
+  EXPECT_NEAR(m(3, 2), 0, 1e-8);
+  EXPECT_NEAR(m(3, 3), 1.0f, 1e-8);
 }

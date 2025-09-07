@@ -89,7 +89,7 @@ class Model3D {
   const Edge& operator()(size_t number) const;
 
  private:
-  static constexpr double c_default_scale_factor = 1.0;
+  static constexpr double kDefaultScaleFactor = 1.0;
   const Vec3& DefaultCenteringVector() const;
   void Scale(double factor);
   void Center(const Vec3& vec);
@@ -111,7 +111,7 @@ class Model3D {
   Edges m_edges;
   AxisBounds3D m_bounds;
 
-  double m_scale_factor = c_default_scale_factor;
+  double m_scale_factor = kDefaultScaleFactor;
   Vec3 m_centering_vector{0, 0, 0};
 };  // class Model3D
 

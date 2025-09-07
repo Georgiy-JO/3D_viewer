@@ -284,9 +284,12 @@ TEST(MatrixTest, doubleServiceMethods) {
   EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(a, b), true);
   EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(a, c), false);
   EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(c, d), true);
-  EXPECT_THROW(s21::matrix::MatrixService::doubleEqComplex(e, d), s21::matrix::DataError);
-  EXPECT_THROW(s21::matrix::MatrixService::doubleEqComplex(-f, -f), s21::matrix::DataError);
-  EXPECT_THROW(s21::matrix::MatrixService::doubleEqComplex(f, f), s21::matrix::DataError);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleEqComplex(e, d),
+               s21::matrix::DataError);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleEqComplex(-f, -f),
+               s21::matrix::DataError);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleEqComplex(f, f),
+               s21::matrix::DataError);
   EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(f, -f), false);
   EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(-f, f), false);
   EXPECT_EQ(s21::matrix::MatrixService::doubleEqComplex(c, -f), false);
@@ -298,9 +301,12 @@ TEST(MatrixTest, doubleServiceMethods) {
   EXPECT_NO_THROW(s21::matrix::MatrixService::doubleLegit(b));
   EXPECT_NO_THROW(s21::matrix::MatrixService::doubleLegit(c));
   EXPECT_NO_THROW(s21::matrix::MatrixService::doubleLegit(d));
-  EXPECT_THROW(s21::matrix::MatrixService::doubleLegit(e), s21::matrix::DataError);
-  EXPECT_THROW(s21::matrix::MatrixService::doubleLegit(f), s21::matrix::DataError);
-  EXPECT_THROW(s21::matrix::MatrixService::doubleLegit(-f), s21::matrix::DataError);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleLegit(e),
+               s21::matrix::DataError);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleLegit(f),
+               s21::matrix::DataError);
+  EXPECT_THROW(s21::matrix::MatrixService::doubleLegit(-f),
+               s21::matrix::DataError);
 }
 TEST(MatrixTest, EqMatrix) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};

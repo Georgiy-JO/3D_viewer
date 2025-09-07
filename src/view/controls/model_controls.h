@@ -28,7 +28,8 @@ class ModelControls {
   inline float GetNegativeScale() const { return kScaleBase - kScaleBigStep; }
 
   inline double GetScale(int position) {
-    return kScaleBase - kScaleStep * static_cast<double>(m_scale.ResetPosition(position));
+    return kScaleBase -
+           kScaleStep * static_cast<double>(m_scale.ResetPosition(position));
   }
 
  private:

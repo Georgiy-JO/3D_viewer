@@ -74,7 +74,7 @@ void Matrix4x4::Rotate(double angle, Vec3 vec) {
  * @note Using "magic numbers" can't be avoided here.
  */
 void Matrix4x4::Scale(double scale) {
-  if (scale <= 0) scale = kMinialScale;
+  if (scale <= kMinialScale) scale = kMinialScale;
   Matrix4x4 local;
   local.SetToIdentity();
   local.m_matrix(0, 0) = scale;

@@ -56,7 +56,7 @@ ProjectionMatrix::ProjectionMatrix() { m_matrix.SetToIdentity(); }
  * @note Using "magic numbers" can't be avoided here.
  */
 void ProjectionMatrix::ResetCentral(double w, double h, double fov_angle,
-                             double near_plane, double far_plane) {
+                                    double near_plane, double far_plane) {
   fov_angle = s21::matrix::DegreesToRadians(fov_angle);
   double tan = std::tan(fov_angle / 2.0f);
   double ratio = w / (h > 0 ? h : 1.0f);
@@ -89,24 +89,26 @@ void ProjectionMatrix::ResetCentral(double w, double h, double fov_angle,
 /**
  * @note Using "magic numbers" can't be avoided here.
  */
-void ProjectionMatrix::ResetOrthographic(double w, double h, double projection_zone_size, double near_plane, double far_plane){
+void ProjectionMatrix::ResetOrthographic(double w, double h,
+                                         double projection_zone_size,
+                                         double near_plane, double far_plane) {
   double ratio = w / (h > 0 ? h : 1.0f);
-  double right=projection_zone_size*ratio;
-  double left=-right;
-  double top=projection_zone_size;
-  double bottom=-top;
+  double right = projection_zone_size * ratio;
+  double left = -right;
+  double top = projection_zone_size;
+  double bottom = -top;
   s21::matrix::Matrix local(s21::matrix::Matrix4x4::kMatrixDimention,
                             s21::matrix::Matrix4x4::kMatrixDimention);
-          
-  local(0, 0) = 2.0f / (right-left);
+
+  local(0, 0) = 2.0f / (right - left);
   local(0, 1) = 0;
   local(0, 2) = 0;
-  local(0, 3) = (right+left)/(left-right);
+  local(0, 3) = (right + left) / (left - right);
 
   local(1, 0) = 0;
-  local(1, 1) = 2.0f / (top-bottom);
+  local(1, 1) = 2.0f / (top - bottom);
   local(1, 2) = 0;
-  local(1, 3) = (top+bottom)/(bottom-top);
+  local(1, 3) = (top + bottom) / (bottom - top);
 
   local(2, 0) = 0;
   local(2, 1) = 0;
@@ -118,8 +120,7 @@ void ProjectionMatrix::ResetOrthographic(double w, double h, double projection_z
   local(3, 2) = 0;
   local(3, 3) = 1.0f;
 
-  m_matrix = local;                  
-
+  m_matrix = local;
 }
 
 }  // namespace s21::render::uniforms

@@ -31,25 +31,29 @@ find_package(OpenGL REQUIRED)
 
 set(INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/controller
   ${CMAKE_CURRENT_SOURCE_DIR}/core
   ${CMAKE_CURRENT_SOURCE_DIR}/core/math
   ${CMAKE_CURRENT_SOURCE_DIR}/core/service
   ${CMAKE_CURRENT_SOURCE_DIR}/core/parameters
-  ${CMAKE_CURRENT_SOURCE_DIR}/controller
   ${CMAKE_CURRENT_SOURCE_DIR}/model
   ${CMAKE_CURRENT_SOURCE_DIR}/model/model3d
   ${CMAKE_CURRENT_SOURCE_DIR}/model/model3d/elements
   ${CMAKE_CURRENT_SOURCE_DIR}/model/parser
+  ${CMAKE_CURRENT_SOURCE_DIR}/model/parser/parser_src
   ${CMAKE_CURRENT_SOURCE_DIR}/model/parser/service_functions
   ${CMAKE_CURRENT_SOURCE_DIR}/model/render
+  ${CMAKE_CURRENT_SOURCE_DIR}/model/render/render_src
   ${CMAKE_CURRENT_SOURCE_DIR}/model/render/uniforms
   ${CMAKE_CURRENT_SOURCE_DIR}/view
   ${CMAKE_CURRENT_SOURCE_DIR}/view/controls
   ${CMAKE_CURRENT_SOURCE_DIR}/view/controls/elements
   ${CMAKE_CURRENT_SOURCE_DIR}/view/model_viewer
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/model_viewer/model_viewer_src
   ${CMAKE_CURRENT_SOURCE_DIR}/view/ui
 )
 set(SOURCES
+  controller/model_parser_worker.cpp
   core/math/matrix4x4.cpp
   core/math/vec3.cpp
   core/math/vec4.cpp
@@ -67,16 +71,17 @@ set(SOURCES
   model/render/render_src/gui_model.cpp
   model/render/render_src/shader_program.cpp
   model/render/uniforms/uniforms.cpp
-  view/ui/mainwindow.cpp
-  view/ui/mainwindow.ui
   view/model_viewer/model_viewer_src/model_viewer.cpp
   view/model_viewer/model_viewer_src/mouse_actions.cpp
   view/controls/elements/slider.cpp
   view/controls/model_settings.cpp
-  controller/model_parser_worker.cpp
+  view/ui/mainwindow.cpp
+  view/ui/mainwindow.ui
   main.cpp
 )
 set(HEADERS
+  controller/model_parser_worker.h
+  controller/render_controller.h
   core/math/basis.h
   core/math/matrix4x4.h
   core/math/vec2.h
@@ -93,14 +98,12 @@ set(HEADERS
   model/render/gui_model.h
   model/render/shader_program.h
   model/render/uniforms/uniforms.h
-  view/ui/mainwindow.h
   view/model_viewer/model_viewer.h
   view/model_viewer/mouse_actions.h
   view/controls/model_controls.h
   view/controls/model_settings.h
   view/controls/elements/slider.h
-  controller/model_parser_worker.h
-  controller/render_controller.h
+  view/ui/mainwindow.h
 )
 
 set(SHADER_FILES
@@ -182,7 +185,7 @@ if(CLANG_FORMAT_EXE)
     set(PROJECT_CHECKABLE_FILES
         ${HEADERS}
         ${SOURCES}
-        ${SHADER_FILES}
+        # ${SHADER_FILES}
         ${S21_MATRIX_SOURCES}
         ${S21_MATRIX_HEADERS}
     )

@@ -49,7 +49,7 @@ void Model3D::Clear() {
   m_model_name.clear();
   (*m_vertices).clear();
   (*m_edges).clear();
-  m_scale_factor = c_default_scale_factor;
+  m_scale_factor = kDefaultScaleFactor;
   m_centering_vector = DefaultCenteringVector();
   m_bounds.clear();
 }
@@ -59,9 +59,7 @@ const Vec3& Model3D::DefaultCenteringVector() const {
   return def_vec;
 }
 
-bool Model3D::IsScaled() const {
-  return m_scale_factor != c_default_scale_factor;
-}
+bool Model3D::IsScaled() const { return m_scale_factor != kDefaultScaleFactor; }
 
 bool Model3D::IsCentered() const {
   return m_centering_vector != DefaultCenteringVector();
@@ -69,8 +67,8 @@ bool Model3D::IsCentered() const {
 
 void Model3D::Unscale() {
   if (IsScaled()) {
-    Scale(c_default_scale_factor / m_scale_factor);
-    m_scale_factor = c_default_scale_factor;
+    Scale(kDefaultScaleFactor / m_scale_factor);
+    m_scale_factor = kDefaultScaleFactor;
   }
 }
 
@@ -102,8 +100,8 @@ void Model3D::SetScaleFactor() {
   double max_delta =
       max({abs(m_bounds.x.max), abs(m_bounds.x.min), abs(m_bounds.y.max),
            abs(m_bounds.y.min), abs(m_bounds.z.max), abs(m_bounds.z.min)});
-  if (max_delta > c_default_scale_factor)
-    m_scale_factor = c_default_scale_factor / max_delta;
+  if (max_delta > kDefaultScaleFactor)
+    m_scale_factor = kDefaultScaleFactor / max_delta;
 }
 
 /**
