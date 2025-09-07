@@ -325,8 +325,9 @@ endif()
 # Self-made installation
 # Default installation prefix is the build dir
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE PATH "Install path prefix" FORCE)
+  set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE PATH "Install path prefix")
 endif()
+
 install(TARGETS Viewer3D
     RUNTIME DESTINATION Viewer_3D
     COMPONENT Viewer3D
