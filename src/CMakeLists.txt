@@ -51,6 +51,7 @@ set(INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/view/model_viewer
   ${CMAKE_CURRENT_SOURCE_DIR}/view/model_viewer/model_viewer_src
   ${CMAKE_CURRENT_SOURCE_DIR}/view/ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/include
 )
 set(SOURCES
   controller/model_parser_worker.cpp
@@ -104,6 +105,7 @@ set(HEADERS
   view/controls/model_settings.h
   view/controls/elements/slider.h
   view/ui/mainwindow.h
+  view/include/gif.h
 )
 
 set(SHADER_FILES
@@ -325,7 +327,7 @@ endif()
 # Self-made installation
 # Default installation prefix is the build dir
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE PATH "Install path prefix")
+  set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE PATH "Install path prefix" FORCE)
 endif()
 
 install(TARGETS Viewer3D
@@ -342,6 +344,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/model/render/shaders
 )
 
 # Custom install target that does not depend on "all"
+# Choose location with th following way: PREFIX=/someting/folder make install_Viewer3D 
 add_custom_target(install_Viewer3D
     COMMAND ${CMAKE_COMMAND} -DCMAKE_INSTALL_COMPONENT=Viewer3D
                              -DCMAKE_INSTALL_PREFIX=$ENV{PREFIX}
@@ -349,7 +352,6 @@ add_custom_target(install_Viewer3D
     DEPENDS Viewer3D
     COMMENT "Installing only Viewer3D and its resources"
 )
-
 
 # Uninstall block    ------------------------------------------------------------------------------
 # Use PREFIX if provided, otherwise default to CMAKE_INSTALL_PREFIX
@@ -391,4 +393,3 @@ else()
         COMMAND ${CMAKE_COMMAND} -E echo "Neither git nor tar found; cannot create source archive from ${CMAKE_CURRENT_SOURCE_DIR}/.."
     )   
 endif()
-

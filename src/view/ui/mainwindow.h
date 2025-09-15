@@ -1,8 +1,9 @@
 #ifndef SRC_VIEW_UI_MAINWINDOW_H
 #define SRC_VIEW_UI_MAINWINDOW_H
 
+#include <QDateTime>  // Для генерации уникального имени файла
 #include <QMainWindow>
-#include <string>
+#include <QString>
 
 #include "../controls/model_controls.h"
 #include "../controls/model_settings.h"
@@ -52,6 +53,10 @@ class MainWindow : public QMainWindow {
   void TextMessageOutput(const QString& str);
   void FileNameOutput();
 
+  void on_bt_scree_clicked();
+  void on_cb_screen_format_currentIndexChanged(int index);
+  void on_bt_gif_clicked();
+
  private:
   void OpenGLSetting();
   template <typename Func>
@@ -62,6 +67,8 @@ class MainWindow : public QMainWindow {
   s21::gui::controls::ModelControls m_model_controls;
   s21::gui::controls::ModelSettings m_model_settings;
   QString m_file_name;
+
+  QString m_selectedSuffix = ".bmp";  // Суффикс по умолчанию
 };
 }  // namespace s21::gui
 #endif  // SRC_VIEW_UI_MAINWINDOW_H
