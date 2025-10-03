@@ -175,7 +175,7 @@ void MainWindow::on_bt_show_model_clicked() {
         } catch (const std::exception& e) {
           ErrorOccured("Model not set: " + QString::fromStdString(e.what()));
         }
-        ChangeModel([this] {});
+        ChangeModel([this] {ui->mv_widget->update();});
       });
   connect(worker, &ModelParserWorker::error, this,
           [this](const QString& msg) { ErrorOccured("Not Parsed: " + msg); });
@@ -266,8 +266,8 @@ void MainWindow::OpenGLSetting() {
    * @note CoreProfile garantee to use modernt functions, while complitely miss
    * support of old ones.
    */
-  // format.setProfile(QSurfaceFormat::CompatibilityProfile);
-  format.setProfile(QSurfaceFormat::CoreProfile);
+  format.setProfile(QSurfaceFormat::CompatibilityProfile);
+  // format.setProfile(QSurfaceFormat::CoreProfile);
   /**
    * @note Requests a 24-bit depth buffer for your OpenGL context.
    * Depth buffer is used for z-testing, i.e., to determine which
