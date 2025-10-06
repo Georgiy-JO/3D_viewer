@@ -165,25 +165,25 @@ class ViewParameters {
    * paramener to it's tag, set before. And sets parameters' types.
    */
   parameters::ViewParameter<
-      vectors::Vec4,  // parameter type
-      double,         // parameter element type
+      vectors::Vec4,                          // parameter type
+      double,                                 // parameter element type
       vectors::Vec4(0.1f, 0.1f, 0.1f, 1.0f),  // default:dark gray color
-      0.0, 1.0,             // element min max
-      kBackgroundColorTag>  // parameter's tag
+      0.0, 1.0,                               // element min max
+      kBackgroundColorTag>                    // parameter's tag
       m_background_color;
   parameters::ViewParameter<
-      vectors::Vec4,  // parameter type
-      double,         // element type
+      vectors::Vec4,                          // parameter type
+      double,                                 // element type
       vectors::Vec4(0.9f, 0.8f, 0.6f, 1.0f),  // default:tan-like color
-      0.0, 1.0,             // element min max
-      kModelColorTag>       // parameter's tag
+      0.0, 1.0,                               // element min max
+      kModelColorTag>                         // parameter's tag
       m_model_color;
   parameters::ViewParameter<
-      parameters::ViewParameters::ProjectionKind,  // parameter type
-      int,                                         // parameter's parent type
-      parameters::ViewParameters::ProjectionKind::kCentral,  // default
-      0, 1,            // parameter min max
-      kProjectionTag>  // parameter's tag
+      parameters::ViewParameters::ProjectionKind,             // parameter type
+      int,                                                    // parameter's parent type
+      parameters::ViewParameters::ProjectionKind::kCentral,   // default
+      0, 1,                                                   // parameter min max
+      kProjectionTag>                                         // parameter's tag
       m_projection_kind;
   parameters::ViewParameter<
       double,          // parameter type
@@ -193,8 +193,8 @@ class ViewParameters {
       kVertexSizeTag>  // parameter's tag
       m_vertex_size;
   parameters::ViewParameter<
-      parameters::ViewParameters::VertexKind,  // parameter type
-      int,                                     // parameter's parent type
+      parameters::ViewParameters::VertexKind,           // parameter type
+      int,                                              // parameter's parent type
       parameters::ViewParameters::VertexKind::kSquare,  // default
       0, 2,                                             // parameter min max
       kVertexKindTag>                                   // parameter's tag

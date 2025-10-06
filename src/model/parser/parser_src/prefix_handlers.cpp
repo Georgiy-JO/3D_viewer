@@ -4,31 +4,32 @@ using namespace service_functions;
 
 const std::vector<std::string>& Parser::CreatePrefixArray() {
   static const std::vector<std::string> array = {
-      "v",  // #0 Vertex coordinates
-      // "vt",      // #1 Vertex texture coordinate
-      // "vn",      // #2 Vertex normal vector
-      // "vp",      // #3 Parameter space vertex
-      "f",  // #4 Face (ref to verts. Ex.: f v1/vt1/vn1 v2/vt2/vn2 ...)
-      "l",  // #5 Line (sequence of verts or vert/texture pairs)
-      "p",  // #6 Point (used for point clouds)
-      // "g",       // #7 Group name
-      "o"  // #8 Object name
-           // "s",       // #9 Smoothing group
-           // "mg",      // #10 Merging group
-           // "mtlib",   // #11 Material library file (external .mtl file)
-           // "usemtl",  // #12 Use material (refers to a material in .mtl file)
-           // "curv",    // #13 Curve
-           // "curv2",   // #14 2D curve
-           // "surf",    // #15 Surface
-           // "parm",    // #16 Parameter values
-           // "deg",     // #17 Degree of curve or surface
-           // "bmat",    // #18 Basis matrix
-           // "step",    // #19 Steps for curve/surface
-      // "cstype",  // #20 Curve or surface type (`bezier`, `bspline`, `rat`
-      // etc.) "trim",    // #21 Trimming loop "hole",    // #22 Hole in surface
-      // "scrv",    // #23 Special curve
-      // "sp",      // #24 Surface patch
-      // "end"      // #25 End statement (for groupings or surface defs)
+      "v",            // #0 Vertex coordinates
+      // "vt",        // #1 Vertex texture coordinate
+      // "vn",        // #2 Vertex normal vector
+      // "vp",        // #3 Parameter space vertex
+      "f",            // #4 Face (ref to verts. Ex.: f v1/vt1/vn1 v2/vt2/vn2 ...)
+      "l",            // #5 Line (sequence of verts or vert/texture pairs)
+      "p",            // #6 Point (used for point clouds)
+      // "g",         // #7 Group name
+      "o"             // #8 Object name
+      // "s",         // #9 Smoothing group
+      // "mg",        // #10 Merging group
+      // "mtlib",     // #11 Material library file (external .mtl file)
+      // "usemtl",    // #12 Use material (refers to a material in .mtl file)
+      // "curv",      // #13 Curve
+      // "curv2",     // #14 2D curve
+      // "surf",      // #15 Surface
+      // "parm",      // #16 Parameter values
+      // "deg",       // #17 Degree of curve or surface
+      // "bmat",      // #18 Basis matrix
+      // "step",      // #19 Steps for curve/surface
+      // "cstype",    // #20 Curve or surface type (`bezier`, `bspline`, `rat` etc.)
+      // "trim",      // #21 Trimming loop 
+      // "hole",      // #22 Hole in surface
+      // "scrv",      // #23 Special curve
+      // "sp",        // #24 Surface patch
+      // "end"        // #25 End statement (for groupings or surface defs)
   };
   return array;
 }
