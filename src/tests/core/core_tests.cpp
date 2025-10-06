@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
 
-#include "../../core/math/basis.h"
-#include "../../core/math/matrix4x4.h"
-#include "../../core/math/vec2.h"
-#include "../../core/math/vec3.h"
-#include "../../core/math/vec4.h"
-#include "../../core/service/service.h"
+#include "core/math/basis.h"
+#include "core/math/matrix4x4.h"
+#include "core/math/vec2.h"
+#include "core/math/vec3.h"
+#include "core/math/vec4.h"
+#include "core/service/service.h"
 
 TEST(Core_Vectors, Vec3_1) {
   using Vec3 = vectors::Vec3;

@@ -2,7 +2,7 @@
 #define SRC_VIEW_RENDER_GUI_MODEL_H
 #include <QOpenGLFunctions_3_3_Core>
 
-#include "../../model/model3d/model3d.h"
+#include "model/model3d/model3d.h"
 
 namespace render {
 class GPU_Model : protected QOpenGLFunctions_3_3_Core {

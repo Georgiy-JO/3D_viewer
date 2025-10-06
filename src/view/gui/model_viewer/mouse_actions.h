@@ -1,8 +1,8 @@
-#ifndef SRC_VIEW_MODEL_VIEWER_MOUSE_ACTIONS_H
-#define SRC_VIEW_MODEL_VIEWER_MOUSE_ACTIONS_H
+#ifndef SRC_VIEW_GUI_MODEL_VIEWER_MOUSE_ACTIONS_H
+#define SRC_VIEW_GUI_MODEL_VIEWER_MOUSE_ACTIONS_H
 #include <QMouseEvent>  // Mouse event types
 
-#include "../../core/math/vec2.h"
+#include "core/math/vec2.h"
 
 namespace gui {
 struct Vec2Pair {
@@ -30,4 +30,4 @@ class MouseActions {
 };
 }  // namespace gui
 
-#endif  // SRC_VIEW_MODEL_VIEWER_MOUSE_ACTIONS_H
+#endif  // SRC_VIEW_GUI_MODEL_VIEWER_MOUSE_ACTIONS_H

@@ -55,7 +55,7 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
         model/parser_tests.cpp
     )
 
-    set(THIRS_PARTY_INCLUDE_DIRS
+    set(THIRD_PARTY_INCLUDE_DIRS
         ${CMAKE_CURRENT_SOURCE_DIR}/..
         ${CMAKE_CURRENT_SOURCE_DIR}/../third_party
         ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/matrix
@@ -71,7 +71,7 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
         ${CMAKE_CURRENT_SOURCE_DIR}/../core/math
         ${CMAKE_CURRENT_SOURCE_DIR}/../core/parameters
         ${CMAKE_CURRENT_SOURCE_DIR}/../core/service
-        ${THIRS_PARTY_INCLUDE_DIRS}
+        ${THIRD_PARTY_INCLUDE_DIRS}
     )
     set(CORE_SRC
         ../core/math/vec3.cpp
@@ -327,7 +327,7 @@ if(BUILD_COVERAGE AND LCOV_EXECUTABLE AND GENHTML_EXECUTABLE)
             ${RENDER_SRC}                   # include ${THIRS_PARTY_SRC} ${CORE_SRC} ${INBOUND_MODEL_SRC}
         )
         target_include_directories(test_cov PRIVATE 
-            ${RENDER_INCLUDE_DIRS}            # include ${THIRS_PARTY_INCLUDE_DIRS} ${INBOUND_MODEL_INCLUDE_DIRS} ${CORE_INCLUDE_DIRS}
+            ${RENDER_INCLUDE_DIRS}            # include ${THIRD_PARTY_INCLUDE_DIRS} ${INBOUND_MODEL_INCLUDE_DIRS} ${CORE_INCLUDE_DIRS}
             )
         target_link_libraries(test_cov PRIVATE 
             gtest 
@@ -345,7 +345,7 @@ if(BUILD_COVERAGE AND LCOV_EXECUTABLE AND GENHTML_EXECUTABLE)
         )
         target_include_directories(test_cov PRIVATE 
             ${INBOUND_MODEL_INCLUDE_DIRS}
-            ${CORE_INCLUDE_DIRS}            # include ${THIRS_PARTY_INCLUDE_DIRS} 
+            ${CORE_INCLUDE_DIRS}            # include ${THIRD_PARTY_INCLUDE_DIRS} 
             )
         target_link_libraries(test_cov PRIVATE gtest_main pthread)
     endif()

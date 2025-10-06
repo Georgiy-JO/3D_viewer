@@ -2,8 +2,8 @@
 
 #include <stdexcept>
 
-#include "../../../core/math/basis.h"
-#include "../../../core/service/service.h"
+#include "core/math/basis.h"
+#include "core/service/service.h"
 
 namespace render::uniforms {
 

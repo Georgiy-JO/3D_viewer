@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../../view/render/uniforms/uniforms.h"
+#include "view/render/uniforms/uniforms.h"
 
 TEST(Render_Uniforms, TransformationMatrix_Basic) {
   render::uniforms::TransformationMatrix tm;

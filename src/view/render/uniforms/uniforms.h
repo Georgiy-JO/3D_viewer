@@ -3,7 +3,7 @@
 
 #include <QMatrix4x4>
 
-#include "../../../core/math/matrix4x4.h"
+#include "core/math/matrix4x4.h"
 namespace render::uniforms {
 
 class UniformMatrix {

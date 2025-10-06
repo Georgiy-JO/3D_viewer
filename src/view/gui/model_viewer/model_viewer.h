@@ -1,10 +1,10 @@
-#ifndef SRC_VIEW_RENDER_MODEL_VIEWER_H
-#define SRC_VIEW_RENDER_MODEL_VIEWER_H
+#ifndef SRC_VIEW_GUI_RENDER_MODEL_VIEWER_H
+#define SRC_VIEW_GUI_RENDER_MODEL_VIEWER_H
 
 #include <QtOpenGLWidgets>
 
-#include "../../controller/render_controller.h"
-#include "../../core/math/vec4.h"
+#include "controller/render_controller.h"
+#include "core/math/vec4.h"
 #include "mouse_actions.h"
 
 namespace gui {
@@ -84,4 +84,4 @@ class ModelViewer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
 }  // namespace gui
 
-#endif  // SRC_VIEW_RENDER_MODEL_VIEWER_H
+#endif  // SRC_VIEW_GUI_RENDER_MODEL_VIEWER_H

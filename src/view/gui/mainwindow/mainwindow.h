@@ -1,12 +1,12 @@
-#ifndef SRC_VIEW_UI_MAINWINDOW_H
-#define SRC_VIEW_UI_MAINWINDOW_H
+#ifndef SRC_VIEW_GUI_MAINWINDOW_MAINWINDOW_H
+#define SRC_VIEW_GUI_MAINWINDOW_MAINWINDOW_H
 
 #include <QDateTime>  // Для генерации уникального имени файла
 #include <QMainWindow>
 #include <QString>
 
-#include "../controls/model_controls.h"
-#include "../controls/model_settings.h"
+#include "view/gui/controls/model_controls.h"
+#include "view/gui/controls/model_settings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -71,4 +71,4 @@ class MainWindow : public QMainWindow {
   QString m_selectedSuffix = ".bmp";  // Суффикс по умолчанию
 };
 }  // namespace gui
-#endif  // SRC_VIEW_UI_MAINWINDOW_H
+#endif  // SRC_VIEW_GUI_MAINWINDOW_MAINWINDOW_H

@@ -2,8 +2,8 @@
 
 #include <QOffscreenSurface>
 
-#include "../../model/parser/model_parser.h"
-#include "../../view/render/gpu_model.h"
+#include "model/parser/model_parser.h"
+#include "view/render/gpu_model.h"
 
 TEST(Render_GUI_Model, Basic) {
   render::GPU_Model model;

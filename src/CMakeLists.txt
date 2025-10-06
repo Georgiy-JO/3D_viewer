@@ -46,12 +46,12 @@ set(INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/view/render/render_src
   ${CMAKE_CURRENT_SOURCE_DIR}/view/render/uniforms
   ${CMAKE_CURRENT_SOURCE_DIR}/view
-  ${CMAKE_CURRENT_SOURCE_DIR}/view/controls
-  ${CMAKE_CURRENT_SOURCE_DIR}/view/controls/elements
-  ${CMAKE_CURRENT_SOURCE_DIR}/view/model_viewer
-  ${CMAKE_CURRENT_SOURCE_DIR}/view/model_viewer/model_viewer_src
-  ${CMAKE_CURRENT_SOURCE_DIR}/view/ui
-  ${CMAKE_CURRENT_SOURCE_DIR}/view/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/gui
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/gui/controls
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/gui/controls/elements
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/gui/model_viewer
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/gui/model_viewer/model_viewer_src
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/mainwindow
 )
 set(SOURCES
   controller/model_parser_worker.cpp
@@ -72,12 +72,12 @@ set(SOURCES
   view/render/render_src/gpu_model.cpp
   view/render/render_src/shader_program.cpp
   view/render/uniforms/uniforms.cpp
-  view/model_viewer/model_viewer_src/model_viewer.cpp
-  view/model_viewer/model_viewer_src/mouse_actions.cpp
-  view/controls/elements/slider.cpp
-  view/controls/model_settings.cpp
-  view/ui/mainwindow.cpp
-  view/ui/mainwindow.ui
+  view/gui/model_viewer/model_viewer_src/model_viewer.cpp
+  view/gui/model_viewer/model_viewer_src/mouse_actions.cpp
+  view/gui/controls/elements/slider.cpp
+  view/gui/controls/model_settings.cpp
+  view/gui/mainwindow/mainwindow.cpp
+  view/gui/mainwindow/mainwindow.ui
   main.cpp
 )
 set(HEADERS
@@ -99,13 +99,13 @@ set(HEADERS
   view/render/gpu_model.h
   view/render/shader_program.h
   view/render/uniforms/uniforms.h
-  view/model_viewer/model_viewer.h
-  view/model_viewer/mouse_actions.h
-  view/controls/model_controls.h
-  view/controls/model_settings.h
-  view/controls/elements/slider.h
-  view/ui/mainwindow.h
-  view/include/gif.h
+  view/gui/model_viewer/model_viewer.h
+  view/gui/model_viewer/mouse_actions.h
+  view/gui/controls/model_controls.h
+  view/gui/controls/model_settings.h
+  view/gui/controls/elements/slider.h
+  view/gui/mainwindow/mainwindow.h
+  third_party/gif.h
 )
 
 set(SHADER_FILES
@@ -144,10 +144,9 @@ add_custom_target(run_Viewer3D
 )
 
 target_include_directories(Viewer3D PUBLIC
-    $<BUILD_INTERFACE:${INCLUDE_DIRS}>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/matrix>
-    $<INSTALL_INTERFACE:include>
+    ${INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/matrix
 )
 
 target_link_libraries(Viewer3D PRIVATE

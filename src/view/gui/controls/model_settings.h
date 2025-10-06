@@ -1,5 +1,5 @@
-#ifndef SRC_VIEW_CONTROLS_MODEL_SETTINGS_H
-#define SRC_VIEW_CONTROLS_MODEL_SETTINGS_H
+#ifndef SRC_VIEW_GUI_CONTROLS_MODEL_SETTINGS_H
+#define SRC_VIEW_GUI_CONTROLS_MODEL_SETTINGS_H
 #include <QComboBox>
 #include <QPushButton>
 
@@ -36,4 +36,4 @@ class ModelSettings {
 
 }  // namespace gui::controls
 
-#endif  // SRC_VIEW_CONTROLS_MODEL_SETTINGS_H
+#endif  // SRC_VIEW_GUI_CONTROLS_MODEL_SETTINGS_H

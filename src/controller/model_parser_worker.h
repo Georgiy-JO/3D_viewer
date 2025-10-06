@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QString>
 
-#include "../model/parser/model_parser.h"
+#include "model/parser/model_parser.h"
 
 namespace controller {
 

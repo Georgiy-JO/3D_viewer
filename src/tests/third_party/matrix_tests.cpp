@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../../third_party/matrix/matrix.hpp"
+#include "third_party/matrix/matrix.hpp"
 
 using std::cout, std::cin, std::endl;
 // elevator    begining

@@ -4,7 +4,7 @@
 #include <QOpenGLShaderProgram>
 #include <string>
 
-#include "../../core/math/vec4.h"
+#include "core/math/vec4.h"
 #include "uniforms/uniforms.h"
 
 namespace render {

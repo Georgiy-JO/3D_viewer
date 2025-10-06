@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../../model/model3d/model3d.h"
+#include "model/model3d/model3d.h"
 
 /**
  * Comments referencing this function (and the function it self) are left

@@ -2,8 +2,8 @@
 
 #include <fstream>
 
-#include "../../model/parser/model_parser.h"
-#include "../../model/parser/parser.h"
+#include "model/parser/model_parser.h"
+#include "model/parser/parser.h"
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNum) {
   int ch = 'k';

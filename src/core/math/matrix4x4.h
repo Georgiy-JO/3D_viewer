@@ -1,6 +1,6 @@
 #ifndef SRC_CORE_MATH_MATRIX4X4_H
 #define SRC_CORE_MATH_MATRIX4X4_H
-#include "../../third_party/matrix/matrix.hpp"
+#include "third_party/matrix/matrix.hpp"
 #include "vec3.h"
 
 namespace matrix {

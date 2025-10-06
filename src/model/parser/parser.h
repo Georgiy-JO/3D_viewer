@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "../model3d/model3d.h"
-#include "service_functions/service_functions.h"
+#include "model/model3d/model3d.h"
+#include "model/parser/service_functions/service_functions.h"
 
 namespace inbound_model::parser {
 /**

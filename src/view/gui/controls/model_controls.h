@@ -1,5 +1,5 @@
-#ifndef SRC_VIEW_CONTROLS_MODEL_CONTROLS_H
-#define SRC_VIEW_CONTROLS_MODEL_CONTROLS_H
+#ifndef SRC_VIEW_GUI_CONTROLS_MODEL_CONTROLS_H
+#define SRC_VIEW_GUI_CONTROLS_MODEL_CONTROLS_H
 #include "elements/slider.h"
 
 namespace gui::controls {
@@ -50,4 +50,4 @@ class ModelControls {
 };
 }  // namespace gui::controls
 
-#endif  // SRC_VIEW_CONTROLS_MODEL_CONTROLS_H
+#endif  // SRC_VIEW_GUI_CONTROLS_MODEL_CONTROLS_H

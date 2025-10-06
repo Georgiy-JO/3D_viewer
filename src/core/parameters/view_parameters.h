@@ -1,8 +1,8 @@
 #ifndef SRC_CORE_SETTINGS_VIEW_PARAMETERS_H
 #define SRC_CORE_SETTINGS_VIEW_PARAMETERS_H
 
-#include "../math/vec4.h"
-#include "../service/service.h"
+#include "core/math/vec4.h"
+#include "core/service/service.h"
 
 namespace parameters {
 

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../../core/parameters/view_parameters.h"
+#include "core/parameters/view_parameters.h"
 
 TEST(Core_parameters, View_Parameters_1) {
   parameters::ViewParameters prs;

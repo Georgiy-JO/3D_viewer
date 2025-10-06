@@ -1,5 +1,5 @@
-#ifndef SRC_VIEW_CONTROLE_ELEMENTS_SLIDER_H
-#define SRC_VIEW_CONTROLE_ELEMENTS_SLIDER_H
+#ifndef SRC_VIEW_GUI_CONTROLS_ELEMENTS_SLIDER_H
+#define SRC_VIEW_GUI_CONTROLS_ELEMENTS_SLIDER_H
 #include <QSlider>
 
 namespace gui::controls {
@@ -17,4 +17,4 @@ class Slider {
 };
 }  // namespace gui::controls
 
-#endif  // SRC_VIEW_CONTROLE_ELEMENTS_SLIDER_H
+#endif  // SRC_VIEW_GUI_CONTROLS_ELEMENTS_SLIDER_H

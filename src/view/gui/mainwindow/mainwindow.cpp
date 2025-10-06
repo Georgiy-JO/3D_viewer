@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 
-#include "../../controller/model_parser_worker.h"
-#include "../include/gif.h"
-#include "../model_viewer/model_viewer.h"
+#include "controller/model_parser_worker.h"
+#include "third_party/gif.h"
+#include "view/gui/model_viewer/model_viewer.h"
 #include "./ui_mainwindow.h"
 
 namespace gui {
@@ -288,6 +288,9 @@ void MainWindow::OpenGLSetting() {
    */
   QSurfaceFormat::setDefaultFormat(format);
 }
+
+
+
 
 void MainWindow::on_bt_scree_clicked() {
   if (!ui->mv_widget) {

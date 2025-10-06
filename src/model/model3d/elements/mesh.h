@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "../../../core/math/vec3.h"
+#include "core/math/vec3.h"
 
 namespace inbound_model {
 
