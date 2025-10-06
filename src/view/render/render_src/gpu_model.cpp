@@ -69,8 +69,7 @@ void GPU_Model::InitializeModel() {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void GPU_Model::SetModelData(
-    std::shared_ptr<inbound_model::Model3D> model_) {
+void GPU_Model::SetModelData(std::shared_ptr<inbound_model::Model3D> model_) {
   // Ensure a VAO/VBO/EBO exist
   if (m_vao == 0)
     throw std::runtime_error(

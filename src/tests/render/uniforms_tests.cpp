@@ -157,8 +157,7 @@ TEST(Render_Uniforms, ProjectionMatrix) {
   EXPECT_NEAR(m(0, 3), 0, 1e-8);
 
   EXPECT_NEAR(m(1, 0), 0, 1e-8);
-  EXPECT_NEAR(m(1, 1),
-              1.0f / (std::tan(matrix::DegreesToRadians(45.0) / 2.0)),
+  EXPECT_NEAR(m(1, 1), 1.0f / (std::tan(matrix::DegreesToRadians(45.0) / 2.0)),
               1e-8);
   EXPECT_NEAR(m(1, 2), 0, 1e-8);
   EXPECT_NEAR(m(1, 3), 0, 1e-8);
@@ -187,7 +186,7 @@ TEST(Render_Uniforms, ProjectionMatrix) {
   double top = size;
   double bottom = -top;
   matrix::Matrix local(matrix::Matrix4x4::kMatrixDimention,
-                            matrix::Matrix4x4::kMatrixDimention);
+                       matrix::Matrix4x4::kMatrixDimention);
 
   EXPECT_NEAR(m(0, 0), 2.0f / (right - left), 1e-8);
   EXPECT_NEAR(m(0, 1), 0, 1e-8);

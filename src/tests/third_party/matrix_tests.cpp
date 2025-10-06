@@ -284,12 +284,10 @@ TEST(MatrixTest, doubleServiceMethods) {
   EXPECT_EQ(matrix::MatrixService::doubleEqComplex(a, b), true);
   EXPECT_EQ(matrix::MatrixService::doubleEqComplex(a, c), false);
   EXPECT_EQ(matrix::MatrixService::doubleEqComplex(c, d), true);
-  EXPECT_THROW(matrix::MatrixService::doubleEqComplex(e, d),
-               matrix::DataError);
+  EXPECT_THROW(matrix::MatrixService::doubleEqComplex(e, d), matrix::DataError);
   EXPECT_THROW(matrix::MatrixService::doubleEqComplex(-f, -f),
                matrix::DataError);
-  EXPECT_THROW(matrix::MatrixService::doubleEqComplex(f, f),
-               matrix::DataError);
+  EXPECT_THROW(matrix::MatrixService::doubleEqComplex(f, f), matrix::DataError);
   EXPECT_EQ(matrix::MatrixService::doubleEqComplex(f, -f), false);
   EXPECT_EQ(matrix::MatrixService::doubleEqComplex(-f, f), false);
   EXPECT_EQ(matrix::MatrixService::doubleEqComplex(c, -f), false);
@@ -301,12 +299,9 @@ TEST(MatrixTest, doubleServiceMethods) {
   EXPECT_NO_THROW(matrix::MatrixService::doubleLegit(b));
   EXPECT_NO_THROW(matrix::MatrixService::doubleLegit(c));
   EXPECT_NO_THROW(matrix::MatrixService::doubleLegit(d));
-  EXPECT_THROW(matrix::MatrixService::doubleLegit(e),
-               matrix::DataError);
-  EXPECT_THROW(matrix::MatrixService::doubleLegit(f),
-               matrix::DataError);
-  EXPECT_THROW(matrix::MatrixService::doubleLegit(-f),
-               matrix::DataError);
+  EXPECT_THROW(matrix::MatrixService::doubleLegit(e), matrix::DataError);
+  EXPECT_THROW(matrix::MatrixService::doubleLegit(f), matrix::DataError);
+  EXPECT_THROW(matrix::MatrixService::doubleLegit(-f), matrix::DataError);
 }
 TEST(MatrixTest, EqMatrix) {
   double ar[]{1, 2, 3, 8, 4, 5, 6, -5, 7, 8, 9, 999};

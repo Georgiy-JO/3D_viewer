@@ -71,8 +71,7 @@ class ViewParameters {
   inline vectors::Vec4 GetModelColor() const {
     return m_model_color.GetValue();
   }
-  inline parameters::ViewParameters::ProjectionKind GetProjectionKind()
-      const {
+  inline parameters::ViewParameters::ProjectionKind GetProjectionKind() const {
     return m_projection_kind.GetValue();
   }
   inline double GetVertexSize() const { return m_vertex_size.GetValue(); }
@@ -116,8 +115,7 @@ class ViewParameters {
   inline void SetModelColor() { m_model_color.SetValue(); }
   inline bool SetModelColor(const double input_x, const double input_y,
                             const double input_z, const double input_w) {
-    return SetModelColor(
-        vectors::Vec4(input_x, input_y, input_z, input_w));
+    return SetModelColor(vectors::Vec4(input_x, input_y, input_z, input_w));
   }
   bool SetModelColor(const vectors::Vec4& input);
   inline void SetProjectionKind() { m_projection_kind.SetValue(); }
@@ -137,8 +135,7 @@ class ViewParameters {
   inline void SetEdgeWidth() { m_edge_width.SetValue(); }
   bool SetEdgeWidth(const double input);
   inline void SetEdgeKind() { m_edge_kind.SetValue(); }
-  inline bool SetEdgeKind(
-      const parameters::ViewParameters::EdgeKind& input) {
+  inline bool SetEdgeKind(const parameters::ViewParameters::EdgeKind& input) {
     return SetEdgeKind(static_cast<int>(input));
   }
   bool SetEdgeKind(const int input);
@@ -168,51 +165,53 @@ class ViewParameters {
    * paramener to it's tag, set before. And sets parameters' types.
    */
   parameters::ViewParameter<
-      vectors::Vec4,                          // parameter type
-      double,                                      // parameter element type
+      vectors::Vec4,  // parameter type
+      double,         // parameter element type
       vectors::Vec4(0.1f, 0.1f, 0.1f, 1.0f),  // default:dark gray color
-      0.0, 1.0,                                    // element min max
-      kBackgroundColorTag>                         // parameter's tag
+      0.0, 1.0,             // element min max
+      kBackgroundColorTag>  // parameter's tag
       m_background_color;
   parameters::ViewParameter<
-      vectors::Vec4,                          // parameter type
-      double,                                      // element type
+      vectors::Vec4,  // parameter type
+      double,         // element type
       vectors::Vec4(0.9f, 0.8f, 0.6f, 1.0f),  // default:tan-like color
-      0.0, 1.0,                                    // element min max
-      kModelColorTag>                              // parameter's tag
+      0.0, 1.0,             // element min max
+      kModelColorTag>       // parameter's tag
       m_model_color;
   parameters::ViewParameter<
       parameters::ViewParameters::ProjectionKind,  // parameter type
-      int,  // parameter's parent type
+      int,                                         // parameter's parent type
       parameters::ViewParameters::ProjectionKind::kCentral,  // default
       0, 1,            // parameter min max
       kProjectionTag>  // parameter's tag
       m_projection_kind;
-  parameters::ViewParameter<double,          // parameter type
-                                 double,          // parameter type
-                                 4.0,             // default
-                                 1.0, 50.0,       // parameter min max
-                                 kVertexSizeTag>  // parameter's tag
+  parameters::ViewParameter<
+      double,          // parameter type
+      double,          // parameter type
+      4.0,             // default
+      1.0, 50.0,       // parameter min max
+      kVertexSizeTag>  // parameter's tag
       m_vertex_size;
   parameters::ViewParameter<
       parameters::ViewParameters::VertexKind,  // parameter type
-      int,                                          // parameter's parent type
+      int,                                     // parameter's parent type
       parameters::ViewParameters::VertexKind::kSquare,  // default
-      0, 2,            // parameter min max
-      kVertexKindTag>  // parameter's tag
+      0, 2,                                             // parameter min max
+      kVertexKindTag>                                   // parameter's tag
       m_vertex_kind;
-  parameters::ViewParameter<double,         // parameter type
-                                 double,         // parameter type
-                                 1.0,            // default
-                                 1.0, 20.0,      // parameter min max
-                                 kEdgeWidthTag>  // parameter's tag
+  parameters::ViewParameter<
+      double,         // parameter type
+      double,         // parameter type
+      1.0,            // default
+      1.0, 20.0,      // parameter min max
+      kEdgeWidthTag>  // parameter's tag
       m_edge_width;
   parameters::ViewParameter<
-      parameters::ViewParameters::EdgeKind,  // parameter type
-      int,                                        // parameter's parent type
+      parameters::ViewParameters::EdgeKind,          // parameter type
+      int,                                           // parameter's parent type
       parameters::ViewParameters::EdgeKind::kSolid,  // default
-      0, 2,                                               // parameter min max
-      kEdgeKindTag>                                       // parameter's tag
+      0, 2,                                          // parameter min max
+      kEdgeKindTag>                                  // parameter's tag
       m_edge_kind;
 };
 

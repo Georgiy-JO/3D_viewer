@@ -35,8 +35,8 @@ TEST(Render_GUI_Model, Basic) {
   EXPECT_EQ(model.GetModelName().empty(), true);
   model.InitializeModel();
 
-  std::shared_ptr<inbound_model::Model3D> p_model{std::move(
-      inbound_model::ParseModelFromFile("models/cube_first.obj"))};
+  std::shared_ptr<inbound_model::Model3D> p_model{
+      std::move(inbound_model::ParseModelFromFile("models/cube_first.obj"))};
   model.SetModelData(p_model);
   EXPECT_NE(model.GetVertexArrayObject(), 0);
   EXPECT_EQ(model.GetEdgesCount(), 36);

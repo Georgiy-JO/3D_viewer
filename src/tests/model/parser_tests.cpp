@@ -12,8 +12,7 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNum) {
     if (ch <= 57 && ch >= 48)
       EXPECT_EQ(inbound_model::parser::service_functions::IsNum(ch), true);
     else
-      EXPECT_EQ(inbound_model::parser::service_functions::IsNum(ch),
-                false);
+      EXPECT_EQ(inbound_model::parser::service_functions::IsNum(ch), false);
   }
 
   EXPECT_EQ(inbound_model::parser::service_functions::IsNum('0'), true);
@@ -33,63 +32,50 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsInteger) {
   double num = 0.0;
 
   for (num = -50.0; num < 100; num++) {
-    EXPECT_EQ(inbound_model::parser::service_functions::IsInteger(num),
-              true);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsInteger(num), true);
   }
   for (num = -50.1; num < 100; num++) {
-    EXPECT_EQ(inbound_model::parser::service_functions::IsInteger(num),
-              false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsInteger(num), false);
   }
   for (num = -50.5; num < 100; num++) {
-    EXPECT_EQ(inbound_model::parser::service_functions::IsInteger(num),
-              false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsInteger(num), false);
   }
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNonzeroInteger) {
   double num = 0.0;
 
-  EXPECT_EQ(
-      inbound_model::parser::service_functions::IsNonzeroInteger(num),
-      false);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNonzeroInteger(num),
+            false);
   for (num = -50.0; num < 0; num++) {
-    EXPECT_EQ(
-        inbound_model::parser::service_functions::IsNonzeroInteger(num),
-        true);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsNonzeroInteger(num),
+              true);
   }
-  EXPECT_EQ(
-      inbound_model::parser::service_functions::IsNonzeroInteger(num),
-      false);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNonzeroInteger(num),
+            false);
   num++;
   for (; num < 100; num++) {
-    EXPECT_EQ(
-        inbound_model::parser::service_functions::IsNonzeroInteger(num),
-        true);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsNonzeroInteger(num),
+              true);
   }
   for (num = -50.1; num < 100; num++) {
-    EXPECT_EQ(
-        inbound_model::parser::service_functions::IsNonzeroInteger(num),
-        false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsNonzeroInteger(num),
+              false);
   }
   for (num = -50.5; num < 100; num++) {
-    EXPECT_EQ(
-        inbound_model::parser::service_functions::IsNonzeroInteger(num),
-        false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsNonzeroInteger(num),
+              false);
   }
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSpaceCh) {
   int ch = 33;
   for (; ch < 127; ch++) {
-    EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh(ch),
-              false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh(ch), false);
   }
-  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh(' '),
-            true);
-  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh('\t'),
-            true);
-  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh(EOF),
-            false);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh(' '), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh('\t'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh(EOF), false);
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsHash) {
@@ -109,14 +95,12 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsHash) {
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSlash) {
   int ch = 33;
   for (ch = 0; ch < 47; ch++) {
-    EXPECT_EQ(inbound_model::parser::service_functions::IsSlash(ch),
-              false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsSlash(ch), false);
   }
   EXPECT_EQ(inbound_model::parser::service_functions::IsSlash(ch), true);
   ch++;
   for (; ch < 127; ch++) {
-    EXPECT_EQ(inbound_model::parser::service_functions::IsSlash(ch),
-              false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsSlash(ch), false);
   }
   EXPECT_EQ(inbound_model::parser::service_functions::IsSlash('/'), true);
   EXPECT_EQ(inbound_model::parser::service_functions::IsSlash(EOF), false);
@@ -125,56 +109,46 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSlash) {
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSpaceChHashEOF) {
   int ch = 33;
   for (ch = 0; ch < '\t'; ch++) {
-    EXPECT_EQ(
-        inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
-        false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+              false);
   }
   EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
             true);
-  EXPECT_EQ(
-      inbound_model::parser::service_functions::IsSpaceChHashEOF('\t'),
-      true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF('\t'),
+            true);
   ch++;
   for (; ch < ' '; ch++) {
-    EXPECT_EQ(
-        inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
-        false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+              false);
   }
   EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
             true);
-  EXPECT_EQ(
-      inbound_model::parser::service_functions::IsSpaceChHashEOF(' '),
-      true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(' '),
+            true);
   ch++;
   for (; ch < '#'; ch++) {
-    EXPECT_EQ(
-        inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
-        false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+              false);
   }
   EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
             true);
-  EXPECT_EQ(
-      inbound_model::parser::service_functions::IsSpaceChHashEOF('#'),
-      true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF('#'),
+            true);
   ch++;
   for (; ch < 127; ch++) {
-    EXPECT_EQ(
-        inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
-        false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+              false);
   }
-  EXPECT_EQ(
-      inbound_model::parser::service_functions::IsSpaceChHashEOF(EOF),
-      true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(EOF),
+            true);
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNotEOF) {
   int ch = 33;
   for (ch = 0; ch < 127; ch++) {
-    EXPECT_EQ(inbound_model::parser::service_functions::IsNotEOF(ch),
-              true);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsNotEOF(ch), true);
   }
-  EXPECT_EQ(inbound_model::parser::service_functions::IsNotEOF(EOF),
-            false);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNotEOF(EOF), false);
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNextNumber) {
@@ -491,8 +465,7 @@ TEST(Model_Parser, Parser_ModelNormalizer) {
 
   EXPECT_THROW(inbound_model::parser::Parser prs11(model, "nothing.txt"),
                std::ios_base::failure);
-  EXPECT_NO_THROW(
-      inbound_model::parser::Parser prs12(model, "nothing.obj"));
+  EXPECT_NO_THROW(inbound_model::parser::Parser prs12(model, "nothing.obj"));
   inbound_model::parser::Parser prs1(model, "nothing.obj");
   prs1.ModelNormalizer();
   EXPECT_EQ(model.GetEdgesAmount(), 2);

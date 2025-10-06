@@ -6,8 +6,7 @@ namespace gui {
 ModelViewer::ModelViewer(QWidget *parent)
     : QOpenGLWidget(parent), m_render(), m_mouse() {}
 
-void ModelViewer::SetModel(
-    std::shared_ptr<inbound_model::Model3D> model_) {
+void ModelViewer::SetModel(std::shared_ptr<inbound_model::Model3D> model_) {
   m_render.Model().SetModelData(std::move(model_));
   ResetTransformations();
 }

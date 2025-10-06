@@ -29,8 +29,7 @@ TEST(Core_parameters, View_Parameters_1) {
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
-  EXPECT_EQ(prs.GetEdgeKind(),
-            parameters::ViewParameters::EdgeKind::kSolid);
+  EXPECT_EQ(prs.GetEdgeKind(), parameters::ViewParameters::EdgeKind::kSolid);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -70,8 +69,7 @@ TEST(Core_parameters, View_Parameters_2) {
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
-  EXPECT_EQ(prs.GetEdgeKind(),
-            parameters::ViewParameters::EdgeKind::kSolid);
+  EXPECT_EQ(prs.GetEdgeKind(), parameters::ViewParameters::EdgeKind::kSolid);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -85,8 +83,7 @@ TEST(Core_parameters, View_Parameters_2) {
 
   prs.SetBackgroundColor(0.5, 0.5, 0.5, 0.5);
   prs.SetModelColor(0.5, 0.5, 0.5, 0.5);
-  prs.SetProjectionKind(
-      parameters::ViewParameters::ProjectionKind::kCentral);
+  prs.SetProjectionKind(parameters::ViewParameters::ProjectionKind::kCentral);
   prs.SetVertexSize(5);
   prs.SetVertexKind(parameters::ViewParameters::VertexKind::kNone);
   prs.SetEdgeWidth(5);
@@ -111,13 +108,11 @@ TEST(Core_parameters, View_Parameters_2) {
   EXPECT_EQ(prs.GetProjectionKindRange().min, 0);
   EXPECT_EQ(prs.GetProjectionKindRange().max, 1);
 
-  EXPECT_EQ(prs.GetVertexKind(),
-            parameters::ViewParameters::VertexKind::kNone);
+  EXPECT_EQ(prs.GetVertexKind(), parameters::ViewParameters::VertexKind::kNone);
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
-  EXPECT_EQ(prs.GetEdgeKind(),
-            parameters::ViewParameters::EdgeKind::kNone);
+  EXPECT_EQ(prs.GetEdgeKind(), parameters::ViewParameters::EdgeKind::kNone);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -152,13 +147,11 @@ TEST(Core_parameters, View_Parameters_3) {
   EXPECT_EQ(prs.GetProjectionKindRange().min, 0);
   EXPECT_EQ(prs.GetProjectionKindRange().max, 1);
 
-  EXPECT_EQ(prs.GetVertexKind(),
-            parameters::ViewParameters::VertexKind::kNone);
+  EXPECT_EQ(prs.GetVertexKind(), parameters::ViewParameters::VertexKind::kNone);
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
-  EXPECT_EQ(prs.GetEdgeKind(),
-            parameters::ViewParameters::EdgeKind::kNone);
+  EXPECT_EQ(prs.GetEdgeKind(), parameters::ViewParameters::EdgeKind::kNone);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -196,8 +189,7 @@ TEST(Core_parameters, View_Parameters_3) {
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
-  EXPECT_EQ(prs.GetEdgeKind(),
-            parameters::ViewParameters::EdgeKind::kSolid);
+  EXPECT_EQ(prs.GetEdgeKind(), parameters::ViewParameters::EdgeKind::kSolid);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -237,8 +229,7 @@ TEST(Core_parameters, View_Parameters_4) {
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
-  EXPECT_EQ(prs.GetEdgeKind(),
-            parameters::ViewParameters::EdgeKind::kSolid);
+  EXPECT_EQ(prs.GetEdgeKind(), parameters::ViewParameters::EdgeKind::kSolid);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -282,8 +273,7 @@ TEST(Core_parameters, View_Parameters_4) {
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
-  EXPECT_EQ(prs.GetEdgeKind(),
-            parameters::ViewParameters::EdgeKind::kSolid);
+  EXPECT_EQ(prs.GetEdgeKind(), parameters::ViewParameters::EdgeKind::kSolid);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -296,6 +286,4 @@ TEST(Core_parameters, View_Parameters_4) {
   EXPECT_DOUBLE_EQ(prs.GetEdgeWidthRange().max, 20);
 }
 
-TEST(Core_parameters, Settings) {
-  service::file::RemoveFile("settings.txt");
-}
+TEST(Core_parameters, Settings) { service::file::RemoveFile("settings.txt"); }

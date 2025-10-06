@@ -85,7 +85,7 @@ void ShaderProgram::UploadUniforms(
   if (!m_program.isLinked() || !Bind())
     throw std::runtime_error("Shader program is not linked or can't be bound.");
 
-  m_program.setUniformValue(kCombinedAffectSwitchUniform, false);  
+  m_program.setUniformValue(kCombinedAffectSwitchUniform, false);
   m_program.setUniformValue(kTransformationUniform, trans_marix.GetMatrixQT());
   m_program.setUniformValue(kCameraUniform, cam_marix.GetMatrixQT());
   m_program.setUniformValue(kProjectionUniform, project_matrix.GetMatrixQT());
@@ -95,11 +95,11 @@ void ShaderProgram::UploadUniforms(
                 service::converters::DoubleToFloat(model_color.y),
                 service::converters::DoubleToFloat(model_color.z),
                 service::converters::DoubleToFloat(model_color.w)));
-  m_program.setUniformValue(
-      kVertexSizeUniform, service::converters::DoubleToFloat(vertex_size));
+  m_program.setUniformValue(kVertexSizeUniform,
+                            service::converters::DoubleToFloat(vertex_size));
 
-  m_program.setUniformValue(
-      kEdgeWidthUniform, service::converters::DoubleToFloat(edge_width));
+  m_program.setUniformValue(kEdgeWidthUniform,
+                            service::converters::DoubleToFloat(edge_width));
   m_program.setUniformValue(kDottedEdgeUniform, dotted_edge_switch);
 
   m_program.setUniformValue(kCircleVertexUniform, circle_vertex_switch);
@@ -115,19 +115,20 @@ void ShaderProgram::UploadUniforms(
   if (!m_program.isLinked() || !Bind())
     throw std::runtime_error("Shader program is not linked or can't be bound.");
 
-  m_program.setUniformValue(kCombinedAffectSwitchUniform, true);  
-  m_program.setUniformValue(kCombinedAffectUniform, combined_affect_matrix.GetMatrixQT());
+  m_program.setUniformValue(kCombinedAffectSwitchUniform, true);
+  m_program.setUniformValue(kCombinedAffectUniform,
+                            combined_affect_matrix.GetMatrixQT());
   m_program.setUniformValue(
       kModelColorUniform,
       QVector4D(service::converters::DoubleToFloat(model_color.x),
                 service::converters::DoubleToFloat(model_color.y),
                 service::converters::DoubleToFloat(model_color.z),
                 service::converters::DoubleToFloat(model_color.w)));
-  m_program.setUniformValue(
-      kVertexSizeUniform, service::converters::DoubleToFloat(vertex_size));
+  m_program.setUniformValue(kVertexSizeUniform,
+                            service::converters::DoubleToFloat(vertex_size));
 
-  m_program.setUniformValue(
-      kEdgeWidthUniform, service::converters::DoubleToFloat(edge_width));
+  m_program.setUniformValue(kEdgeWidthUniform,
+                            service::converters::DoubleToFloat(edge_width));
   m_program.setUniformValue(kDottedEdgeUniform, dotted_edge_switch);
 
   m_program.setUniformValue(kCircleVertexUniform, circle_vertex_switch);

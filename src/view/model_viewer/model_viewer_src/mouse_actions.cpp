@@ -14,7 +14,7 @@ void MouseActions::PressEvent(QMouseEvent *event) {
 
 Vec2Pair MouseActions::MoveEvent(QMouseEvent *event) {
   vectors::Vec2 delta(event->pos().x() - m_lastMousePos.x,
-                           event->pos().y() - m_lastMousePos.y);
+                      event->pos().y() - m_lastMousePos.y);
   Vec2Pair output;
 
   // If left button is down, rotate the model based on mouse movement

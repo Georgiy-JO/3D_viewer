@@ -32,13 +32,13 @@ class Render {
   render::ShaderProgram& Program() { return m_program; }
   const render::ShaderProgram& Program() const { return m_program; }
   parameters::ViewParameters& Parameters() { return m_parameters; }
-  const parameters::ViewParameters& Parameters() const {
-    return m_parameters;
-  }
+  const parameters::ViewParameters& Parameters() const { return m_parameters; }
 
   void SetUniforms() {
     m_program.UploadUniforms(
-        render::uniforms::UniformMatrix(m_projection_matrix.GetMatrix()*m_camera_matrix.GetMatrix()*m_transformation_matrix.GetMatrix()),
+        render::uniforms::UniformMatrix(m_projection_matrix.GetMatrix() *
+                                        m_camera_matrix.GetMatrix() *
+                                        m_transformation_matrix.GetMatrix()),
         m_parameters.GetModelColor(), m_parameters.GetVertexSize(),
         m_parameters.GetEdgeWidth(),
         (m_parameters.GetEdgeKind() == EdgeKinds::kDotted),

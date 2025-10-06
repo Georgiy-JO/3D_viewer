@@ -175,7 +175,7 @@ void MainWindow::on_bt_show_model_clicked() {
         } catch (const std::exception& e) {
           ErrorOccured("Model not set: " + QString::fromStdString(e.what()));
         }
-        ChangeModel([this] {ui->mv_widget->update();});
+        ChangeModel([this] { ui->mv_widget->update(); });
       });
   connect(worker, &ModelParserWorker::error, this,
           [this](const QString& msg) { ErrorOccured("Not Parsed: " + msg); });

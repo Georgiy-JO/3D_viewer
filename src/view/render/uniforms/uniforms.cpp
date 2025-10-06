@@ -8,11 +8,10 @@
 namespace render::uniforms {
 
 UniformMatrix::UniformMatrix() : m_matrix() { m_matrix.SetToIdentity(); }
-UniformMatrix::UniformMatrix(const matrix::Matrix4x4& matrix_):m_matrix(matrix_){}
+UniformMatrix::UniformMatrix(const matrix::Matrix4x4& matrix_)
+    : m_matrix(matrix_) {}
 
-const matrix::Matrix4x4& UniformMatrix::GetMatrix() const {
-  return m_matrix;
-}
+const matrix::Matrix4x4& UniformMatrix::GetMatrix() const { return m_matrix; }
 
 QMatrix4x4 UniformMatrix::GetMatrixQT() const {
   QMatrix4x4 qmatrix;
@@ -62,7 +61,7 @@ void ProjectionMatrix::ResetCentral(double w, double h, double fov_angle,
   double tan = std::tan(fov_angle / 2.0f);
   double ratio = w / (h > 0 ? h : 1.0f);
   matrix::Matrix local(matrix::Matrix4x4::kMatrixDimention,
-                            matrix::Matrix4x4::kMatrixDimention);
+                       matrix::Matrix4x4::kMatrixDimention);
 
   local(0, 0) = 1.0f / (ratio * tan);
   local(0, 1) = 0;
@@ -99,7 +98,7 @@ void ProjectionMatrix::ResetOrthographic(double w, double h,
   double top = projection_zone_size;
   double bottom = -top;
   matrix::Matrix local(matrix::Matrix4x4::kMatrixDimention,
-                            matrix::Matrix4x4::kMatrixDimention);
+                       matrix::Matrix4x4::kMatrixDimention);
 
   local(0, 0) = 2.0f / (right - left);
   local(0, 1) = 0;

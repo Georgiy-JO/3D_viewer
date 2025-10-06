@@ -18,13 +18,13 @@ class ShaderProgram {
   void SetShaders(const std::string& vertex_shader_path,
                   const std::string& fragment_shader_path,
                   const std::string& geometry_shader_path = "");
-  void UploadUniforms(
-      const render::uniforms::TransformationMatrix& trans_marix,
-      const render::uniforms::CameraMatrix& cam_marix,
-      const render::uniforms::ProjectionMatrix& project_matrix,
-      const vectors::Vec4& model_color, const double vertex_size,
-      const double edge_width, const bool dotted_edge_switch,
-      const bool circle_vertex_switch);
+  void UploadUniforms(const render::uniforms::TransformationMatrix& trans_marix,
+                      const render::uniforms::CameraMatrix& cam_marix,
+                      const render::uniforms::ProjectionMatrix& project_matrix,
+                      const vectors::Vec4& model_color,
+                      const double vertex_size, const double edge_width,
+                      const bool dotted_edge_switch,
+                      const bool circle_vertex_switch);
   void UploadUniforms(
       const render::uniforms::UniformMatrix& combined_affect_matrix,
       const vectors::Vec4& model_color, const double vertex_size,

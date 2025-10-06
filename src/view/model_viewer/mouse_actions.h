@@ -24,8 +24,7 @@ class MouseActions {
   // static constexpr double kMinScaleStep=0.01f;
 
   void SetLastMousePosition(QMouseEvent *event);
-  vectors::Vec2
-      m_lastMousePos;  // last mouse position (used to compute deltas)
+  vectors::Vec2 m_lastMousePos;  // last mouse position (used to compute deltas)
   bool m_left_button_down = false;
   bool m_right_button_down = false;
 };

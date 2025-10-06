@@ -7,8 +7,7 @@ namespace parameters {
 
 bool ViewParameters::ReadFromSettingsFile(const std::string& file_name) {
   SetDefaults();
-  if (!service::file::IsFileOk(file_name, kMaxSettingsFileSize))
-    return false;
+  if (!service::file::IsFileOk(file_name, kMaxSettingsFileSize)) return false;
 
   std::ifstream ifs(file_name);
   if (!ifs.is_open())
