@@ -90,34 +90,34 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui OpenGLWidgets)    
     if(${QT_VERSION_MAJOR})
         set(RENDER_INCLUDE_DIRS
-            ${CMAKE_CURRENT_SOURCE_DIR}/../model/render
-            ${CMAKE_CURRENT_SOURCE_DIR}/../model/render/uniforms
-            ${CMAKE_CURRENT_SOURCE_DIR}/../model/render/shaders
-            ${CMAKE_CURRENT_SOURCE_DIR}/../model/render/render_src
+            ${CMAKE_CURRENT_SOURCE_DIR}/../view/render
+            ${CMAKE_CURRENT_SOURCE_DIR}/../view/render/uniforms
+            ${CMAKE_CURRENT_SOURCE_DIR}/../view/render/shaders
+            ${CMAKE_CURRENT_SOURCE_DIR}/../view/render/render_src
             ${CORE_INCLUDE_DIRS}
             ${INBOUND_MODEL_INCLUDE_DIRS}
         )
         set(RENDER_SRC
-            ../model/render/uniforms/uniforms.cpp
-            ../model/render/render_src/gui_model.cpp        
-            ../model/render/render_src/shader_program.cpp
+            ../view/render/uniforms/uniforms.cpp
+            ../view/render/render_src/gpu_model.cpp        
+            ../view/render/render_src/shader_program.cpp
             ${CORE_SRC}
             ${INBOUND_MODEL_SRC}
         )
         set(RENDER_TEST_SRC
             render/main.cpp
             render/uniforms_tests.cpp
-            render/gui_model_tests.cpp
+            render/gpu_model_tests.cpp
             render/shader_program_tests.cpp
         )
         set(RENDER_VALG_SRC
-            ../model/render/uniforms/uniforms.cpp
+            ../view/render/uniforms/uniforms.cpp
             ${CORE_SRC}
         )
         set(RENDER_VALG_TEST_SRC
             render/uniforms_tests.cpp
         )
-        file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../model/render/shaders
+        file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../view/render/shaders
             DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
     else()
         message(WARNING "No render tests will be possible, QT source files was not found.")

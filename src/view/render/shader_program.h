@@ -1,5 +1,5 @@
-#ifndef SRC_MODEL_RENDER_SHADER_PROGRAM_H
-#define SRC_MODEL_RENDER_SHADER_PROGRAM_H
+#ifndef SRC_VIEW_RENDER_SHADER_PROGRAM_H
+#define SRC_VIEW_RENDER_SHADER_PROGRAM_H
 
 #include <QOpenGLShaderProgram>
 #include <string>
@@ -65,4 +65,4 @@ class ShaderProgram {
 std::string GetFileData(const std::string& file_name);
 }  // namespace render
 
-#endif  // SRC_MODEL_RENDER_SHADER_PROGRAM_H
+#endif  // SRC_VIEW_RENDER_SHADER_PROGRAM_H

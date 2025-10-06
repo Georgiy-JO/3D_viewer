@@ -1,5 +1,5 @@
-#ifndef SRC_MODEL_RENDER_UNIFORMS_H
-#define SRC_MODEL_RENDER_UNIFORMS_H
+#ifndef SRC_VIEW_RENDER_UNIFORMS_UNIFORMS_H
+#define SRC_VIEW_RENDER_UNIFORMS_UNIFORMS_H
 
 #include <QMatrix4x4>
 
@@ -72,4 +72,4 @@ class ProjectionMatrix : public UniformMatrix {
 
 }  // namespace render::uniforms
 
-#endif  // SRC_MODEL_RENDER_UNIFORMS_H
+#endif  // SRC_VIEW_RENDER_UNIFORMS_UNIFORMS_H

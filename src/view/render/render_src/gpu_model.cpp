@@ -1,4 +1,4 @@
-#include "../gui_model.h"
+#include "../gpu_model.h"
 
 #include <stdexcept>
 

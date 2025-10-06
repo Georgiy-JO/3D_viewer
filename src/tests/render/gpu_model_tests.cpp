@@ -3,7 +3,7 @@
 #include <QOffscreenSurface>
 
 #include "../../model/parser/model_parser.h"
-#include "../../model/render/gui_model.h"
+#include "../../view/render/gpu_model.h"
 
 TEST(Render_GUI_Model, Basic) {
   render::GPU_Model model;

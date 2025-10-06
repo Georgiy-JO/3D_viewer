@@ -1,8 +1,8 @@
-#ifndef SRC_MODEL_RENDER_GUI_MODEL_H
-#define SRC_MODEL_RENDER_GUI_MODEL_H
+#ifndef SRC_VIEW_RENDER_GUI_MODEL_H
+#define SRC_VIEW_RENDER_GUI_MODEL_H
 #include <QOpenGLFunctions_3_3_Core>
 
-#include "../model3d/model3d.h"
+#include "../../model/model3d/model3d.h"
 
 namespace render {
 class GPU_Model : protected QOpenGLFunctions_3_3_Core {
@@ -35,4 +35,4 @@ class GPU_Model : protected QOpenGLFunctions_3_3_Core {
 };
 }  // namespace render
 
-#endif  // SRC_MODEL_RENDER_GUI_MODEL_H
+#endif  // SRC_VIEW_RENDER_GUI_MODEL_H

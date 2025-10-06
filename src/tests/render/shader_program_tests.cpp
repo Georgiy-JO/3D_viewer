@@ -3,7 +3,7 @@
 #include <QOffscreenSurface>
 #include <QOpenGLFunctions_3_3_Core>
 
-#include "../../model/render/shader_program.h"
+#include "../../view/render/shader_program.h"
 
 TEST(Render_Shader_Program, Basic) {
   render::ShaderProgram sh_pr;

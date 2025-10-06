@@ -42,9 +42,9 @@ set(INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/model/parser
   ${CMAKE_CURRENT_SOURCE_DIR}/model/parser/parser_src
   ${CMAKE_CURRENT_SOURCE_DIR}/model/parser/service_functions
-  ${CMAKE_CURRENT_SOURCE_DIR}/model/render
-  ${CMAKE_CURRENT_SOURCE_DIR}/model/render/render_src
-  ${CMAKE_CURRENT_SOURCE_DIR}/model/render/uniforms
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/render
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/render/render_src
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/render/uniforms
   ${CMAKE_CURRENT_SOURCE_DIR}/view
   ${CMAKE_CURRENT_SOURCE_DIR}/view/controls
   ${CMAKE_CURRENT_SOURCE_DIR}/view/controls/elements
@@ -69,9 +69,9 @@ set(SOURCES
   model/parser/parser_src/prefix_handlers.cpp
   model/parser/parser_src/model_parser.cpp
   model/parser/service_functions/service_functions.cpp
-  model/render/render_src/gui_model.cpp
-  model/render/render_src/shader_program.cpp
-  model/render/uniforms/uniforms.cpp
+  view/render/render_src/gpu_model.cpp
+  view/render/render_src/shader_program.cpp
+  view/render/uniforms/uniforms.cpp
   view/model_viewer/model_viewer_src/model_viewer.cpp
   view/model_viewer/model_viewer_src/mouse_actions.cpp
   view/controls/elements/slider.cpp
@@ -96,9 +96,9 @@ set(HEADERS
   model/parser/parser.h
   model/parser/model_parser.h
   model/parser/service_functions/service_functions.h
-  model/render/gui_model.h
-  model/render/shader_program.h
-  model/render/uniforms/uniforms.h
+  view/render/gpu_model.h
+  view/render/shader_program.h
+  view/render/uniforms/uniforms.h
   view/model_viewer/model_viewer.h
   view/model_viewer/mouse_actions.h
   view/controls/model_controls.h
@@ -109,8 +109,8 @@ set(HEADERS
 )
 
 set(SHADER_FILES
-  ${CMAKE_CURRENT_SOURCE_DIR}/model/render/shaders/shader.frag
-  ${CMAKE_CURRENT_SOURCE_DIR}/model/render/shaders/shader.vert
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/render/shaders/shader.frag
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/render/shaders/shader.vert
 )
 
 set(MATRIX_SOURCES
@@ -131,7 +131,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${SOURCES}
         ${HEADERS}
     )
-    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/model/render/shaders
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/view/render/shaders
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../materials/models
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
@@ -336,7 +336,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../materials/models
     DESTINATION Viewer_3D
     COMPONENT Viewer3D
 )
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/model/render/shaders
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/view/render/shaders
     DESTINATION Viewer_3D
     COMPONENT Viewer3D
 )

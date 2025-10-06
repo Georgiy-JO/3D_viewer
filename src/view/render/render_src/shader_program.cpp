@@ -4,7 +4,7 @@
 #include <fstream>
 #include <stdexcept>
 
-#include "../../core/service/service.h"
+#include "../../../core/service/service.h"
 namespace render {
 
 void ShaderProgram::SetVertexShaders() {

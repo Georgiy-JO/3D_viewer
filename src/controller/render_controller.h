@@ -1,8 +1,8 @@
 #ifndef SRC_CONTROLLER_RENDER_CONTROLLER_H
 #define SRC_CONTROLLER_RENDER_CONTROLLER_H
 #include "../core/parameters/view_parameters.h"
-#include "../model/render/gui_model.h"
-#include "../model/render/shader_program.h"
+#include "../view/render/gpu_model.h"
+#include "../view/render/shader_program.h"
 
 namespace controller {
 class Render {
