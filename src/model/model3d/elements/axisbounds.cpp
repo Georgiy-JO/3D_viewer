@@ -1,6 +1,6 @@
 #include "axisbounds.h"
 
-namespace s21::inbound_model {
+namespace inbound_model {
 
 AxisBounds& AxisBounds::operator*=(double number) {
   min *= number;
@@ -23,4 +23,4 @@ void AxisBounds3D::clear() {
   z.max = 0;
 }
 
-}  // namespace s21::inbound_model
+}  // namespace inbound_model

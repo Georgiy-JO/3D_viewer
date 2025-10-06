@@ -1,13 +1,13 @@
 
 #include "../model_viewer.h"
 
-namespace s21::gui {
+namespace gui {
 
 ModelViewer::ModelViewer(QWidget *parent)
     : QOpenGLWidget(parent), m_render(), m_mouse() {}
 
 void ModelViewer::SetModel(
-    std::shared_ptr<s21::inbound_model::Model3D> model_) {
+    std::shared_ptr<inbound_model::Model3D> model_) {
   m_render.Model().SetModelData(std::move(model_));
   ResetTransformations();
 }
@@ -30,13 +30,13 @@ void ModelViewer::initializeGL() {
   m_render.Model().InitializeModel();
 
   m_render.Camera().Reset();
-  glClearColor(s21::service::converters::DoubleToFloat(
+  glClearColor(service::converters::DoubleToFloat(
                    m_render.Parameters().GetBackgroundColor().x),
-               s21::service::converters::DoubleToFloat(
+               service::converters::DoubleToFloat(
                    m_render.Parameters().GetBackgroundColor().y),
-               s21::service::converters::DoubleToFloat(
+               service::converters::DoubleToFloat(
                    m_render.Parameters().GetBackgroundColor().z),
-               s21::service::converters::DoubleToFloat(
+               service::converters::DoubleToFloat(
                    m_render.Parameters().GetBackgroundColor().w));
 }
 
@@ -48,13 +48,13 @@ void ModelViewer::resizeGL(int w, int h) {
 void ModelViewer::paintGL() {
   try {
     // set background (clear) color
-    glClearColor(s21::service::converters::DoubleToFloat(
+    glClearColor(service::converters::DoubleToFloat(
                      m_render.Parameters().GetBackgroundColor().x),
-                 s21::service::converters::DoubleToFloat(
+                 service::converters::DoubleToFloat(
                      m_render.Parameters().GetBackgroundColor().y),
-                 s21::service::converters::DoubleToFloat(
+                 service::converters::DoubleToFloat(
                      m_render.Parameters().GetBackgroundColor().z),
-                 s21::service::converters::DoubleToFloat(
+                 service::converters::DoubleToFloat(
                      m_render.Parameters().GetBackgroundColor().w));
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -63,7 +63,7 @@ void ModelViewer::paintGL() {
     // enabling vertice sizing and setting edges width
     glEnable(GL_PROGRAM_POINT_SIZE);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glLineWidth(s21::service::converters::DoubleToFloat(
+    glLineWidth(service::converters::DoubleToFloat(
         m_render.Parameters().GetEdgeWidth()));
 
     // Bind VAO (which also binds VBO/EBO layouts)
@@ -71,7 +71,7 @@ void ModelViewer::paintGL() {
 
     if (m_render.Model().GetEdgesCount() != 0 &&
         m_render.Parameters().GetEdgeKind() !=
-            s21::controller::Render::EdgeKinds::kNone) {
+            controller::Render::EdgeKinds::kNone) {
       m_render.SetEdgeProgram();
       m_render.Program().GetProgram().bind();  // Bind shader program
       // Draw the edges stored in the EBO as lines.
@@ -80,7 +80,7 @@ void ModelViewer::paintGL() {
                      GL_UNSIGNED_INT, nullptr);
     }
     if (m_render.Parameters().GetVertexKind() !=
-        s21::controller::Render::VertexKinds::kNone) {
+        controller::Render::VertexKinds::kNone) {
       m_render.SetVertexProgram();
       m_render.Program().GetProgram().bind();
       glDrawArrays(GL_POINTS, 0, m_render.Model().GetVerticesAmount());
@@ -219,7 +219,7 @@ std::pair<double, double> ModelViewer::GetEdgeWidthRange() const {
 }
 
 void ModelViewer::SetModelColor(QColor input) {
-  m_render.Parameters().SetModelColor(s21::vectors::Vec4(
+  m_render.Parameters().SetModelColor(vectors::Vec4(
       input.redF(), input.greenF(), input.blueF(), input.alphaF()));
 }
 
@@ -231,7 +231,7 @@ QColor ModelViewer::GetModelColor() const {
 }
 
 void ModelViewer::SetBackgroundColor(QColor input) {
-  m_render.Parameters().SetBackgroundColor(s21::vectors::Vec4(
+  m_render.Parameters().SetBackgroundColor(vectors::Vec4(
       input.redF(), input.greenF(), input.blueF(), input.alphaF()));
 }
 
@@ -247,4 +247,4 @@ void ModelViewer::ResetParameters() {
   m_render.ResetProjection(width(), height());
 }
 
-}  // namespace s21::gui
+}  // namespace gui

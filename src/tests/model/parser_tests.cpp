@@ -7,41 +7,41 @@
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNum) {
   int ch = 'k';
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum(ch), false);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum(ch), false);
   for (ch = 0; ch < 127; ch++) {
     if (ch <= 57 && ch >= 48)
-      EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum(ch), true);
+      EXPECT_EQ(inbound_model::parser::service_functions::IsNum(ch), true);
     else
-      EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum(ch),
+      EXPECT_EQ(inbound_model::parser::service_functions::IsNum(ch),
                 false);
   }
 
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('0'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('1'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('2'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('3'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('4'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('5'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('6'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('7'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('8'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum('9'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNum(EOF), false);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum('0'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum('1'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum('2'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum('3'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum('4'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum('5'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum('6'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum('7'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum('8'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum('9'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNum(EOF), false);
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsInteger) {
   double num = 0.0;
 
   for (num = -50.0; num < 100; num++) {
-    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsInteger(num),
+    EXPECT_EQ(inbound_model::parser::service_functions::IsInteger(num),
               true);
   }
   for (num = -50.1; num < 100; num++) {
-    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsInteger(num),
+    EXPECT_EQ(inbound_model::parser::service_functions::IsInteger(num),
               false);
   }
   for (num = -50.5; num < 100; num++) {
-    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsInteger(num),
+    EXPECT_EQ(inbound_model::parser::service_functions::IsInteger(num),
               false);
   }
 }
@@ -50,30 +50,30 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNonzeroInteger) {
   double num = 0.0;
 
   EXPECT_EQ(
-      s21::inbound_model::parser::service_functions::IsNonzeroInteger(num),
+      inbound_model::parser::service_functions::IsNonzeroInteger(num),
       false);
   for (num = -50.0; num < 0; num++) {
     EXPECT_EQ(
-        s21::inbound_model::parser::service_functions::IsNonzeroInteger(num),
+        inbound_model::parser::service_functions::IsNonzeroInteger(num),
         true);
   }
   EXPECT_EQ(
-      s21::inbound_model::parser::service_functions::IsNonzeroInteger(num),
+      inbound_model::parser::service_functions::IsNonzeroInteger(num),
       false);
   num++;
   for (; num < 100; num++) {
     EXPECT_EQ(
-        s21::inbound_model::parser::service_functions::IsNonzeroInteger(num),
+        inbound_model::parser::service_functions::IsNonzeroInteger(num),
         true);
   }
   for (num = -50.1; num < 100; num++) {
     EXPECT_EQ(
-        s21::inbound_model::parser::service_functions::IsNonzeroInteger(num),
+        inbound_model::parser::service_functions::IsNonzeroInteger(num),
         false);
   }
   for (num = -50.5; num < 100; num++) {
     EXPECT_EQ(
-        s21::inbound_model::parser::service_functions::IsNonzeroInteger(num),
+        inbound_model::parser::service_functions::IsNonzeroInteger(num),
         false);
   }
 }
@@ -81,104 +81,104 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNonzeroInteger) {
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSpaceCh) {
   int ch = 33;
   for (; ch < 127; ch++) {
-    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceCh(ch),
+    EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh(ch),
               false);
   }
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceCh(' '),
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh(' '),
             true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceCh('\t'),
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh('\t'),
             true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceCh(EOF),
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceCh(EOF),
             false);
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsHash) {
   int ch = 33;
   for (ch = 0; ch < 35; ch++) {
-    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsHash(ch), false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsHash(ch), false);
   }
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsHash(ch), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsHash(ch), true);
   ch++;
   for (; ch < 127; ch++) {
-    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsHash(ch), false);
+    EXPECT_EQ(inbound_model::parser::service_functions::IsHash(ch), false);
   }
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsHash('#'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsHash(EOF), false);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsHash('#'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsHash(EOF), false);
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSlash) {
   int ch = 33;
   for (ch = 0; ch < 47; ch++) {
-    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSlash(ch),
+    EXPECT_EQ(inbound_model::parser::service_functions::IsSlash(ch),
               false);
   }
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSlash(ch), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSlash(ch), true);
   ch++;
   for (; ch < 127; ch++) {
-    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSlash(ch),
+    EXPECT_EQ(inbound_model::parser::service_functions::IsSlash(ch),
               false);
   }
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSlash('/'), true);
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSlash(EOF), false);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSlash('/'), true);
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSlash(EOF), false);
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsSpaceChHashEOF) {
   int ch = 33;
   for (ch = 0; ch < '\t'; ch++) {
     EXPECT_EQ(
-        s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+        inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
         false);
   }
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
             true);
   EXPECT_EQ(
-      s21::inbound_model::parser::service_functions::IsSpaceChHashEOF('\t'),
+      inbound_model::parser::service_functions::IsSpaceChHashEOF('\t'),
       true);
   ch++;
   for (; ch < ' '; ch++) {
     EXPECT_EQ(
-        s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+        inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
         false);
   }
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
             true);
   EXPECT_EQ(
-      s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(' '),
+      inbound_model::parser::service_functions::IsSpaceChHashEOF(' '),
       true);
   ch++;
   for (; ch < '#'; ch++) {
     EXPECT_EQ(
-        s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+        inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
         false);
   }
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+  EXPECT_EQ(inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
             true);
   EXPECT_EQ(
-      s21::inbound_model::parser::service_functions::IsSpaceChHashEOF('#'),
+      inbound_model::parser::service_functions::IsSpaceChHashEOF('#'),
       true);
   ch++;
   for (; ch < 127; ch++) {
     EXPECT_EQ(
-        s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
+        inbound_model::parser::service_functions::IsSpaceChHashEOF(ch),
         false);
   }
   EXPECT_EQ(
-      s21::inbound_model::parser::service_functions::IsSpaceChHashEOF(EOF),
+      inbound_model::parser::service_functions::IsSpaceChHashEOF(EOF),
       true);
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNotEOF) {
   int ch = 33;
   for (ch = 0; ch < 127; ch++) {
-    EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNotEOF(ch),
+    EXPECT_EQ(inbound_model::parser::service_functions::IsNotEOF(ch),
               true);
   }
-  EXPECT_EQ(s21::inbound_model::parser::service_functions::IsNotEOF(EOF),
+  EXPECT_EQ(inbound_model::parser::service_functions::IsNotEOF(EOF),
             false);
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNextNumber) {
-  using s21::inbound_model::parser::service_functions::IsNextNumber;
+  using inbound_model::parser::service_functions::IsNextNumber;
   std::string line{"Hell 2 you! "};
   std::istringstream iss{line};
   int ch = iss.peek();
@@ -263,7 +263,7 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNextNumber) {
   iss.clear();
   iss.str(line);
   ch = iss.get();
-  while (s21::inbound_model::parser::service_functions::IsNotEOF(ch)) {
+  while (inbound_model::parser::service_functions::IsNotEOF(ch)) {
     if (IsNextNumber(iss)) {
       iss >> num;
       EXPECT_DOUBLE_EQ(num, -5555.55);
@@ -276,7 +276,7 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNextNumber) {
   iss.clear();
   iss.str(line);
   ch = iss.get();
-  while (s21::inbound_model::parser::service_functions::IsNotEOF(ch)) {
+  while (inbound_model::parser::service_functions::IsNotEOF(ch)) {
     if (IsNextNumber(iss)) {
       iss >> num;
       EXPECT_DOUBLE_EQ(num, 5);
@@ -286,7 +286,7 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_IsNextNumber) {
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_RSpaceChTrim_string) {
-  using s21::inbound_model::parser::service_functions::RSpaceChTrim;
+  using inbound_model::parser::service_functions::RSpaceChTrim;
 
   std::string line{"Hello there!"};
 
@@ -336,7 +336,7 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_RSpaceChTrim_string) {
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_LSpaceChTrim_string) {
-  using s21::inbound_model::parser::service_functions::LSpaceChTrim;
+  using inbound_model::parser::service_functions::LSpaceChTrim;
 
   std::string line{"Hello there!"};
 
@@ -387,7 +387,7 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_LSpaceChTrim_string) {
   line = "   asdf     ";
   length = line.length();
   LSpaceChTrim(line);
-  s21::inbound_model::parser::service_functions::RSpaceChTrim(line);
+  inbound_model::parser::service_functions::RSpaceChTrim(line);
   EXPECT_EQ(line.length(), length - 8);
   EXPECT_EQ(line.length(), 4);
   EXPECT_EQ(line[0], 'a');
@@ -395,7 +395,7 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_LSpaceChTrim_string) {
 }
 
 TEST(Model_Parser, ParssingUnits_ServiseFunctions_LSpaceChTrim_istringsteam) {
-  using s21::inbound_model::parser::service_functions::LSpaceChTrim;
+  using inbound_model::parser::service_functions::LSpaceChTrim;
 
   std::string line{"Hello there!"};
   std::istringstream iss(line);
@@ -473,10 +473,10 @@ TEST(Model_Parser, ParssingUnits_ServiseFunctions_LSpaceChTrim_istringsteam) {
 }
 
 TEST(Model_Parser, Parser_ModelNormalizer) {
-  using s21::inbound_model::Edge;
-  using s21::inbound_model::Vec3;
+  using inbound_model::Edge;
+  using inbound_model::Vec3;
 
-  s21::inbound_model::Model3D model;
+  inbound_model::Model3D model;
 
   for (int i = 0; i < 21; i++) {
     model.AddVert(i + 10, i - 20, i - 10);
@@ -489,11 +489,11 @@ TEST(Model_Parser, Parser_ModelNormalizer) {
   EXPECT_EQ(model.GetEdgesAmount(), 15);
   EXPECT_EQ(model.GetVerticesAmount(), 21);
 
-  EXPECT_THROW(s21::inbound_model::parser::Parser prs11(model, "nothing.txt"),
+  EXPECT_THROW(inbound_model::parser::Parser prs11(model, "nothing.txt"),
                std::ios_base::failure);
   EXPECT_NO_THROW(
-      s21::inbound_model::parser::Parser prs12(model, "nothing.obj"));
-  s21::inbound_model::parser::Parser prs1(model, "nothing.obj");
+      inbound_model::parser::Parser prs12(model, "nothing.obj"));
+  inbound_model::parser::Parser prs1(model, "nothing.obj");
   prs1.ModelNormalizer();
   EXPECT_EQ(model.GetEdgesAmount(), 2);
   EXPECT_EQ(model.GetVerticesAmount(), 21);
@@ -527,11 +527,11 @@ TEST(Model_Parser, Parser_ParseIt_Prepare) {
 }
 
 TEST(Model_Parser, Parser_ParseIt) {
-  using s21::inbound_model::Edge;
-  using s21::inbound_model::parser::Parser;
+  using inbound_model::Edge;
+  using inbound_model::parser::Parser;
 
   std::string file_name{"model.obj"};
-  s21::inbound_model::Model3D model;
+  inbound_model::Model3D model;
   Parser prs(model, file_name);
 
   EXPECT_THROW(prs.ParseIt(), std::ios_base::failure);
@@ -797,7 +797,7 @@ TEST(Model_Parser, Parser_ParseIt) {
 
   EXPECT_EQ(model.GetName(), "model_1_&_model 2");
 
-  s21::inbound_model::Model3D model_2;
+  inbound_model::Model3D model_2;
 
   prs.SetModelRef(model_2);
   model = prs.GetModelRef();
@@ -806,11 +806,11 @@ TEST(Model_Parser, Parser_ParseIt) {
 }
 
 TEST(Model_Parser, ModelParser_ParseModelFromFile_pointer) {
-  using s21::inbound_model::Edge;
-  using s21::inbound_model::ParseModelFromFile;
+  using inbound_model::Edge;
+  using inbound_model::ParseModelFromFile;
 
   std::string file_name;
-  std::unique_ptr<s21::inbound_model::Model3D> model;
+  std::unique_ptr<inbound_model::Model3D> model;
   EXPECT_THROW(model = ParseModelFromFile(file_name), std::ios_base::failure);
   file_name = "models/test.txt";
   EXPECT_THROW(model = ParseModelFromFile(file_name), std::ios_base::failure);
@@ -941,11 +941,11 @@ TEST(Model_Parser, ModelParser_ParseModelFromFile_pointer) {
 }
 
 TEST(Model_Parser, ModelParser_ParseModelFromFile_reference) {
-  using s21::inbound_model::Edge;
-  using s21::inbound_model::ParseModelFromFile;
+  using inbound_model::Edge;
+  using inbound_model::ParseModelFromFile;
 
   std::string file_name;
-  s21::inbound_model::Model3D model;
+  inbound_model::Model3D model;
 
   EXPECT_THROW(ParseModelFromFile(model, file_name), std::ios_base::failure);
   file_name = "models/test.txt";
@@ -1078,10 +1078,10 @@ TEST(Model_Parser, ModelParser_ParseModelFromFile_reference) {
 
 // cube_first.obj
 TEST(Model_Parser, ObjectFiles_SimpleModel) {
-  using s21::inbound_model::Edge;
-  using s21::inbound_model::ParseModelFromFile;
+  using inbound_model::Edge;
+  using inbound_model::ParseModelFromFile;
 
-  s21::inbound_model::Model3D model;
+  inbound_model::Model3D model;
   EXPECT_NO_THROW(ParseModelFromFile(model, "models/cube_first.obj"));
 
   EXPECT_EQ(model.GetName(), "cube_first");
@@ -1141,10 +1141,10 @@ TEST(Model_Parser, ObjectFiles_SimpleModel) {
 /**
  * Redundant test (unless new test / visualize method found).
 TEST(Model_Parser, ObjectFiles_cube_carcas){
-    using s21::inbound_model::Parser;
-    using s21::inbound_model::Edge;
+    using inbound_model::Parser;
+    using inbound_model::Edge;
 
-    s21::inbound_model::Model3D model;
+    inbound_model::Model3D model;
     EXPECT_NO_THROW(Parser(model,"models/cube_carcas.obj"));
 
     EXPECT_EQ(model.GetName(),"cube_carcas");
@@ -1159,10 +1159,10 @@ TEST(Model_Parser, ObjectFiles_cube_carcas){
  * T ~ 0,6 seconds
  */
 TEST(Model_Parser, ObjectFiles_MiddleVerticesAmountModel) {
-  using s21::inbound_model::Edge;
-  using s21::inbound_model::ParseModelFromFile;
+  using inbound_model::Edge;
+  using inbound_model::ParseModelFromFile;
 
-  s21::inbound_model::Model3D model;
+  inbound_model::Model3D model;
   EXPECT_NO_THROW(ParseModelFromFile(model, "models/cube_rubik.obj"));
 
   EXPECT_EQ(model.GetName(), "cube_rubik");
@@ -1179,10 +1179,10 @@ TEST(Model_Parser, ObjectFiles_MiddleVerticesAmountModel) {
  * or removed.
  */
 // TEST(Model_Parser, ObjectFiles_HighVerticesAmountModel) {
-//   using s21::inbound_model::Edge;
-//   using s21::inbound_model::ParseModelFromFile;
+//   using inbound_model::Edge;
+//   using inbound_model::ParseModelFromFile;
 
-//   s21::inbound_model::Model3D model;
+//   inbound_model::Model3D model;
 //   EXPECT_NO_THROW(ParseModelFromFile(model, "models/dog.obj"));
 
 //   EXPECT_EQ(model.GetName(), "dog");
@@ -1196,10 +1196,10 @@ TEST(Model_Parser, ObjectFiles_MiddleVerticesAmountModel) {
  * T ~ 0,6 seconds
  */
 TEST(Model_Parser, ObjectFiles_NegativeVertexReferenceModel) {
-  using s21::inbound_model::Edge;
-  using s21::inbound_model::ParseModelFromFile;
+  using inbound_model::Edge;
+  using inbound_model::ParseModelFromFile;
 
-  s21::inbound_model::Model3D model;
+  inbound_model::Model3D model;
   EXPECT_NO_THROW(ParseModelFromFile(model, "models/skull.obj"));
 
   EXPECT_EQ(model.GetName(), "skull");

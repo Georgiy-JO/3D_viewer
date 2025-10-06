@@ -4,7 +4,7 @@
 #include <fstream>
 #include <stdexcept>
 
-namespace s21::inbound_model::parser {
+namespace inbound_model::parser {
 using namespace service_functions;
 
 Parser::Parser(Model3D& model_, const std::string& file_name_)
@@ -76,4 +76,4 @@ void Parser::ModelNormalizer() {
   m_model.ManageEdges();
 }
 
-}  // namespace s21::inbound_model::parser
+}  // namespace inbound_model::parser

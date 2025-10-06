@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-namespace s21::render {
+namespace render {
 GPU_Model::GPU_Model()
     : m_vao(0), m_vbo(0), m_ebo(0), m_EdgesCount(0), m_VerticesAmount(0) {}
 
@@ -70,7 +70,7 @@ void GPU_Model::InitializeModel() {
 }
 
 void GPU_Model::SetModelData(
-    std::shared_ptr<s21::inbound_model::Model3D> model_) {
+    std::shared_ptr<inbound_model::Model3D> model_) {
   // Ensure a VAO/VBO/EBO exist
   if (m_vao == 0)
     throw std::runtime_error(
@@ -92,9 +92,9 @@ void GPU_Model::SetModelData(
    */
   std::vector<float> vertices;  // will store in form: x,y,z,x,y,z,...
   vertices.reserve(m_VerticesAmount * 3);
-  s21::vectors::Vec3 v;
+  vectors::Vec3 v;
   for (uint32_t i = 0; i < m_VerticesAmount; ++i) {
-    v = static_cast<s21::vectors::Vec3>((*model_)[i]);
+    v = static_cast<vectors::Vec3>((*model_)[i]);
     if (v.x > std::numeric_limits<float>::max() ||
         v.y > std::numeric_limits<float>::max() ||
         v.z > std::numeric_limits<float>::max())
@@ -108,9 +108,9 @@ void GPU_Model::SetModelData(
 
   std::vector<uint32_t> edges;
   edges.reserve(m_EdgesCount * 2);
-  s21::inbound_model::Edge e(0, 0);
+  inbound_model::Edge e(0, 0);
   for (size_t i = 0; i < m_EdgesCount; ++i) {
-    e = static_cast<s21::inbound_model::Edge>((*model_)(i));
+    e = static_cast<inbound_model::Edge>((*model_)(i));
     edges.push_back(e.begin);
     edges.push_back(e.end);
   }
@@ -151,4 +151,4 @@ uint32_t GPU_Model::GetVerticesAmount() const { return m_VerticesAmount; }
 const std::string& GPU_Model::GetModelName() const { return m_model_name; }
 
 size_t GPU_Model::GetEdgesAmount() const { return m_EdgesAmount; }
-}  // namespace s21::render
+}  // namespace render

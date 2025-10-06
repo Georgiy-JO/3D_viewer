@@ -3,7 +3,7 @@
 
 #include <sstream>
 
-namespace s21::inbound_model::parser::service_functions {
+namespace inbound_model::parser::service_functions {
 
 bool IsNotEOF(const int& symbol);
 bool IsNum(const int& symbol);
@@ -21,6 +21,6 @@ void RSpaceChTrim(std::string& line);
 void LSpaceChTrim(std::string& line);
 void LSpaceChTrim(std::istringstream& iss);
 
-}  // namespace s21::inbound_model::parser::service_functions
+}  // namespace inbound_model::parser::service_functions
 
 #endif  // SRC_MODEL_PARSER_SERVICE_FUNCTIONS_SERVICE_FUNCTIONS

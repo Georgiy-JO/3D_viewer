@@ -3,11 +3,11 @@
 #include <fstream>
 #include <stdexcept>
 
-namespace s21::parameters {
+namespace parameters {
 
 bool ViewParameters::ReadFromSettingsFile(const std::string& file_name) {
   SetDefaults();
-  if (!s21::service::file::IsFileOk(file_name, kMaxSettingsFileSize))
+  if (!service::file::IsFileOk(file_name, kMaxSettingsFileSize))
     return false;
 
   std::ifstream ifs(file_name);
@@ -19,8 +19,8 @@ bool ViewParameters::ReadFromSettingsFile(const std::string& file_name) {
   int next_char = ifs.peek();
   std::string tag;
 
-  while (s21::service::character::IntIsNotEOF(next_char)) {
-    if (s21::service::character::IntIsHash(next_char))
+  while (service::character::IntIsNotEOF(next_char)) {
+    if (service::character::IntIsHash(next_char))
       std::getline(ifs, flush_line);
     else {
       if (ifs >> tag) ReadDataAfterTag(ifs, tag);
@@ -32,7 +32,7 @@ bool ViewParameters::ReadFromSettingsFile(const std::string& file_name) {
 }
 
 void ViewParameters::SaveToSettingsFile() const {
-  s21::service::file::RemoveFile(kSettingsFile);
+  service::file::RemoveFile(kSettingsFile);
   std::ofstream ofs(kSettingsFile, std::ios::out);
   if (!ofs.is_open())
     throw std::ios_base::failure("Settings file can't be saved.");
@@ -69,12 +69,12 @@ void ViewParameters::SetDefaults() {
 void ViewParameters::ReadDataAfterTag(std::ifstream& ifs,
                                       const std::string& tag) {
   if (tag == m_background_color.kTag) {
-    s21::vectors::Vec4 temp_var;
+    vectors::Vec4 temp_var;
     if (ifs >> temp_var.x >> temp_var.y >> temp_var.z >> temp_var.w)
       SetBackgroundColor(temp_var);
   }
   if (tag == m_model_color.kTag) {
-    s21::vectors::Vec4 temp_var;
+    vectors::Vec4 temp_var;
     if (ifs >> temp_var.x >> temp_var.y >> temp_var.z >> temp_var.w)
       SetModelColor(temp_var);
   }
@@ -100,7 +100,7 @@ void ViewParameters::ReadDataAfterTag(std::ifstream& ifs,
   }
 }
 
-bool ViewParameters::SetBackgroundColor(const s21::vectors::Vec4& input) {
+bool ViewParameters::SetBackgroundColor(const vectors::Vec4& input) {
   if (input.x <= m_background_color.kRange.max &&
       input.x >= m_background_color.kRange.min &&
       input.y <= m_background_color.kRange.max &&
@@ -115,7 +115,7 @@ bool ViewParameters::SetBackgroundColor(const s21::vectors::Vec4& input) {
   return false;
 }
 
-bool ViewParameters::SetModelColor(const s21::vectors::Vec4& input) {
+bool ViewParameters::SetModelColor(const vectors::Vec4& input) {
   if (input.x <= m_model_color.kRange.max &&
       input.x >= m_model_color.kRange.min &&
       input.y <= m_model_color.kRange.max &&
@@ -134,7 +134,7 @@ bool ViewParameters::SetProjectionKind(const int input) {
   if (input >= m_projection_kind.kRange.min &&
       input <= m_projection_kind.kRange.max) {
     m_projection_kind.SetValue(
-        static_cast<s21::parameters::ViewParameters::ProjectionKind>(input));
+        static_cast<parameters::ViewParameters::ProjectionKind>(input));
     return true;
   }
   return false;
@@ -151,7 +151,7 @@ bool ViewParameters::SetVertexSize(const double input) {
 bool ViewParameters::SetVertexKind(const int input) {
   if (input >= m_vertex_kind.kRange.min && input <= m_vertex_kind.kRange.max) {
     m_vertex_kind.SetValue(
-        static_cast<s21::parameters::ViewParameters::VertexKind>(input));
+        static_cast<parameters::ViewParameters::VertexKind>(input));
     return true;
   }
   return false;
@@ -168,10 +168,10 @@ bool ViewParameters::SetEdgeWidth(const double input) {
 bool ViewParameters::SetEdgeKind(const int input) {
   if (input >= m_edge_kind.kRange.min && input <= m_edge_kind.kRange.max) {
     m_edge_kind.SetValue(
-        static_cast<s21::parameters::ViewParameters::EdgeKind>(input));
+        static_cast<parameters::ViewParameters::EdgeKind>(input));
     return true;
   }
   return false;
 }
 
-}  // namespace s21::parameters
+}  // namespace parameters

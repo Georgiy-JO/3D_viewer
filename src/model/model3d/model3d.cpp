@@ -6,7 +6,7 @@
 #include <limits>
 #include <stdexcept>
 
-namespace s21::inbound_model {
+namespace inbound_model {
 
 void Model3D::AddVert(double x_, double y_, double z_) {
   Unscale();
@@ -273,4 +273,4 @@ void Model3D::UnscaleUncenter() {
   Unscale();
   Uncenter();
 }
-}  // namespace s21::inbound_model
+}  // namespace inbound_model

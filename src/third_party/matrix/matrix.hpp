@@ -1,11 +1,11 @@
-#ifndef SRC_THIRD_PARTY_S21_MATRIX_MATRIX_HPP
-#define SRC_THIRD_PARTY_S21_MATRIX_MATRIX_HPP
+#ifndef SRC_THIRD_PARTY_MATRIX_MATRIX_HPP
+#define SRC_THIRD_PARTY_MATRIX_MATRIX_HPP
 #include <memory>
 
 #include "matrix_exceptions.hpp"
 #include "matrix_service.hpp"
 
-namespace s21::matrix {
+namespace matrix {
 
 /**
  * @brief Enumeration to indicate addition or subtraction operations.
@@ -374,5 +374,5 @@ class Matrix {
    */
   Matrix minorMaker(const int row, const int col) const;
 };
-}  // namespace s21::matrix
-#endif  // SRC_THIRD_PARTY_S21_MATRIX_MATRIX_HPP
+}  // namespace matrix
+#endif  // SRC_THIRD_PARTY_MATRIX_MATRIX_HPP

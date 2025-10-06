@@ -6,7 +6,7 @@
 #include "../../model/render/gui_model.h"
 
 TEST(Render_GUI_Model, Basic) {
-  s21::render::GPU_Model model;
+  render::GPU_Model model;
 
   EXPECT_EQ(model.GetVertexArrayObject(), 0);
   EXPECT_EQ(model.GetEdgesCount(), 0);
@@ -35,8 +35,8 @@ TEST(Render_GUI_Model, Basic) {
   EXPECT_EQ(model.GetModelName().empty(), true);
   model.InitializeModel();
 
-  std::shared_ptr<s21::inbound_model::Model3D> p_model{std::move(
-      s21::inbound_model::ParseModelFromFile("models/cube_first.obj"))};
+  std::shared_ptr<inbound_model::Model3D> p_model{std::move(
+      inbound_model::ParseModelFromFile("models/cube_first.obj"))};
   model.SetModelData(p_model);
   EXPECT_NE(model.GetVertexArrayObject(), 0);
   EXPECT_EQ(model.GetEdgesCount(), 36);

@@ -1,70 +1,63 @@
-# Viewer3D (CPP)
-! Description of the project is written in Russian language.
+# Viewer3D (C++)
+⚠️ Description of the project was originally written in Russian language.
 
-Данный проект - приложение для просмотра 3D-моделей в каркасном виде. Реализация подготовленна на языке С++ в парадигме объектно-ориентированного программирования.
-
-## Contents
-- [Contents](#contents)
-- [Theory](#theory)
-  - [Паттерны проектирования](#паттерны-проектирования)
-  - [Пример диаграммы классов проекта](#пример-диаграммы-классов-проекта)
-- [Check list](#check-list)
-  - [Main part](#main-part)
-  - [Second segment](#second-segment)
-  - [Third segment](#third-segment)
+This project is an application for viewing 3D models in wireframe mode. It is implemented in C++ using the object-oriented programming paradigm.
 
 
 ## Theory
 
-### Паттерны проектирования
-[Паттерны проектирования](/materials/patterns_info.md) - это повторяющиеся при проектировании приложений задачт и принципы их решения.
+### Design patterns
+[Design patterns](/materials/patterns_info.md) - recurring problems in software design, along with general principles and solutions for addressing them.
 
-### Пример диаграммы классов проекта 
-! Не соответствует структуре проекта в полной мере  
+### Example Class Diagram
+⚠️ This diagram does not fully reflect the project’s structure.
+
 ![unreadable_example_class_diagram](misc/images/unreadable_example_class_diagram.png)
 
-## Check list
 
-### Main part
-|Check| List|
+
+## Checklist
+### Main Part
+|Check|Requirement|
 |---|---|
-|✔|Part 1: Разработана программа для визуализации каркасной модели в трехмерном пространстве.|
-|✔| Программа разработана на языке C++ стандарта C++20.|
-|✔| Код программы находиться в папке src.|
-|✔| Программа написана согласно Google Style.|
-|✔| Сборка программы настроена с помощью Cmake/Makefile, присутствует стандартный набором целей для GNU-программ (установка может вестись в любой другой произвольный каталог): <br>    -all, <br>    -install, <br>    -uninstall, <br>    -clean, <br>    -dvi, <br>    -dist, <br>    -tests, <br>    -coverage.|
-|✔| Программа должна быть разработана в соответствии с принципами объектно-ориентированного программирования, структурный подход запрещен.|
-|✔| Должно быть обеспечено полное покрытие unit-тестами модулей, связанных с загрузкой моделей и аффинными преобразованиями.|
-|✔| В один момент времени должна быть только одна модель на экране.|
-|✔| Программа должна предоставлять возможность:<br>    - Загружать каркасную модель из файла формата obj (поддержка только списка вершин и поверхностей);<br>    - Перемещать модель на заданное расстояние относительно осей X, Y, Z;<br>    - Поворачивать модель на заданный угол относительно своих осей X, Y, Z;<br>    - Масштабировать модель на заданное значение.|
-|✔| В программе должен быть реализован графический пользовательский интерфейс, на базе любой GUI-библиотеки с API для C++:<br>    * Для Linux: GTK+, CEF, Qt, JUCE;<br>    * Для Mac: GTK+, CEF, Qt, JUCE, SFML, Nanogui, Nngui.|
-|✔| Графический пользовательский интерфейс должен содержать:<br>    - Кнопку для выбора файла с моделью и поле для вывода его названия;<br>    - Зону визуализации каркасной модели;<br>    - Кнопку/кнопки и поля ввода для перемещения модели;<br>     - Кнопку/кнопки и поля ввода для поворота модели;<br>    - Кнопку/кнопки и поля ввода для масштабирования модели; <br>    - Информацию о загруженной модели — название файла, кол-во вершин и ребер.|
-|✔| Программа должна корректно обрабатывать и позволять пользователю просматривать модели с деталями до 100, 1000, 10 000, 100 000, 1 000 000 вершин без зависания (зависание — это бездействие интерфейса более 0,5 секунды).|
-|✔| Программа должна быть реализована с использованием паттерна MVC, то есть:<br>    - не должно быть кода бизнес-логики в коде представлений;<br>    - не должно быть кода интерфейса в контроллере и в модели;<br>    - контроллеры должны быть тонкими.|
-|✔| Необходимо использовать минимум три различных паттерна проектирования (например, фасад, стратегия и команда).|
-|✔| Классы должны быть реализованы внутри пространства имен `s21`.|
-|✔| Для осуществления афинных преобразований могут использоваться матрицы из библиотеки из предыдущего проекта s21_matrix+.|
-|✔| Репозиторий не содержит **тяжелые файлы (>10 Мб).**|
+|✔|A program for visualizing 3D wireframe models has been developed.|
+|✔|Implemented in C++20.|
+|✔|Source code is located in the src directory.|
+|✔|Code follows Google C++ Style Guide (ColumnLimit: 120).|
+|✔|Build system configured with CMake/Makefile, including standard GNU targets: <br>    - all, <br>    - install, <br>    - uninstall, <br>    - clean, <br>    - dvi, <br>    - dist, <br>    - tests, <br>    - coverage.|
+|✔|Implementation follows OOP principles (structural/functional approach is not allowed).|
+|✔|Full unit test coverage provided for modules related to model loading and affine transformations.|
+|✔|Only one model may be displayed on screen at any time.|
+|✔|Features include:<br>    - Load wireframe models from .obj files (support for vertex and face lists only).<br>    - Translate the model along the X, Y, Z axes.<br>    - Rotate the model around the X, Y, Z axes.<br>    - Scale the model by a given factor.|
+|✔|Graphical User Interface (GUI) implemented using any C++-compatible library:<br>    * Linux: GTK+, CEF, Qt, JUCE<br>    * macOS: GTK+, CEF, Qt, JUCE, SFML, Nanogui, Nngui|
+|✔|GUI must include:<br>    - A file selection button with a display field for the chosen file name.<br>    - A rendering area for the wireframe model.<br>    - Buttons/inputs for translation, rotation, and scaling.<br>    - Display of model information: file name, number of vertices, number of edges.|
+|✔|The program must handle models with up to 1,000,000 vertices without UI freezes (>0.5s unresponsiveness).|
+|✔|Must follow the MVC design pattern:<br>    - No business logic in the View.<br>    - No GUI code in the Controller or Model.<br>    - Controllers must remain lightweight.|
+|✔|At least three different design patterns must be used (example: Facade, Strategy, Command).|
+|✔|Affine transformations rely on the matrix library from [matrices_CPP_pet](https://github.com/Georgiy-JO/matrices_CPP_pet)|
+|✔|Repository must not contain large files (>10 MB).|
 
-### Second segment
-
-|Check| List|
+### Second Part
+|Check|Requirement|
 |---|---|
-|+/-|Part 2: Функционал настроек реализован.|
-|✔|Программа должна позволять настраивать тип проекции (параллельная и центральная).|
-|+/-|Программа должна позволять настраивать тип (сплошная, пунктирная), цвет и толщину ребер(!отсутствует на некоторых системах), способ отображения (отсутствует, круг, квадрат), цвет и размер вершин.|
-|✔|Программа должна позволять выбирать цвет фона.|
-|✔|Настройки должны сохраняться между перезапусками программы.|
+|+/-	|Settings functionality partially implemented.|
+|✔	|Projection modes supported: parallel and perspective.|
+|+/-	|Customization options: line style (solid, dashed), edge color, edge thickness (not supported on some systems), vertex rendering (none, circle, square), vertex color, vertex size.|
+|✔	|Background color selection supported.|
+|✔	|User settings persist across program restarts.|
 
-### Third segment
+⚠️ Due to OpenGL version conflicts (2.0+ vs 3.0+), line thickness customization was not implemented in this version. It may be added in the future if a better solution is found than rendering edges as rectangles.
 
-|Check| List|
+### Third Part
+|Check|Requirement|
 |---|---|
-|✔|Part 3. Функционал записи реализован.| 
-|✔| Программа должна позволять сохранять полученные («отрендеренные») изображения в файл в форматах bmp и jpeg.|
-|✔| Программа должна позволять по специальной кнопке записывать небольшие «скринкасты» — текущие пользовательские аффинные преобразования загруженного объекта в gif-анимацию (640x480, 10fps, 5s).|
+|✔|Recording functionality implemented.|
+|✔|Images can be saved in BMP and JPEG formats.|
+|✔|The application can record short screencasts of affine transformations as GIF animations (640×480, 10 FPS, 5 seconds).|
 
-## Project notes
+📌 GIF recording uses a header-only library by Charlie Tangora.
+
+## Project Notes
 
 [**Constants list**](/src/README_constants.md)
 

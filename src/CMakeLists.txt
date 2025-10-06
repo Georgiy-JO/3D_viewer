@@ -113,22 +113,20 @@ set(SHADER_FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/model/render/shaders/shader.vert
 )
 
-set(S21_MATRIX_SOURCES
-  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21_matrix/matrix.cpp
+set(MATRIX_SOURCES
+  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/matrix/matrix.cpp
 )
-set(S21_MATRIX_HEADERS
-  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21_matrix/matrix_exceptions.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21_matrix/matrix_service.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21_matrix/matrix.hpp
+set(MATRIX_HEADERS
+  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/matrix/matrix_exceptions.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/matrix/matrix_service.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/matrix/matrix.hpp
 )
 
-add_library(s21_matrix STATIC
-  ${S21_MATRIX_SOURCES}
-  ${S21_MATRIX_HEADERS}  # optional
-)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third_party)
 
 # Main executable block    ------------------------------------------------------------------------
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+
     add_executable(Viewer3D
         ${SOURCES}
         ${HEADERS}
@@ -148,7 +146,7 @@ add_custom_target(run_Viewer3D
 target_include_directories(Viewer3D PUBLIC
     $<BUILD_INTERFACE:${INCLUDE_DIRS}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/s21_matrix>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/matrix>
     $<INSTALL_INTERFACE:include>
 )
 
@@ -159,7 +157,7 @@ target_link_libraries(Viewer3D PRIVATE
     Qt${QT_VERSION_MAJOR}::OpenGLWidgets
     OpenGL::GLU
     OpenGL::GL
-    s21_matrix
+    matrix
 )
 # Extra block    ----------------------------------------------------------------------------------
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES
@@ -188,8 +186,8 @@ if(CLANG_FORMAT_EXE)
         ${HEADERS}
         ${SOURCES}
         # ${SHADER_FILES}
-        ${S21_MATRIX_SOURCES}
-        ${S21_MATRIX_HEADERS}
+        ${MATRIX_SOURCES}
+        ${MATRIX_HEADERS}
     )
     set(ALL_SOURCE_FILES
         ${PROJECT_CHECKABLE_FILES}

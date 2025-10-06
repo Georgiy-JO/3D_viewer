@@ -4,10 +4,10 @@
 
 #include "../../core/math/vec2.h"
 
-namespace s21::gui {
+namespace gui {
 struct Vec2Pair {
-  s21::vectors::Vec2 rotation_vec;
-  s21::vectors::Vec2 translation_vec;
+  vectors::Vec2 rotation_vec;
+  vectors::Vec2 translation_vec;
 };
 
 class MouseActions {
@@ -24,11 +24,11 @@ class MouseActions {
   // static constexpr double kMinScaleStep=0.01f;
 
   void SetLastMousePosition(QMouseEvent *event);
-  s21::vectors::Vec2
+  vectors::Vec2
       m_lastMousePos;  // last mouse position (used to compute deltas)
   bool m_left_button_down = false;
   bool m_right_button_down = false;
 };
-}  // namespace s21::gui
+}  // namespace gui
 
 #endif  // SRC_VIEW_MODEL_VIEWER_MOUSE_ACTIONS_H

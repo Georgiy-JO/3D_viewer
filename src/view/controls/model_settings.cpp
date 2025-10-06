@@ -1,6 +1,6 @@
 #include "model_settings.h"
 
-namespace s21::gui::controls {
+namespace gui::controls {
 void ModelSettings::InitializeSliders(QSlider* edge_,
                                       std::pair<double, double> edge_range,
                                       double edge_value, QSlider* vertex_,
@@ -36,4 +36,4 @@ void ModelSettings::InitializeComboBoxes(QComboBox* projection_cbox_,
   vertex_cbox_->setCurrentIndex(vertex_cbox_value);
 }
 
-}  // namespace s21::gui::controls
+}  // namespace gui::controls

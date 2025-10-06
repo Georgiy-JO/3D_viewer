@@ -5,7 +5,7 @@
 
 #include "elements/slider.h"
 
-namespace s21::gui::controls {
+namespace gui::controls {
 class ModelSettings {
  public:
   void InitializeSliders(QSlider* edge_, std::pair<double, double> edge_range,
@@ -34,6 +34,6 @@ class ModelSettings {
   static constexpr const char* kVertexKind_2 = "Circle Vertices";
 };
 
-}  // namespace s21::gui::controls
+}  // namespace gui::controls
 
 #endif  // SRC_VIEW_CONTROLS_MODEL_SETTINGS_H

@@ -1,5 +1,5 @@
 #include "../parser.h"
-namespace s21::inbound_model::parser {
+namespace inbound_model::parser {
 using namespace service_functions;
 
 const std::vector<std::string>& Parser::CreatePrefixArray() {
@@ -192,4 +192,4 @@ bool Parser::ProcessCharLP(std::istringstream& iss,
   return true;
 }
 
-}  // namespace s21::inbound_model::parser
+}  // namespace inbound_model::parser

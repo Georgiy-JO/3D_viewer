@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace s21::vectors {
+namespace vectors {
 Vec3 Vec3::operator*(double number) const {
   return Vec3(x * number, y * number, z * number);
 }
@@ -96,4 +96,4 @@ void Vec3::Normalize() {
   }
 }
 
-}  // namespace s21::vectors
+}  // namespace vectors

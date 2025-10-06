@@ -2,7 +2,7 @@
 #define SRC_VIEW_CONTROLS_MODEL_CONTROLS_H
 #include "elements/slider.h"
 
-namespace s21::gui::controls {
+namespace gui::controls {
 class ModelControls {
  public:
   inline void Initialize(QSlider* ox_, QSlider* oy_, QSlider* oz_,
@@ -48,6 +48,6 @@ class ModelControls {
   Slider m_sl_z;
   Slider m_scale;
 };
-}  // namespace s21::gui::controls
+}  // namespace gui::controls
 
 #endif  // SRC_VIEW_CONTROLS_MODEL_CONTROLS_H

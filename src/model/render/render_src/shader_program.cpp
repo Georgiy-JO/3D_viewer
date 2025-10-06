@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 #include "../../core/service/service.h"
-namespace s21::render {
+namespace render {
 
 void ShaderProgram::SetVertexShaders() {
   SetShaders(kDefaultGlobalVertexShaderPath, kDefaultVertexFragmentShaderPath);
@@ -76,29 +76,58 @@ std::string GetFileData(const std::string& file_name) {
 }
 
 void ShaderProgram::UploadUniforms(
-    const s21::render::uniforms::TransformationMatrix& trans_marix,
-    const s21::render::uniforms::CameraMatrix& cam_marix,
-    const s21::render::uniforms::ProjectionMatrix& project_matrix,
-    const s21::vectors::Vec4& model_color, const double vertex_size,
+    const render::uniforms::TransformationMatrix& trans_marix,
+    const render::uniforms::CameraMatrix& cam_marix,
+    const render::uniforms::ProjectionMatrix& project_matrix,
+    const vectors::Vec4& model_color, const double vertex_size,
     const double edge_width, const bool dotted_edge_switch,
     const bool circle_vertex_switch) {
   if (!m_program.isLinked() || !Bind())
     throw std::runtime_error("Shader program is not linked or can't be bound.");
 
+  m_program.setUniformValue(kCombinedAffectSwitchUniform, false);  
   m_program.setUniformValue(kTransformationUniform, trans_marix.GetMatrixQT());
   m_program.setUniformValue(kCameraUniform, cam_marix.GetMatrixQT());
   m_program.setUniformValue(kProjectionUniform, project_matrix.GetMatrixQT());
   m_program.setUniformValue(
       kModelColorUniform,
-      QVector4D(s21::service::converters::DoubleToFloat(model_color.x),
-                s21::service::converters::DoubleToFloat(model_color.y),
-                s21::service::converters::DoubleToFloat(model_color.z),
-                s21::service::converters::DoubleToFloat(model_color.w)));
+      QVector4D(service::converters::DoubleToFloat(model_color.x),
+                service::converters::DoubleToFloat(model_color.y),
+                service::converters::DoubleToFloat(model_color.z),
+                service::converters::DoubleToFloat(model_color.w)));
   m_program.setUniformValue(
-      kVertexSizeUniform, s21::service::converters::DoubleToFloat(vertex_size));
+      kVertexSizeUniform, service::converters::DoubleToFloat(vertex_size));
 
   m_program.setUniformValue(
-      kEdgeWidthUniform, s21::service::converters::DoubleToFloat(edge_width));
+      kEdgeWidthUniform, service::converters::DoubleToFloat(edge_width));
+  m_program.setUniformValue(kDottedEdgeUniform, dotted_edge_switch);
+
+  m_program.setUniformValue(kCircleVertexUniform, circle_vertex_switch);
+
+  Unbind();
+}
+
+void ShaderProgram::UploadUniforms(
+    const render::uniforms::UniformMatrix& combined_affect_matrix,
+    const vectors::Vec4& model_color, const double vertex_size,
+    const double edge_width, const bool dotted_edge_switch,
+    const bool circle_vertex_switch) {
+  if (!m_program.isLinked() || !Bind())
+    throw std::runtime_error("Shader program is not linked or can't be bound.");
+
+  m_program.setUniformValue(kCombinedAffectSwitchUniform, true);  
+  m_program.setUniformValue(kCombinedAffectUniform, combined_affect_matrix.GetMatrixQT());
+  m_program.setUniformValue(
+      kModelColorUniform,
+      QVector4D(service::converters::DoubleToFloat(model_color.x),
+                service::converters::DoubleToFloat(model_color.y),
+                service::converters::DoubleToFloat(model_color.z),
+                service::converters::DoubleToFloat(model_color.w)));
+  m_program.setUniformValue(
+      kVertexSizeUniform, service::converters::DoubleToFloat(vertex_size));
+
+  m_program.setUniformValue(
+      kEdgeWidthUniform, service::converters::DoubleToFloat(edge_width));
   m_program.setUniformValue(kDottedEdgeUniform, dotted_edge_switch);
 
   m_program.setUniformValue(kCircleVertexUniform, circle_vertex_switch);
@@ -108,4 +137,4 @@ void ShaderProgram::UploadUniforms(
 
 bool ShaderProgram::Bind() { return m_program.bind(); }
 void ShaderProgram::Unbind() { m_program.release(); }
-}  // namespace s21::render
+}  // namespace render

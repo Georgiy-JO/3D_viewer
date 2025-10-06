@@ -3,7 +3,7 @@
 #include "../../core/parameters/view_parameters.h"
 
 TEST(Core_parameters, View_Parameters_1) {
-  s21::parameters::ViewParameters prs;
+  parameters::ViewParameters prs;
 
   EXPECT_NEAR(prs.GetBackgroundColor().x, 0.1f, 1e-7);
   EXPECT_NEAR(prs.GetBackgroundColor().y, 0.1f, 1e-7);
@@ -20,17 +20,17 @@ TEST(Core_parameters, View_Parameters_1) {
   EXPECT_DOUBLE_EQ(prs.GetModelColorRange().max, 1);
 
   EXPECT_EQ(prs.GetProjectionKind(),
-            s21::parameters::ViewParameters::ProjectionKind::kCentral);
+            parameters::ViewParameters::ProjectionKind::kCentral);
   EXPECT_EQ(prs.GetProjectionKindRange().min, 0);
   EXPECT_EQ(prs.GetProjectionKindRange().max, 1);
 
   EXPECT_EQ(prs.GetVertexKind(),
-            s21::parameters::ViewParameters::VertexKind::kSquare);
+            parameters::ViewParameters::VertexKind::kSquare);
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
   EXPECT_EQ(prs.GetEdgeKind(),
-            s21::parameters::ViewParameters::EdgeKind::kSolid);
+            parameters::ViewParameters::EdgeKind::kSolid);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -44,7 +44,7 @@ TEST(Core_parameters, View_Parameters_1) {
 }
 
 TEST(Core_parameters, View_Parameters_2) {
-  s21::parameters::ViewParameters prs;
+  parameters::ViewParameters prs;
 
   EXPECT_NEAR(prs.GetBackgroundColor().x, 0.1f, 1e-7);
   EXPECT_NEAR(prs.GetBackgroundColor().y, 0.1f, 1e-7);
@@ -61,17 +61,17 @@ TEST(Core_parameters, View_Parameters_2) {
   EXPECT_DOUBLE_EQ(prs.GetModelColorRange().max, 1);
 
   EXPECT_EQ(prs.GetProjectionKind(),
-            s21::parameters::ViewParameters::ProjectionKind::kCentral);
+            parameters::ViewParameters::ProjectionKind::kCentral);
   EXPECT_EQ(prs.GetProjectionKindRange().min, 0);
   EXPECT_EQ(prs.GetProjectionKindRange().max, 1);
 
   EXPECT_EQ(prs.GetVertexKind(),
-            s21::parameters::ViewParameters::VertexKind::kSquare);
+            parameters::ViewParameters::VertexKind::kSquare);
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
   EXPECT_EQ(prs.GetEdgeKind(),
-            s21::parameters::ViewParameters::EdgeKind::kSolid);
+            parameters::ViewParameters::EdgeKind::kSolid);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -86,11 +86,11 @@ TEST(Core_parameters, View_Parameters_2) {
   prs.SetBackgroundColor(0.5, 0.5, 0.5, 0.5);
   prs.SetModelColor(0.5, 0.5, 0.5, 0.5);
   prs.SetProjectionKind(
-      s21::parameters::ViewParameters::ProjectionKind::kCentral);
+      parameters::ViewParameters::ProjectionKind::kCentral);
   prs.SetVertexSize(5);
-  prs.SetVertexKind(s21::parameters::ViewParameters::VertexKind::kNone);
+  prs.SetVertexKind(parameters::ViewParameters::VertexKind::kNone);
   prs.SetEdgeWidth(5);
-  prs.SetEdgeKind(s21::parameters::ViewParameters::EdgeKind::kNone);
+  prs.SetEdgeKind(parameters::ViewParameters::EdgeKind::kNone);
 
   EXPECT_NEAR(prs.GetBackgroundColor().x, 0.5f, 1e-7);
   EXPECT_NEAR(prs.GetBackgroundColor().y, 0.5f, 1e-7);
@@ -107,17 +107,17 @@ TEST(Core_parameters, View_Parameters_2) {
   EXPECT_DOUBLE_EQ(prs.GetModelColorRange().max, 1);
 
   EXPECT_EQ(prs.GetProjectionKind(),
-            s21::parameters::ViewParameters::ProjectionKind::kCentral);
+            parameters::ViewParameters::ProjectionKind::kCentral);
   EXPECT_EQ(prs.GetProjectionKindRange().min, 0);
   EXPECT_EQ(prs.GetProjectionKindRange().max, 1);
 
   EXPECT_EQ(prs.GetVertexKind(),
-            s21::parameters::ViewParameters::VertexKind::kNone);
+            parameters::ViewParameters::VertexKind::kNone);
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
   EXPECT_EQ(prs.GetEdgeKind(),
-            s21::parameters::ViewParameters::EdgeKind::kNone);
+            parameters::ViewParameters::EdgeKind::kNone);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -131,7 +131,7 @@ TEST(Core_parameters, View_Parameters_2) {
 }
 
 TEST(Core_parameters, View_Parameters_3) {
-  s21::parameters::ViewParameters prs;
+  parameters::ViewParameters prs;
 
   EXPECT_NEAR(prs.GetBackgroundColor().x, 0.5f, 1e-7);
   EXPECT_NEAR(prs.GetBackgroundColor().y, 0.5f, 1e-7);
@@ -148,17 +148,17 @@ TEST(Core_parameters, View_Parameters_3) {
   EXPECT_DOUBLE_EQ(prs.GetModelColorRange().max, 1);
 
   EXPECT_EQ(prs.GetProjectionKind(),
-            s21::parameters::ViewParameters::ProjectionKind::kCentral);
+            parameters::ViewParameters::ProjectionKind::kCentral);
   EXPECT_EQ(prs.GetProjectionKindRange().min, 0);
   EXPECT_EQ(prs.GetProjectionKindRange().max, 1);
 
   EXPECT_EQ(prs.GetVertexKind(),
-            s21::parameters::ViewParameters::VertexKind::kNone);
+            parameters::ViewParameters::VertexKind::kNone);
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
   EXPECT_EQ(prs.GetEdgeKind(),
-            s21::parameters::ViewParameters::EdgeKind::kNone);
+            parameters::ViewParameters::EdgeKind::kNone);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -187,17 +187,17 @@ TEST(Core_parameters, View_Parameters_3) {
   EXPECT_DOUBLE_EQ(prs.GetModelColorRange().max, 1);
 
   EXPECT_EQ(prs.GetProjectionKind(),
-            s21::parameters::ViewParameters::ProjectionKind::kCentral);
+            parameters::ViewParameters::ProjectionKind::kCentral);
   EXPECT_EQ(prs.GetProjectionKindRange().min, 0);
   EXPECT_EQ(prs.GetProjectionKindRange().max, 1);
 
   EXPECT_EQ(prs.GetVertexKind(),
-            s21::parameters::ViewParameters::VertexKind::kSquare);
+            parameters::ViewParameters::VertexKind::kSquare);
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
   EXPECT_EQ(prs.GetEdgeKind(),
-            s21::parameters::ViewParameters::EdgeKind::kSolid);
+            parameters::ViewParameters::EdgeKind::kSolid);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -211,7 +211,7 @@ TEST(Core_parameters, View_Parameters_3) {
 }
 
 TEST(Core_parameters, View_Parameters_4) {
-  s21::parameters::ViewParameters prs;
+  parameters::ViewParameters prs;
 
   EXPECT_NEAR(prs.GetBackgroundColor().x, 0.1f, 1e-7);
   EXPECT_NEAR(prs.GetBackgroundColor().y, 0.1f, 1e-7);
@@ -228,17 +228,17 @@ TEST(Core_parameters, View_Parameters_4) {
   EXPECT_DOUBLE_EQ(prs.GetModelColorRange().max, 1);
 
   EXPECT_EQ(prs.GetProjectionKind(),
-            s21::parameters::ViewParameters::ProjectionKind::kCentral);
+            parameters::ViewParameters::ProjectionKind::kCentral);
   EXPECT_EQ(prs.GetProjectionKindRange().min, 0);
   EXPECT_EQ(prs.GetProjectionKindRange().max, 1);
 
   EXPECT_EQ(prs.GetVertexKind(),
-            s21::parameters::ViewParameters::VertexKind::kSquare);
+            parameters::ViewParameters::VertexKind::kSquare);
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
   EXPECT_EQ(prs.GetEdgeKind(),
-            s21::parameters::ViewParameters::EdgeKind::kSolid);
+            parameters::ViewParameters::EdgeKind::kSolid);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -273,17 +273,17 @@ TEST(Core_parameters, View_Parameters_4) {
   EXPECT_DOUBLE_EQ(prs.GetModelColorRange().max, 1);
 
   EXPECT_EQ(prs.GetProjectionKind(),
-            s21::parameters::ViewParameters::ProjectionKind::kCentral);
+            parameters::ViewParameters::ProjectionKind::kCentral);
   EXPECT_EQ(prs.GetProjectionKindRange().min, 0);
   EXPECT_EQ(prs.GetProjectionKindRange().max, 1);
 
   EXPECT_EQ(prs.GetVertexKind(),
-            s21::parameters::ViewParameters::VertexKind::kSquare);
+            parameters::ViewParameters::VertexKind::kSquare);
   EXPECT_EQ(prs.GetVertexKindRange().min, 0);
   EXPECT_EQ(prs.GetVertexKindRange().max, 2);
 
   EXPECT_EQ(prs.GetEdgeKind(),
-            s21::parameters::ViewParameters::EdgeKind::kSolid);
+            parameters::ViewParameters::EdgeKind::kSolid);
   EXPECT_EQ(prs.GetEdgeKindRange().min, 0);
   EXPECT_EQ(prs.GetEdgeKindRange().max, 2);
 
@@ -297,5 +297,5 @@ TEST(Core_parameters, View_Parameters_4) {
 }
 
 TEST(Core_parameters, Settings) {
-  s21::service::file::RemoveFile("settings.txt");
+  service::file::RemoveFile("settings.txt");
 }

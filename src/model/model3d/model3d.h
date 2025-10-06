@@ -7,7 +7,7 @@
 #include "elements/axisbounds.h"
 #include "elements/mesh.h"
 
-namespace s21::inbound_model {
+namespace inbound_model {
 
 class Model3D {
  public:
@@ -115,6 +115,6 @@ class Model3D {
   Vec3 m_centering_vector{0, 0, 0};
 };  // class Model3D
 
-}  // namespace s21::inbound_model
+}  // namespace inbound_model
 
 #endif  // SRC_MODEL_MODEL3D_MODEL3D_H

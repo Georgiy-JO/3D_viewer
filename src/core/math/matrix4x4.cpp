@@ -1,6 +1,6 @@
 #include "matrix4x4.h"
 
-namespace s21::matrix {
+namespace matrix {
 
 Matrix4x4::Matrix4x4() : m_matrix(kMatrixDimention, kMatrixDimention) {}
 
@@ -138,4 +138,4 @@ double DegreesToRadians(double degrees) {
   return degrees * (M_PI / kStraightAngle);
 }
 
-}  // namespace s21::matrix
+}  // namespace matrix

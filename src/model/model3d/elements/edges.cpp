@@ -1,7 +1,7 @@
 
 #include "mesh.h"
 
-namespace s21::inbound_model {
+namespace inbound_model {
 
 // Edge methods
 
@@ -102,4 +102,4 @@ void Edges::Normalize() {
   Sort();
   Deduplicate();
 }
-}  // namespace s21::inbound_model
+}  // namespace inbound_model

@@ -1,7 +1,7 @@
 ---
 BasedOnStyle: Google
 Language: Cpp
-ColumnLimit: 80
+ColumnLimit: 120
 IndentWidth: 2
 # UseTab: Never
 PointerAlignment: Left

@@ -1,6 +1,6 @@
 #include "../mouse_actions.h"
 
-namespace s21::gui {
+namespace gui {
 void MouseActions::SetLastMousePosition(QMouseEvent *event) {
   m_lastMousePos.x = event->pos().x();
   m_lastMousePos.y = event->pos().y();
@@ -13,7 +13,7 @@ void MouseActions::PressEvent(QMouseEvent *event) {
 }
 
 Vec2Pair MouseActions::MoveEvent(QMouseEvent *event) {
-  s21::vectors::Vec2 delta(event->pos().x() - m_lastMousePos.x,
+  vectors::Vec2 delta(event->pos().x() - m_lastMousePos.x,
                            event->pos().y() - m_lastMousePos.y);
   Vec2Pair output;
 
@@ -46,4 +46,4 @@ void MouseActions::ReleaseEvent(QMouseEvent *event) {
   if (event->button() == Qt::LeftButton) m_left_button_down = false;
   if (event->button() == Qt::RightButton) m_right_button_down = false;
 }
-}  // namespace s21::gui
+}  // namespace gui

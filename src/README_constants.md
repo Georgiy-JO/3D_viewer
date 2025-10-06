@@ -6,33 +6,33 @@ The project contains a bunch of constants that set up the way the model is inter
 
 |Constant| Description|Location|
 |---|---|---|
-|s21::matrix::kStraightAngle|180.0|src/core/math/matrix4x4.h|
+|matrix::kStraightAngle|180.0|src/core/math/matrix4x4.h|
 
 ## Vector and Matrix related 
 
 |Constant| Description|Location|
 |---|---|---|
-|s21::basis::kBasisVectorX|OX basis vector (1;0;0)|src/core/math/basis.h|
-|s21::basis::kBasisVectorY|OY basis vector (0;1;0)|src/core/math/basis.h|
-|s21::basis::kBasisVectorZ|OZ basis vector (0;0;1)|src/core/math/basis.h|
-|s21::matrix::matrix4x4::kMatrixDimention|Keeps dimensions of the Matrix4x4|src/core/math/matrix4x4.h|
-|s21::matrix::matrix4x4::kMinialScale|Minimal single-time scale for Matrix4x4|src/core/math/matrix4x4.h|
+|basis::kBasisVectorX|OX basis vector (1;0;0)|src/core/math/basis.h|
+|basis::kBasisVectorY|OY basis vector (0;1;0)|src/core/math/basis.h|
+|basis::kBasisVectorZ|OZ basis vector (0;0;1)|src/core/math/basis.h|
+|matrix::matrix4x4::kMatrixDimention|Keeps dimensions of the Matrix4x4|src/core/math/matrix4x4.h|
+|matrix::matrix4x4::kMinialScale|Minimal single-time scale for Matrix4x4|src/core/math/matrix4x4.h|
 
 ## Inbound model constants
 
 |Constant| Description|Location|
 |---|---|---|
-|s21::inbound_model::Model3D::kDefaultScaleFactor|Default scaling factor of a model|src/model/model3d/model3d.h|
+|inbound_model::Model3D::kDefaultScaleFactor|Default scaling factor of a model|src/model/model3d/model3d.h|
 
 ## Model view parameters
 
 |Constant| Description|Location|
 |---|---|---|
-|s21::parameters::ViewParameters::kSettingsFile|Model view parameters' save file|src/core/parameters/view_parameters.h|
-|s21::parameters::ViewParameters::kSettingsFileHead|Model view parameters file' header|src/core/parameters/view_parameters.h|
-|s21::parameters::ViewParameters::kMaxSettingsFileSize|Max model view parameters save file' size in bytes|src/core/parameters/view_parameters.h|
-|s21::parameters::ViewParameters::kBackgroundColorTag <br> s21::parameters::ViewParameters::kModelColorTag <br> s21::parameters::ViewParameters::kProjectionTag <br> s21::parameters::ViewParameters::kVertexSizeTag <br> s21::parameters::ViewParameters::kVertexKindTag <br> s21::parameters::ViewParameters::kEdgeWidthTag <br> s21::parameters::ViewParameters::kEdgeKindTag |Tags of the model view's parameters for saving to/reading from file. |src/core/parameters/view_parameters.h|
-|s21::parameters::ViewParameters::[...]::kDefault <br> s21::parameters::ViewParameters::[...]::kRange <br> s21::parameters::ViewParameters::[...]::kTag|Default value (in case no model view parameters' save file present), range of values and tag of the following variables:  <br> * m_background_color - color of background <br> * m_model_color - color of model <br> * m_projection_kind - kind of projection (Orthographic/Central) <br> * m_vertex_size - size of vertices <br> * m_vertex_kind - vertices' kind (None/Square/Circle) <br> * m_edge_width - width of edges/lines <br> * m_edge_kind - kind of edges (None/Solid/Dotted)|src/core/parameters/view_parameters.h|
+|parameters::ViewParameters::kSettingsFile|Model view parameters' save file|src/core/parameters/view_parameters.h|
+|parameters::ViewParameters::kSettingsFileHead|Model view parameters file' header|src/core/parameters/view_parameters.h|
+|parameters::ViewParameters::kMaxSettingsFileSize|Max model view parameters save file' size in bytes|src/core/parameters/view_parameters.h|
+|parameters::ViewParameters::kBackgroundColorTag <br> parameters::ViewParameters::kModelColorTag <br> parameters::ViewParameters::kProjectionTag <br> parameters::ViewParameters::kVertexSizeTag <br> parameters::ViewParameters::kVertexKindTag <br> parameters::ViewParameters::kEdgeWidthTag <br> parameters::ViewParameters::kEdgeKindTag |Tags of the model view's parameters for saving to/reading from file. |src/core/parameters/view_parameters.h|
+|parameters::ViewParameters::[...]::kDefault <br> parameters::ViewParameters::[...]::kRange <br> parameters::ViewParameters::[...]::kTag|Default value (in case no model view parameters' save file present), range of values and tag of the following variables:  <br> * m_background_color - color of background <br> * m_model_color - color of model <br> * m_projection_kind - kind of projection (Orthographic/Central) <br> * m_vertex_size - size of vertices <br> * m_vertex_kind - vertices' kind (None/Square/Circle) <br> * m_edge_width - width of edges/lines <br> * m_edge_kind - kind of edges (None/Solid/Dotted)|src/core/parameters/view_parameters.h|
 
 ## Model view rendering and View widget
 
@@ -40,42 +40,44 @@ The project contains a bunch of constants that set up the way the model is inter
 
 |Constant| Description|Location|
 |---|---|---|
-|s21::render::ShaderProgram::kDefaultGlobalVertexShaderPath|Default vertex shader for vertices and edges file location|src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kDefaultVertexVertexShaderPath|Default vertex shader for vertices file location (NOT USED)|src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kDefaultEdgeVertexShaderPath|Default vertex shader for edges file location (NOT USED)|src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kDefaultEdgeGeometryShaderPath|Default geometry shader for edges file location|src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kDefaultEdgeFragmentShaderPath|Default fragment shader for vertices file location|src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kDefaultVertexFragmentShaderPath|Default fragment shader for edges file location|src/model/render/shader_program.h|
+|render::ShaderProgram::kDefaultGlobalVertexShaderPath|Default vertex shader for vertices and edges file location|src/model/render/shader_program.h|
+|render::ShaderProgram::kDefaultVertexVertexShaderPath|Default vertex shader for vertices file location (NOT USED)|src/model/render/shader_program.h|
+|render::ShaderProgram::kDefaultEdgeVertexShaderPath|Default vertex shader for edges file location (NOT USED)|src/model/render/shader_program.h|
+|render::ShaderProgram::kDefaultEdgeGeometryShaderPath|Default geometry shader for edges file location|src/model/render/shader_program.h|
+|render::ShaderProgram::kDefaultEdgeFragmentShaderPath|Default fragment shader for vertices file location|src/model/render/shader_program.h|
+|render::ShaderProgram::kDefaultVertexFragmentShaderPath|Default fragment shader for edges file location|src/model/render/shader_program.h|
 
 ### Uniforms' naming (for passing to shader files)
 
 |Constant| Description|Location|
 |---|---|---|
-|s21::render::ShaderProgram::kTransformationUniform|Transformation matrix uniform's name |src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kCameraUniform|Camera matrix uniform's name |src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kProjectionUniform|Projection matrix uniform's name |src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kVertexSizeUniform|Vertices size uniform's name |src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kEdgeWidthUniform|Edges width uniform's name |src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kModelColorUniform|Model color uniform's name |src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kDottedEdgeUniform|Dotted edges switch uniform's name |src/model/render/shader_program.h|
-|s21::render::ShaderProgram::kCircleVertexUniform|Circle vertices uniform's name |src/model/render/shader_program.h|
+|render::ShaderProgram::kTransformationUniform|Transformation matrix uniform's name |src/model/render/shader_program.h|
+|render::ShaderProgram::kCameraUniform|Camera matrix uniform's name |src/model/render/shader_program.h|
+|render::ShaderProgram::kProjectionUniform|Projection matrix uniform's name |src/model/render/shader_program.h|
+|render::ShaderProgram::kCombinedAffectUniform|Combination of Projection, camera and transformation matrices matrix uniform's name |src/model/render/shader_program.h|
+|render::ShaderProgram::kVertexSizeUniform|Vertices size uniform's name |src/model/render/shader_program.h|
+|render::ShaderProgram::kEdgeWidthUniform|Edges width uniform's name |src/model/render/shader_program.h|
+|render::ShaderProgram::kModelColorUniform|Model color uniform's name |src/model/render/shader_program.h|
+|render::ShaderProgram::kCombinedAffectSwitchUniform|Use kCombinedAffectUniform switch uniform's name |src/model/render/shader_program.h|
+|render::ShaderProgram::kDottedEdgeUniform|Dotted edges switch uniform's name |src/model/render/shader_program.h|
+|render::ShaderProgram::kCircleVertexUniform|Circle vertices switch uniform's name |src/model/render/shader_program.h|
 
 ### Matrix uniforms' constants
 
-|s21::render::uniforms::ProjectionMatrix::kFovAngle|Projection's field of view for **central** projection|src/model/render/uniforms/uniforms.h|
-|s21::render::uniforms::ProjectionMatrix::kNearPlane|Projection's near plane|src/model/render/uniforms/uniforms.h|
-|s21::render::uniforms::ProjectionMatrix::kFarPlane|Projection's far plane|src/model/render/uniforms/uniforms.h|
-|s21::render::uniforms::ProjectionMatrix::kProjectionCubeSize|Size of height of projection cube for **orthographic** projection |src/model/render/uniforms/uniforms.h|
-|s21::render::uniforms::CameraMatrix::kDefaultCamera|Default camera's position|src/model/render/uniforms/uniforms.h|
+|render::uniforms::ProjectionMatrix::kFovAngle|Projection's field of view for **central** projection|src/model/render/uniforms/uniforms.h|
+|render::uniforms::ProjectionMatrix::kNearPlane|Projection's near plane|src/model/render/uniforms/uniforms.h|
+|render::uniforms::ProjectionMatrix::kFarPlane|Projection's far plane|src/model/render/uniforms/uniforms.h|
+|render::uniforms::ProjectionMatrix::kProjectionCubeSize|Size of height of projection cube for **orthographic** projection |src/model/render/uniforms/uniforms.h|
+|render::uniforms::CameraMatrix::kDefaultCamera|Default camera's position|src/model/render/uniforms/uniforms.h|
 
 
 ## Mouse controls
 
 |Constant| Description|Location|
 |---|---|---|
-|s21::gui::MouseActions::kRotateSensitivityFactor|Mouse movement to rotation conversion number|src/view/model_viewer/mouse_actions.h|
-|s21::gui::MouseActions::kTranslateSensitivityFactor|Mouse movement to translation conversion number|src/view/model_viewer/mouse_actions.h|
-|s21::gui::MouseActions::kScaleSensitivityFactor|Mouse roller to rotation conversion number|src/view/model_viewer/mouse_actions.h|
+|gui::MouseActions::kRotateSensitivityFactor|Mouse movement to rotation conversion number|src/view/model_viewer/mouse_actions.h|
+|gui::MouseActions::kTranslateSensitivityFactor|Mouse movement to translation conversion number|src/view/model_viewer/mouse_actions.h|
+|gui::MouseActions::kScaleSensitivityFactor|Mouse roller to rotation conversion number|src/view/model_viewer/mouse_actions.h|
 
 ## GUI controls
 
@@ -83,29 +85,29 @@ The project contains a bunch of constants that set up the way the model is inter
 
 |Constant| Description|Location|
 |---|---|---|
-|s21::gui::controls::ModelControls::kRotateRange|Range of rotate sliders|src/view/controls/model_controls.h|
-|s21::gui::controls::ModelControls::kDefaultRotatePosition|Default rotate sliders pin location|src/view/controls/model_controls.h|
-|s21::gui::controls::ModelControls::kRotateStep|Rotate sliders step|src/view/controlsmodel_controls.h|
-|s21::gui::controls::ModelControls::kScaleRange|Range of scale slider|src/view/controlsmodel_controls.h|
-|s21::gui::controls::ModelControls::kDefaultScalePosition|Default scale slider pin location|src/view/controlsmodel_controls.h|
-|s21::gui::controls::ModelControls::kScaleBase|Scale base constant (base of scaling changes are added or subtracted from it)|src/view/controlsmodel_controls.h|
-|s21::gui::controls::ModelControls::kScaleStep|Scale slider step|src/view/controlsmodel_controls.h|
-|s21::gui::controls::ModelControls::kScaleBigStep|Scale buttons step|src/view/controlsmodel_controls.h|
-|s21::gui::controls::ModelControls::kTranslateStep|Translate buttons step|src/view/controlsmodel_controls.h|
+|gui::controls::ModelControls::kRotateRange|Range of rotate sliders|src/view/controls/model_controls.h|
+|gui::controls::ModelControls::kDefaultRotatePosition|Default rotate sliders pin location|src/view/controls/model_controls.h|
+|gui::controls::ModelControls::kRotateStep|Rotate sliders step|src/view/controlsmodel_controls.h|
+|gui::controls::ModelControls::kScaleRange|Range of scale slider|src/view/controlsmodel_controls.h|
+|gui::controls::ModelControls::kDefaultScalePosition|Default scale slider pin location|src/view/controlsmodel_controls.h|
+|gui::controls::ModelControls::kScaleBase|Scale base constant (base of scaling changes are added or subtracted from it)|src/view/controlsmodel_controls.h|
+|gui::controls::ModelControls::kScaleStep|Scale slider step|src/view/controlsmodel_controls.h|
+|gui::controls::ModelControls::kScaleBigStep|Scale buttons step|src/view/controlsmodel_controls.h|
+|gui::controls::ModelControls::kTranslateStep|Translate buttons step|src/view/controlsmodel_controls.h|
 
 ### GUI model parameters settings
 
 |Constant| Description|Location|
 |---|---|---|
-|s21::gui::controls::ModelSettings::kProjectionKind_0|Name of first element of projection kind combo box (Orthographic Projection)|src/view/controls/model_settings.h|
-|s21::gui::controls::ModelSettings::kProjectionKind_1|Name of second element of projection kind combo box (Central Projection)|src/view/controls/model_settings.h|
-|s21::gui::controls::ModelSettings::kEdgeKind_0|Name of first element of edges kind combo box (No Edges)|src/view/controls/model_settings.h|
-|s21::gui::controls::ModelSettings::kEdgeKind_1|Name of second element of edges kind combo box (Solid Edges)|src/view/controls/model_settings.h|
-|s21::gui::controls::ModelSettings::kEdgeKind_2|Name of third element of edges kind combo box (Dotted Edges)|src/view/controls/model_settings.h|
-|s21::gui::controls::ModelSettings::kVertexKind_0|Name of first element of vertices kind combo box (No Vertices)|src/view/controls/model_settings.h|
-|s21::gui::controls::ModelSettings::kVertexKind_1|Name of second element of vertices kind combo box (Square Vertices)|src/view/controls/model_settings.h|
-|s21::gui::controls::ModelSettings::kVertexKind_2|Name of third element of vertices kind combo box (Circle Vertices)|src/view/controls/model_settings.h|
-|s21::gui::controls::ModelSettings::kStepsPerSlide|Step of sliders (edges width and vertices size)|src/view/controls/model_settings.h|
+|gui::controls::ModelSettings::kProjectionKind_0|Name of first element of projection kind combo box (Orthographic Projection)|src/view/controls/model_settings.h|
+|gui::controls::ModelSettings::kProjectionKind_1|Name of second element of projection kind combo box (Central Projection)|src/view/controls/model_settings.h|
+|gui::controls::ModelSettings::kEdgeKind_0|Name of first element of edges kind combo box (No Edges)|src/view/controls/model_settings.h|
+|gui::controls::ModelSettings::kEdgeKind_1|Name of second element of edges kind combo box (Solid Edges)|src/view/controls/model_settings.h|
+|gui::controls::ModelSettings::kEdgeKind_2|Name of third element of edges kind combo box (Dotted Edges)|src/view/controls/model_settings.h|
+|gui::controls::ModelSettings::kVertexKind_0|Name of first element of vertices kind combo box (No Vertices)|src/view/controls/model_settings.h|
+|gui::controls::ModelSettings::kVertexKind_1|Name of second element of vertices kind combo box (Square Vertices)|src/view/controls/model_settings.h|
+|gui::controls::ModelSettings::kVertexKind_2|Name of third element of vertices kind combo box (Circle Vertices)|src/view/controls/model_settings.h|
+|gui::controls::ModelSettings::kStepsPerSlide|Step of sliders (edges width and vertices size)|src/view/controls/model_settings.h|
 
 ## Main window
 

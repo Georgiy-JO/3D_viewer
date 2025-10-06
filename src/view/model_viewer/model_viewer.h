@@ -7,7 +7,7 @@
 #include "../../core/math/vec4.h"
 #include "mouse_actions.h"
 
-namespace s21::gui {
+namespace gui {
 class ModelViewer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
   Q_OBJECT
 
@@ -15,7 +15,7 @@ class ModelViewer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
   explicit ModelViewer(QWidget *parent = nullptr);
   ~ModelViewer() = default;
 
-  void SetModel(std::shared_ptr<s21::inbound_model::Model3D> model_);
+  void SetModel(std::shared_ptr<inbound_model::Model3D> model_);
   void RotateX(float degrees);
   void RotateY(float degrees);
   void RotateZ(float degrees);
@@ -78,10 +78,10 @@ class ModelViewer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
   void wheelEvent(QWheelEvent *event) override;
 
  private:
-  s21::controller::Render m_render;
-  s21::gui::MouseActions m_mouse;
+  controller::Render m_render;
+  gui::MouseActions m_mouse;
 };
 
-}  // namespace s21::gui
+}  // namespace gui
 
 #endif  // SRC_VIEW_RENDER_MODEL_VIEWER_H

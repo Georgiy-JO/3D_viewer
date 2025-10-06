@@ -5,7 +5,7 @@
 #include "../model_viewer/model_viewer.h"
 #include "./ui_mainwindow.h"
 
-namespace s21::gui {
+namespace gui {
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
@@ -28,8 +28,8 @@ MainWindow::MainWindow(QWidget* parent)
   ui->filename_output->setWordWrap(true);
   FileNameOutput();
   TextMessageOutput("");
-  connect(ui->mv_widget, &s21::gui::ModelViewer::SignalPrintingError, this,
-          &s21::gui::MainWindow::ErrorOccured);
+  connect(ui->mv_widget, &gui::ModelViewer::SignalPrintingError, this,
+          &gui::MainWindow::ErrorOccured);
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -147,8 +147,8 @@ void MainWindow::on_bt_file_list_clicked() {
 }
 
 void MainWindow::on_bt_show_model_clicked() {
-  using s21::controller::ModelParserWorker;
-  using s21::inbound_model::Model3D;
+  using controller::ModelParserWorker;
+  using inbound_model::Model3D;
 
   auto worker = new ModelParserWorker(m_file_name);
   QThread* thread = new QThread;
@@ -381,4 +381,4 @@ void MainWindow::on_bt_gif_clicked() {
   }
 }
 
-}  // namespace s21::gui
+}  // namespace gui

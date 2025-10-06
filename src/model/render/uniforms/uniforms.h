@@ -4,18 +4,19 @@
 #include <QMatrix4x4>
 
 #include "../../../core/math/matrix4x4.h"
-namespace s21::render::uniforms {
+namespace render::uniforms {
 
 class UniformMatrix {
  public:
   UniformMatrix();
+  UniformMatrix(const matrix::Matrix4x4& matrix_);
   virtual ~UniformMatrix() = default;
 
-  const s21::matrix::Matrix4x4& GetMatrix() const;
+  const matrix::Matrix4x4& GetMatrix() const;
   QMatrix4x4 GetMatrixQT() const;
 
  protected:
-  s21::matrix::Matrix4x4 m_matrix;
+  matrix::Matrix4x4 m_matrix;
 };
 
 /**
@@ -25,7 +26,7 @@ class UniformMatrix {
  * scaling). Simply speaking multiplication over and over again result in
  * collecting floating-point numbers approximations. Best way to avoid it would
  * be storing all changes as separate munbers (double rotX, double rotY, double
- * rotZ, s21::vectors::Vec3 translation, double scale) and every time the matrix
+ * rotZ, vectors::Vec3 translation, double scale) and every time the matrix
  * is needed Reset() it and do all the needed changes to it again.
  * @note Keeping this particular realization is not that troublemaking for this
  * project, but these is a room to grow is better accuracy will be required.
@@ -45,10 +46,10 @@ class TransformationMatrix : public UniformMatrix {
 class CameraMatrix : public UniformMatrix {
  public:
   CameraMatrix();
-  void Reset(s21::vectors::Vec3 vec = kDefaultCamera);
+  void Reset(vectors::Vec3 vec = kDefaultCamera);
 
  private:
-  static constexpr s21::vectors::Vec3 kDefaultCamera{0.0f, 0.0f, -5.0f};
+  static constexpr vectors::Vec3 kDefaultCamera{0.0f, 0.0f, -5.0f};
 };
 
 class ProjectionMatrix : public UniformMatrix {
@@ -69,6 +70,6 @@ class ProjectionMatrix : public UniformMatrix {
   static constexpr double kProjectionCubeSize = 2.0f;
 };
 
-}  // namespace s21::render::uniforms
+}  // namespace render::uniforms
 
 #endif  // SRC_MODEL_RENDER_UNIFORMS_H

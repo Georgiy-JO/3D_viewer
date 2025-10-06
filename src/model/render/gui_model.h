@@ -4,7 +4,7 @@
 
 #include "../model3d/model3d.h"
 
-namespace s21::render {
+namespace render {
 class GPU_Model : protected QOpenGLFunctions_3_3_Core {
  public:
   GPU_Model();
@@ -15,7 +15,7 @@ class GPU_Model : protected QOpenGLFunctions_3_3_Core {
    * @note And call initializeOpenGLFunctions() before calling.
    */
   void InitializeModel();
-  void SetModelData(std::shared_ptr<s21::inbound_model::Model3D> model_);
+  void SetModelData(std::shared_ptr<inbound_model::Model3D> model_);
   const GLuint& GetVertexArrayObject() const;
   size_t GetEdgesCount() const;
   size_t GetEdgesAmount() const;
@@ -33,6 +33,6 @@ class GPU_Model : protected QOpenGLFunctions_3_3_Core {
   uint32_t m_VerticesAmount = 0;  // indices in VBO
   std::string m_model_name;
 };
-}  // namespace s21::render
+}  // namespace render
 
 #endif  // SRC_MODEL_RENDER_GUI_MODEL_H

@@ -1,6 +1,6 @@
 #include "vec4.h"
 
-namespace s21::vectors {
+namespace vectors {
 
 Vec4 Vec4::operator*(double number) const {
   return Vec4(x * number, y * number, z * number, w * number);
@@ -55,4 +55,4 @@ bool Vec4::operator==(const Vec4 &vec) const {
 }
 
 bool Vec4::operator!=(const Vec4 &vec) const { return !(*this == vec); }
-}  // namespace s21::vectors
+}  // namespace vectors

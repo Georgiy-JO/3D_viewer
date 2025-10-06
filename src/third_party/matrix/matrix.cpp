@@ -3,7 +3,7 @@
 // #include <variant>
 #include "matrix.hpp"
 #include "matrix_exceptions.hpp"
-namespace s21::matrix {
+namespace matrix {
 Matrix::Matrix(const int rows, const int cols) {
   if (rows <= 0 || cols <= 0) throw DimentionError();
   rows_ = rows;
@@ -293,4 +293,4 @@ Matrix Matrix::InverseMatrix() const {
   return CalcComplements().Transpose() * inverse_determinamt;
 }
 
-}  // namespace s21::matrix
+}  // namespace matrix

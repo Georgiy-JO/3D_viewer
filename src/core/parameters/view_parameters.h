@@ -4,7 +4,7 @@
 #include "../math/vec4.h"
 #include "../service/service.h"
 
-namespace s21::parameters {
+namespace parameters {
 
 template <typename N>
 struct Range {
@@ -65,44 +65,44 @@ class ViewParameters {
   bool ReadFromSettingsFile(const std::string& file_name = kSettingsFile);
   void SetDefaults();
 
-  inline s21::vectors::Vec4 GetBackgroundColor() const {
+  inline vectors::Vec4 GetBackgroundColor() const {
     return m_background_color.GetValue();
   }
-  inline s21::vectors::Vec4 GetModelColor() const {
+  inline vectors::Vec4 GetModelColor() const {
     return m_model_color.GetValue();
   }
-  inline s21::parameters::ViewParameters::ProjectionKind GetProjectionKind()
+  inline parameters::ViewParameters::ProjectionKind GetProjectionKind()
       const {
     return m_projection_kind.GetValue();
   }
   inline double GetVertexSize() const { return m_vertex_size.GetValue(); }
-  inline s21::parameters::ViewParameters::VertexKind GetVertexKind() const {
+  inline parameters::ViewParameters::VertexKind GetVertexKind() const {
     return m_vertex_kind.GetValue();
   }
   inline double GetEdgeWidth() const { return m_edge_width.GetValue(); }
-  inline s21::parameters::ViewParameters::EdgeKind GetEdgeKind() const {
+  inline parameters::ViewParameters::EdgeKind GetEdgeKind() const {
     return m_edge_kind.GetValue();
   }
 
-  inline s21::parameters::Range<double> GetBackgroundColorRange() const {
+  inline parameters::Range<double> GetBackgroundColorRange() const {
     return m_background_color.kRange;
   }
-  inline s21::parameters::Range<double> GetModelColorRange() const {
+  inline parameters::Range<double> GetModelColorRange() const {
     return m_model_color.kRange;
   }
-  inline s21::parameters::Range<int> GetProjectionKindRange() const {
+  inline parameters::Range<int> GetProjectionKindRange() const {
     return m_projection_kind.kRange;
   }
-  inline s21::parameters::Range<double> GetVertexSizeRange() const {
+  inline parameters::Range<double> GetVertexSizeRange() const {
     return m_vertex_size.kRange;
   }
-  inline s21::parameters::Range<int> GetVertexKindRange() const {
+  inline parameters::Range<int> GetVertexKindRange() const {
     return m_vertex_kind.kRange;
   }
-  inline s21::parameters::Range<double> GetEdgeWidthRange() const {
+  inline parameters::Range<double> GetEdgeWidthRange() const {
     return m_edge_width.kRange;
   }
-  inline s21::parameters::Range<int> GetEdgeKindRange() const {
+  inline parameters::Range<int> GetEdgeKindRange() const {
     return m_edge_kind.kRange;
   }
 
@@ -110,19 +110,19 @@ class ViewParameters {
   inline bool SetBackgroundColor(const double input_x, const double input_y,
                                  const double input_z, const double input_w) {
     return SetBackgroundColor(
-        s21::vectors::Vec4(input_x, input_y, input_z, input_w));
+        vectors::Vec4(input_x, input_y, input_z, input_w));
   }
-  bool SetBackgroundColor(const s21::vectors::Vec4& input);
+  bool SetBackgroundColor(const vectors::Vec4& input);
   inline void SetModelColor() { m_model_color.SetValue(); }
   inline bool SetModelColor(const double input_x, const double input_y,
                             const double input_z, const double input_w) {
     return SetModelColor(
-        s21::vectors::Vec4(input_x, input_y, input_z, input_w));
+        vectors::Vec4(input_x, input_y, input_z, input_w));
   }
-  bool SetModelColor(const s21::vectors::Vec4& input);
+  bool SetModelColor(const vectors::Vec4& input);
   inline void SetProjectionKind() { m_projection_kind.SetValue(); }
   inline bool SetProjectionKind(
-      const s21::parameters::ViewParameters::ProjectionKind& input) {
+      const parameters::ViewParameters::ProjectionKind& input) {
     return SetProjectionKind(static_cast<int>(input));
   }
   bool SetProjectionKind(const int input);
@@ -130,7 +130,7 @@ class ViewParameters {
   bool SetVertexSize(const double input);
   inline void SetVertexKind() { m_vertex_kind.SetValue(); }
   inline bool SetVertexKind(
-      const s21::parameters::ViewParameters::VertexKind& input) {
+      const parameters::ViewParameters::VertexKind& input) {
     return SetVertexKind(static_cast<int>(input));
   }
   bool SetVertexKind(const int input);
@@ -138,7 +138,7 @@ class ViewParameters {
   bool SetEdgeWidth(const double input);
   inline void SetEdgeKind() { m_edge_kind.SetValue(); }
   inline bool SetEdgeKind(
-      const s21::parameters::ViewParameters::EdgeKind& input) {
+      const parameters::ViewParameters::EdgeKind& input) {
     return SetEdgeKind(static_cast<int>(input));
   }
   bool SetEdgeKind(const int input);
@@ -167,55 +167,55 @@ class ViewParameters {
    * default values, minimal and maximal values. Furthermore, it connects
    * paramener to it's tag, set before. And sets parameters' types.
    */
-  s21::parameters::ViewParameter<
-      s21::vectors::Vec4,                          // parameter type
+  parameters::ViewParameter<
+      vectors::Vec4,                          // parameter type
       double,                                      // parameter element type
-      s21::vectors::Vec4(0.1f, 0.1f, 0.1f, 1.0f),  // default:dark gray color
+      vectors::Vec4(0.1f, 0.1f, 0.1f, 1.0f),  // default:dark gray color
       0.0, 1.0,                                    // element min max
       kBackgroundColorTag>                         // parameter's tag
       m_background_color;
-  s21::parameters::ViewParameter<
-      s21::vectors::Vec4,                          // parameter type
+  parameters::ViewParameter<
+      vectors::Vec4,                          // parameter type
       double,                                      // element type
-      s21::vectors::Vec4(0.9f, 0.8f, 0.6f, 1.0f),  // default:tan-like color
+      vectors::Vec4(0.9f, 0.8f, 0.6f, 1.0f),  // default:tan-like color
       0.0, 1.0,                                    // element min max
       kModelColorTag>                              // parameter's tag
       m_model_color;
-  s21::parameters::ViewParameter<
-      s21::parameters::ViewParameters::ProjectionKind,  // parameter type
+  parameters::ViewParameter<
+      parameters::ViewParameters::ProjectionKind,  // parameter type
       int,  // parameter's parent type
-      s21::parameters::ViewParameters::ProjectionKind::kCentral,  // default
+      parameters::ViewParameters::ProjectionKind::kCentral,  // default
       0, 1,            // parameter min max
       kProjectionTag>  // parameter's tag
       m_projection_kind;
-  s21::parameters::ViewParameter<double,          // parameter type
+  parameters::ViewParameter<double,          // parameter type
                                  double,          // parameter type
                                  4.0,             // default
                                  1.0, 50.0,       // parameter min max
                                  kVertexSizeTag>  // parameter's tag
       m_vertex_size;
-  s21::parameters::ViewParameter<
-      s21::parameters::ViewParameters::VertexKind,  // parameter type
+  parameters::ViewParameter<
+      parameters::ViewParameters::VertexKind,  // parameter type
       int,                                          // parameter's parent type
-      s21::parameters::ViewParameters::VertexKind::kSquare,  // default
+      parameters::ViewParameters::VertexKind::kSquare,  // default
       0, 2,            // parameter min max
       kVertexKindTag>  // parameter's tag
       m_vertex_kind;
-  s21::parameters::ViewParameter<double,         // parameter type
+  parameters::ViewParameter<double,         // parameter type
                                  double,         // parameter type
                                  1.0,            // default
                                  1.0, 20.0,      // parameter min max
                                  kEdgeWidthTag>  // parameter's tag
       m_edge_width;
-  s21::parameters::ViewParameter<
-      s21::parameters::ViewParameters::EdgeKind,  // parameter type
+  parameters::ViewParameter<
+      parameters::ViewParameters::EdgeKind,  // parameter type
       int,                                        // parameter's parent type
-      s21::parameters::ViewParameters::EdgeKind::kSolid,  // default
+      parameters::ViewParameters::EdgeKind::kSolid,  // default
       0, 2,                                               // parameter min max
       kEdgeKindTag>                                       // parameter's tag
       m_edge_kind;
 };
 
-}  // namespace s21::parameters
+}  // namespace parameters
 
 #endif  // SRC_CORE_SETTINGS_VIEW_PARAMETERS_H

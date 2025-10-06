@@ -1,6 +1,6 @@
 #include "service.h"
 
-namespace s21::service::file {
+namespace service::file {
 bool IsFileOk(const std::string& file_name, const uintmax_t max_size) {
   std::filesystem::path file_path(file_name);
   return std::filesystem::exists(file_path) &&
@@ -12,16 +12,16 @@ void RemoveFile(const std::string& file_name) {
   std::filesystem::path file_path(file_name);
   std::filesystem::remove(file_path);
 }
-}  // namespace s21::service::file
+}  // namespace service::file
 
-namespace s21::service::character {
+namespace service::character {
 bool IntIsHash(const int& symbol) {
   return IntIsNotEOF(symbol) && symbol == '#';
 }
 bool IntIsNotEOF(const int& symbol) { return symbol != EOF; }
-}  // namespace s21::service::character
+}  // namespace service::character
 
-namespace s21::service::converters {
+namespace service::converters {
 float DoubleToFloat(const double input) {
   if (input >= static_cast<double>(std::numeric_limits<float>::max()))
     return std::numeric_limits<float>::max();
@@ -36,4 +36,4 @@ float DoubleToFloat(const double input) {
   else
     return static_cast<float>(input);
 }
-}  // namespace s21::service::converters
+}  // namespace service::converters

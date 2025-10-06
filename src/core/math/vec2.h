@@ -1,7 +1,7 @@
 #ifndef SRC_CORE_MATH_VEC2_H
 #define SRC_CORE_MATH_VEC2_H
 
-namespace s21::vectors {
+namespace vectors {
 
 struct Vec2 {
   double x = 0.0f;
@@ -12,6 +12,6 @@ struct Vec2 {
   ~Vec2() = default;
 };
 
-}  // namespace s21::vectors
+}  // namespace vectors
 
 #endif  // SRC_CORE_MATH_VEC2_H

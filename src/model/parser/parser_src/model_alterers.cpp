@@ -1,5 +1,5 @@
 #include "../parser.h"
-namespace s21::inbound_model::parser {
+namespace inbound_model::parser {
 
 /**
  * Returns false if "from"==0 or negative index is over range.
@@ -79,4 +79,4 @@ bool Parser::SingleVertEdgesAdder(const std::vector<double>& vertices) {
   }
   return false;
 }
-}  // namespace s21::inbound_model::parser
+}  // namespace inbound_model::parser

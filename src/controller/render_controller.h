@@ -4,41 +4,41 @@
 #include "../model/render/gui_model.h"
 #include "../model/render/shader_program.h"
 
-namespace s21::controller {
+namespace controller {
 class Render {
  public:
-  using EdgeKinds = s21::parameters::ViewParameters::EdgeKind;
-  using VertexKinds = s21::parameters::ViewParameters::VertexKind;
-  using ProjectionKinds = s21::parameters::ViewParameters::ProjectionKind;
+  using EdgeKinds = parameters::ViewParameters::EdgeKind;
+  using VertexKinds = parameters::ViewParameters::VertexKind;
+  using ProjectionKinds = parameters::ViewParameters::ProjectionKind;
 
-  s21::render::GPU_Model& Model() { return m_model; }
-  const s21::render::GPU_Model& Model() const { return m_model; }
-  s21::render::uniforms::TransformationMatrix& Transform() {
+  render::GPU_Model& Model() { return m_model; }
+  const render::GPU_Model& Model() const { return m_model; }
+  render::uniforms::TransformationMatrix& Transform() {
     return m_transformation_matrix;
   }
-  const s21::render::uniforms::TransformationMatrix& Transform() const {
+  const render::uniforms::TransformationMatrix& Transform() const {
     return m_transformation_matrix;
   }
-  s21::render::uniforms::CameraMatrix& Camera() { return m_camera_matrix; }
-  const s21::render::uniforms::CameraMatrix& Camera() const {
+  render::uniforms::CameraMatrix& Camera() { return m_camera_matrix; }
+  const render::uniforms::CameraMatrix& Camera() const {
     return m_camera_matrix;
   }
-  s21::render::uniforms::ProjectionMatrix& Projection() {
+  render::uniforms::ProjectionMatrix& Projection() {
     return m_projection_matrix;
   }
-  const s21::render::uniforms::ProjectionMatrix& Projection() const {
+  const render::uniforms::ProjectionMatrix& Projection() const {
     return m_projection_matrix;
   }
-  s21::render::ShaderProgram& Program() { return m_program; }
-  const s21::render::ShaderProgram& Program() const { return m_program; }
-  s21::parameters::ViewParameters& Parameters() { return m_parameters; }
-  const s21::parameters::ViewParameters& Parameters() const {
+  render::ShaderProgram& Program() { return m_program; }
+  const render::ShaderProgram& Program() const { return m_program; }
+  parameters::ViewParameters& Parameters() { return m_parameters; }
+  const parameters::ViewParameters& Parameters() const {
     return m_parameters;
   }
 
   void SetUniforms() {
     m_program.UploadUniforms(
-        m_transformation_matrix, m_camera_matrix, m_projection_matrix,
+        render::uniforms::UniformMatrix(m_projection_matrix.GetMatrix()*m_camera_matrix.GetMatrix()*m_transformation_matrix.GetMatrix()),
         m_parameters.GetModelColor(), m_parameters.GetVertexSize(),
         m_parameters.GetEdgeWidth(),
         (m_parameters.GetEdgeKind() == EdgeKinds::kDotted),
@@ -59,13 +59,13 @@ class Render {
   }
 
  private:
-  s21::render::GPU_Model m_model;
-  s21::render::uniforms::TransformationMatrix m_transformation_matrix;
-  s21::render::uniforms::CameraMatrix m_camera_matrix;
-  s21::render::uniforms::ProjectionMatrix m_projection_matrix;
-  s21::render::ShaderProgram m_program;
-  s21::parameters::ViewParameters m_parameters;
+  render::GPU_Model m_model;
+  render::uniforms::TransformationMatrix m_transformation_matrix;
+  render::uniforms::CameraMatrix m_camera_matrix;
+  render::uniforms::ProjectionMatrix m_projection_matrix;
+  render::ShaderProgram m_program;
+  parameters::ViewParameters m_parameters;
 };
-}  // namespace s21::controller
+}  // namespace controller
 
 #endif  // SRC_CONTROLLER_RENDER_CONTROLLER_H

@@ -1,8 +1,8 @@
-#ifndef SRC_THIRD_PARTY_S21_MATRIX_MATRIX_EXCEPTIONS_HPP
-#define SRC_THIRD_PARTY_S21_MATRIX_MATRIX_EXCEPTIONS_HPP
+#ifndef SRC_THIRD_PARTY_MATRIX_MATRIX_EXCEPTIONS_HPP
+#define SRC_THIRD_PARTY_MATRIX_MATRIX_EXCEPTIONS_HPP
 #include <string>
 
-namespace s21::matrix {
+namespace matrix {
 
 /**
  * @brief Base class for matrix-related exceptions.
@@ -166,6 +166,6 @@ class InputError : public MatrixError {
   InputError(const char* error = "Input parameter or data error.")
       : MatrixError(error) {}
 };
-}  // namespace s21::matrix
+}  // namespace matrix
 
-#endif  // SRC_THIRD_PARTY_S21_MATRIX_MATRIX_EXCEPTIONS_HPP
+#endif  // SRC_THIRD_PARTY_MATRIX_MATRIX_EXCEPTIONS_HPP

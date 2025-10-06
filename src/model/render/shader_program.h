@@ -7,7 +7,7 @@
 #include "../../core/math/vec4.h"
 #include "uniforms/uniforms.h"
 
-namespace s21::render {
+namespace render {
 class ShaderProgram {
  public:
   /**
@@ -19,10 +19,15 @@ class ShaderProgram {
                   const std::string& fragment_shader_path,
                   const std::string& geometry_shader_path = "");
   void UploadUniforms(
-      const s21::render::uniforms::TransformationMatrix& trans_marix,
-      const s21::render::uniforms::CameraMatrix& cam_marix,
-      const s21::render::uniforms::ProjectionMatrix& project_matrix,
-      const s21::vectors::Vec4& model_color, const double vertex_size,
+      const render::uniforms::TransformationMatrix& trans_marix,
+      const render::uniforms::CameraMatrix& cam_marix,
+      const render::uniforms::ProjectionMatrix& project_matrix,
+      const vectors::Vec4& model_color, const double vertex_size,
+      const double edge_width, const bool dotted_edge_switch,
+      const bool circle_vertex_switch);
+  void UploadUniforms(
+      const render::uniforms::UniformMatrix& combined_affect_matrix,
+      const vectors::Vec4& model_color, const double vertex_size,
       const double edge_width, const bool dotted_edge_switch,
       const bool circle_vertex_switch);
   bool Bind();
@@ -46,9 +51,11 @@ class ShaderProgram {
   static constexpr const char* kTransformationUniform = "mTransformation";
   static constexpr const char* kCameraUniform = "mCamera";
   static constexpr const char* kProjectionUniform = "mProjection";
+  static constexpr const char* kCombinedAffectUniform = "mCombinedAffect";
   static constexpr const char* kModelColorUniform = "vModelColor";
   static constexpr const char* kVertexSizeUniform = "dVertexSize";
   static constexpr const char* kEdgeWidthUniform = "dEdgeWidth";
+  static constexpr const char* kCombinedAffectSwitchUniform = "sCombinedAffect";
   static constexpr const char* kDottedEdgeUniform = "sDottedEdge";
   static constexpr const char* kCircleVertexUniform = "sCircleVertex";
 
@@ -56,6 +63,6 @@ class ShaderProgram {
 };
 
 std::string GetFileData(const std::string& file_name);
-}  // namespace s21::render
+}  // namespace render
 
 #endif  // SRC_MODEL_RENDER_SHADER_PROGRAM_H

@@ -1,10 +1,10 @@
-#ifndef SRC_THIRD_PARTY_S21_MATRIX_MATRIX_SERVICE_HPP
-#define SRC_THIRD_PARTY_S21_MATRIX_MATRIX_SERVICE_HPP
+#ifndef SRC_THIRD_PARTY_MATRIX_MATRIX_SERVICE_HPP
+#define SRC_THIRD_PARTY_MATRIX_MATRIX_SERVICE_HPP
 #include <cmath>
 
 #include "matrix_exceptions.hpp"
 
-namespace s21::matrix {
+namespace matrix {
 using std::isinf, std::isnan;
 
 // Represents the value of zero as a double.
@@ -53,5 +53,5 @@ inline static void doubleLegit(const double& a) {
 }
 }  // namespace MatrixService
 
-}  // namespace s21::matrix
-#endif  // SRC_THIRD_PARTY_S21_MATRIX_MATRIX_SERVICE_HPP
+}  // namespace matrix
+#endif  // SRC_THIRD_PARTY_MATRIX_MATRIX_SERVICE_HPP

@@ -6,7 +6,7 @@
 
 #include "../../../core/math/vec3.h"
 
-namespace s21::inbound_model {
+namespace inbound_model {
 
 struct Edge {
   uint32_t begin;
@@ -51,6 +51,6 @@ struct Edges {
   void Deduplicate();  // ~o(n)
 };
 
-}  // namespace s21::inbound_model
+}  // namespace inbound_model
 
 #endif  // SRC_MODEL_MODEL3D_ELEMENTS_MESH_H

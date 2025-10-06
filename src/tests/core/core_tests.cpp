@@ -8,7 +8,7 @@
 #include "../../core/service/service.h"
 
 TEST(Core_Vectors, Vec3_1) {
-  using Vec3 = s21::vectors::Vec3;
+  using Vec3 = vectors::Vec3;
   Vec3 a;
   Vec3 b(0, 0, 0);
   EXPECT_DOUBLE_EQ(a.x, b.x);
@@ -114,7 +114,7 @@ TEST(Core_Vectors, Vec3_1) {
 }
 
 TEST(Core_Vectors, Vec3_2) {
-  using Vec3 = s21::vectors::Vec3;
+  using Vec3 = vectors::Vec3;
   Vec3 a;
 
   a.x = 1;
@@ -151,18 +151,18 @@ TEST(Core_Vectors, Vec3_2) {
 }
 
 TEST(Core_Vectors, Vec2) {
-  s21::vectors::Vec2 a;
+  vectors::Vec2 a;
 
   EXPECT_DOUBLE_EQ(a.x, 0);
   EXPECT_DOUBLE_EQ(a.y, 0);
 
-  s21::vectors::Vec2 b(4.5, 5.5);
+  vectors::Vec2 b(4.5, 5.5);
   EXPECT_DOUBLE_EQ(b.x, 4.5);
   EXPECT_DOUBLE_EQ(b.y, 5.5);
 }
 
 TEST(Core_Vectors, Vec4) {
-  using Vec4 = s21::vectors::Vec4;
+  using Vec4 = vectors::Vec4;
   Vec4 a;
   Vec4 b(0, 0, 0, 0);
   EXPECT_DOUBLE_EQ(a.x, b.x);
@@ -245,15 +245,15 @@ TEST(Core_Vectors, Vec4) {
 }
 
 TEST(Core_Vectors, Basis) {
-  EXPECT_EQ(s21::basis::kBasisVectorX, s21::vectors::Vec3(1, 0, 0));
-  EXPECT_EQ(s21::basis::kBasisVectorY, s21::vectors::Vec3(0, 1, 0));
-  EXPECT_EQ(s21::basis::kBasisVectorZ, s21::vectors::Vec3(0, 0, 1));
+  EXPECT_EQ(basis::kBasisVectorX, vectors::Vec3(1, 0, 0));
+  EXPECT_EQ(basis::kBasisVectorY, vectors::Vec3(0, 1, 0));
+  EXPECT_EQ(basis::kBasisVectorZ, vectors::Vec3(0, 0, 1));
 }
 
 TEST(Core_Vectors, Matrix4x4_1_and_Translate) {
-  using Matrix4x4 = s21::matrix::Matrix4x4;
-  using Matrix = s21::matrix::Matrix;
-  using Vec3 = s21::vectors::Vec3;
+  using Matrix4x4 = matrix::Matrix4x4;
+  using Matrix = matrix::Matrix;
+  using Vec3 = vectors::Vec3;
 
   Matrix4x4 a;
   EXPECT_DOUBLE_EQ(a(0, 0), 0);
@@ -430,12 +430,12 @@ TEST(Core_Vectors, Matrix4x4_1_and_Translate) {
 }
 
 TEST(Core_Vectors, Matrix4x4_Rotate_1) {
-  using Matrix4x4 = s21::matrix::Matrix4x4;
-  using Matrix = s21::matrix::Matrix;
+  using Matrix4x4 = matrix::Matrix4x4;
+  using Matrix = matrix::Matrix;
 
   Matrix4x4 c;
   c.SetToIdentity();
-  c.Rotate(90, s21::basis::kBasisVectorX);
+  c.Rotate(90, basis::kBasisVectorX);
   Matrix m(4, 4);
 
   m(0, 0) = c(0, 0);
@@ -544,12 +544,12 @@ TEST(Core_Vectors, Matrix4x4_Rotate_1) {
 }
 
 TEST(Core_Vectors, Matrix4x4_Rotate_2) {
-  using Matrix4x4 = s21::matrix::Matrix4x4;
-  using Matrix = s21::matrix::Matrix;
+  using Matrix4x4 = matrix::Matrix4x4;
+  using Matrix = matrix::Matrix;
 
   Matrix4x4 c;
   c.SetToIdentity();
-  c.Rotate(90, s21::basis::kBasisVectorY);
+  c.Rotate(90, basis::kBasisVectorY);
   Matrix m(4, 4);
 
   m(0, 0) = c(0, 0);
@@ -679,12 +679,12 @@ TEST(Core_Vectors, Matrix4x4_Rotate_2) {
 }
 
 TEST(Core_Vectors, Matrix4x4_Rotate_3) {
-  using Matrix4x4 = s21::matrix::Matrix4x4;
-  using Matrix = s21::matrix::Matrix;
+  using Matrix4x4 = matrix::Matrix4x4;
+  using Matrix = matrix::Matrix;
 
   Matrix4x4 c;
   c.SetToIdentity();
-  c.Rotate(90, s21::basis::kBasisVectorZ);
+  c.Rotate(90, basis::kBasisVectorZ);
   Matrix m(4, 4);
 
   m(0, 0) = c(0, 0);
@@ -814,8 +814,8 @@ TEST(Core_Vectors, Matrix4x4_Rotate_3) {
 }
 
 TEST(Core_Vectors, Matrix4x4_Scale) {
-  using Matrix4x4 = s21::matrix::Matrix4x4;
-  using Matrix = s21::matrix::Matrix;
+  using Matrix4x4 = matrix::Matrix4x4;
+  using Matrix = matrix::Matrix;
 
   Matrix4x4 c;
   c.SetToIdentity();
@@ -866,8 +866,8 @@ TEST(Core_Vectors, Matrix4x4_Scale) {
 
   c.SetToIdentity();
   c.Scale(0.5);
-  for (int i = 0; i < s21::matrix::Matrix4x4::kMatrixDimention; i++) {
-    for (int j = 0; j < s21::matrix::Matrix4x4::kMatrixDimention; j++) {
+  for (int i = 0; i < matrix::Matrix4x4::kMatrixDimention; i++) {
+    for (int j = 0; j < matrix::Matrix4x4::kMatrixDimention; j++) {
       m(i, j) = c(i, j);
     }
   }
@@ -880,8 +880,8 @@ TEST(Core_Vectors, Matrix4x4_Scale) {
   EXPECT_NEAR(res(3, 0), 0, 1e-10);
   c.SetToIdentity();
   c.Scale(4);
-  for (int i = 0; i < s21::matrix::Matrix4x4::kMatrixDimention; i++) {
-    for (int j = 0; j < s21::matrix::Matrix4x4::kMatrixDimention; j++) {
+  for (int i = 0; i < matrix::Matrix4x4::kMatrixDimention; i++) {
+    for (int j = 0; j < matrix::Matrix4x4::kMatrixDimention; j++) {
       m(i, j) = c(i, j);
     }
   }
@@ -895,8 +895,8 @@ TEST(Core_Vectors, Matrix4x4_Scale) {
 }
 
 TEST(Core_Vectors, Matrix4x4_2) {
-  using Matrix4x4 = s21::matrix::Matrix4x4;
-  using Matrix = s21::matrix::Matrix;
+  using Matrix4x4 = matrix::Matrix4x4;
+  using Matrix = matrix::Matrix;
 
   Matrix4x4 a;
   EXPECT_DOUBLE_EQ(a(0, 0), 0);
@@ -1309,17 +1309,17 @@ TEST(Core_Vectors, Matrix4x4_2) {
 
 TEST(Core_Service, Service_1) {
   double d{5.5};
-  EXPECT_NEAR(s21::service::converters::DoubleToFloat(d), 5.5, 1e-7);
+  EXPECT_NEAR(service::converters::DoubleToFloat(d), 5.5, 1e-7);
   d = std::numeric_limits<float>::max() * 1.5;
-  EXPECT_NEAR(s21::service::converters::DoubleToFloat(d),
+  EXPECT_NEAR(service::converters::DoubleToFloat(d),
               std::numeric_limits<float>::max(), 1e-7);
   d = std::numeric_limits<float>::lowest() * 1.5;
-  EXPECT_NEAR(s21::service::converters::DoubleToFloat(d),
+  EXPECT_NEAR(service::converters::DoubleToFloat(d),
               std::numeric_limits<float>::lowest(), 1e-7);
   d = std::numeric_limits<float>::min() / 2;
-  EXPECT_NEAR(s21::service::converters::DoubleToFloat(d),
+  EXPECT_NEAR(service::converters::DoubleToFloat(d),
               std::numeric_limits<float>::min(), 1e-7);
   d = -std::numeric_limits<float>::min() / 2;
-  EXPECT_NEAR(s21::service::converters::DoubleToFloat(d),
+  EXPECT_NEAR(service::converters::DoubleToFloat(d),
               -std::numeric_limits<float>::min(), 1e-7);
 }

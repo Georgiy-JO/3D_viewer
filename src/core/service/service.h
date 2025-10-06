@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <string>
 
-namespace s21::service {
+namespace service {
 namespace converters {
 float DoubleToFloat(const double input);
 }
@@ -17,6 +17,6 @@ bool IsFileOk(const std::string& file_name, const uintmax_t max_size);
 void RemoveFile(const std::string& file_name);
 }  // namespace file
 
-}  // namespace s21::service
+}  // namespace service
 
 #endif  // SRC_CORE_SERVICE_SERVICE_H

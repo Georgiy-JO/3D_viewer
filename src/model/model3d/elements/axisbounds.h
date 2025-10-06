@@ -1,7 +1,7 @@
 #ifndef SRC_MODEL_MODEL3D_ELEMENTS_AXISBOUNDS_H
 #define SRC_MODEL_MODEL3D_ELEMENTS_AXISBOUNDS_H
 
-namespace s21::inbound_model {
+namespace inbound_model {
 
 struct AxisBounds {
   double min = 0;
@@ -19,6 +19,6 @@ struct AxisBounds3D {
   void clear();
 };
 
-}  // namespace s21::inbound_model
+}  // namespace inbound_model
 
 #endif  // SRC_MODEL_MODEL3D_ELEMENTS_AXISBOUNDS_H

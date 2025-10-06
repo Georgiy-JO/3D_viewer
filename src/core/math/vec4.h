@@ -1,7 +1,7 @@
 #ifndef SRC_CORE_MATH_VEC4_H
 #define SRC_CORE_MATH_VEC4_H
 
-namespace s21::vectors {
+namespace vectors {
 struct Vec4 {
   double x = 0.0f;
   double y = 0.0f;
@@ -27,6 +27,6 @@ struct Vec4 {
   bool operator==(const Vec4 &vec) const;
   bool operator!=(const Vec4 &vec) const;
 };
-}  // namespace s21::vectors
+}  // namespace vectors
 
 #endif  // SRC_CORE_MATH_VEC4_H

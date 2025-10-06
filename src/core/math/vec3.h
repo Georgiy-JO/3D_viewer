@@ -1,7 +1,7 @@
 #ifndef SRC_CORE_MATH_VEC3_H
 #define SRC_CORE_MATH_VEC3_H
 
-namespace s21::vectors {
+namespace vectors {
 
 struct Vec3 {
   double x = 0.0f;
@@ -33,6 +33,6 @@ struct Vec3 {
   Vec3 operator++(int);
 };
 
-}  // namespace s21::vectors
+}  // namespace vectors
 
 #endif  // SRC_CORE_MATH_VEC3_H

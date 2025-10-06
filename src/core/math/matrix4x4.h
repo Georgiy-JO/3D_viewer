@@ -1,10 +1,10 @@
 #ifndef SRC_CORE_MATH_MATRIX4X4_H
 #define SRC_CORE_MATH_MATRIX4X4_H
-#include "../../third_party/s21_matrix/matrix.hpp"
+#include "../../third_party/matrix/matrix.hpp"
 #include "vec3.h"
 
-namespace s21::matrix {
-using namespace s21::vectors;
+namespace matrix {
+using namespace vectors;
 constexpr double kStraightAngle = 180.0f;
 class Matrix4x4 {
  public:
@@ -40,6 +40,6 @@ class Matrix4x4 {
 
 double DegreesToRadians(double degrees);
 
-}  // namespace s21::matrix
+}  // namespace matrix
 
 #endif  // SRC_CORE_MATH_MATRIX4X4_H

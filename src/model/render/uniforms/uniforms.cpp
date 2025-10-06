@@ -5,19 +5,20 @@
 #include "../../../core/math/basis.h"
 #include "../../../core/service/service.h"
 
-namespace s21::render::uniforms {
+namespace render::uniforms {
 
 UniformMatrix::UniformMatrix() : m_matrix() { m_matrix.SetToIdentity(); }
+UniformMatrix::UniformMatrix(const matrix::Matrix4x4& matrix_):m_matrix(matrix_){}
 
-const s21::matrix::Matrix4x4& UniformMatrix::GetMatrix() const {
+const matrix::Matrix4x4& UniformMatrix::GetMatrix() const {
   return m_matrix;
 }
 
 QMatrix4x4 UniformMatrix::GetMatrixQT() const {
   QMatrix4x4 qmatrix;
-  for (int i = 0; i < s21::matrix::Matrix4x4::kMatrixDimention; i++) {
-    for (int j = 0; j < s21::matrix::Matrix4x4::kMatrixDimention; j++) {
-      qmatrix(i, j) = s21::service::converters::DoubleToFloat(m_matrix(i, j));
+  for (int i = 0; i < matrix::Matrix4x4::kMatrixDimention; i++) {
+    for (int j = 0; j < matrix::Matrix4x4::kMatrixDimention; j++) {
+      qmatrix(i, j) = service::converters::DoubleToFloat(m_matrix(i, j));
     }
   }
   return qmatrix;
@@ -26,26 +27,26 @@ QMatrix4x4 UniformMatrix::GetMatrixQT() const {
 void TransformationMatrix::Reset() { m_matrix.SetToIdentity(); }
 
 void TransformationMatrix::RotateX(float degrees) {
-  m_matrix.Rotate(degrees, s21::basis::kBasisVectorX);
+  m_matrix.Rotate(degrees, basis::kBasisVectorX);
 }
 
 void TransformationMatrix::RotateY(float degrees) {
-  m_matrix.Rotate(degrees, s21::basis::kBasisVectorY);
+  m_matrix.Rotate(degrees, basis::kBasisVectorY);
 }
 
 void TransformationMatrix::RotateZ(float degrees) {
-  m_matrix.Rotate(degrees, s21::basis::kBasisVectorZ);
+  m_matrix.Rotate(degrees, basis::kBasisVectorZ);
 }
 
 void TransformationMatrix::Translate(float x, float y, float z) {
-  m_matrix.Translate(s21::vectors::Vec3(x, y, z));
+  m_matrix.Translate(vectors::Vec3(x, y, z));
 }
 
 void TransformationMatrix::Scale(float scale) { m_matrix.Scale(scale); }
 
 CameraMatrix::CameraMatrix() { Reset(); }
 
-void CameraMatrix::Reset(s21::vectors::Vec3 vec) {
+void CameraMatrix::Reset(vectors::Vec3 vec) {
   m_matrix.SetToIdentity();
   m_matrix.Translate(vec);
 }
@@ -57,11 +58,11 @@ ProjectionMatrix::ProjectionMatrix() { m_matrix.SetToIdentity(); }
  */
 void ProjectionMatrix::ResetCentral(double w, double h, double fov_angle,
                                     double near_plane, double far_plane) {
-  fov_angle = s21::matrix::DegreesToRadians(fov_angle);
+  fov_angle = matrix::DegreesToRadians(fov_angle);
   double tan = std::tan(fov_angle / 2.0f);
   double ratio = w / (h > 0 ? h : 1.0f);
-  s21::matrix::Matrix local(s21::matrix::Matrix4x4::kMatrixDimention,
-                            s21::matrix::Matrix4x4::kMatrixDimention);
+  matrix::Matrix local(matrix::Matrix4x4::kMatrixDimention,
+                            matrix::Matrix4x4::kMatrixDimention);
 
   local(0, 0) = 1.0f / (ratio * tan);
   local(0, 1) = 0;
@@ -97,8 +98,8 @@ void ProjectionMatrix::ResetOrthographic(double w, double h,
   double left = -right;
   double top = projection_zone_size;
   double bottom = -top;
-  s21::matrix::Matrix local(s21::matrix::Matrix4x4::kMatrixDimention,
-                            s21::matrix::Matrix4x4::kMatrixDimention);
+  matrix::Matrix local(matrix::Matrix4x4::kMatrixDimention,
+                            matrix::Matrix4x4::kMatrixDimention);
 
   local(0, 0) = 2.0f / (right - left);
   local(0, 1) = 0;
@@ -123,4 +124,4 @@ void ProjectionMatrix::ResetOrthographic(double w, double h,
   m_matrix = local;
 }
 
-}  // namespace s21::render::uniforms
+}  // namespace render::uniforms

@@ -1,7 +1,7 @@
 
 #include "../model_parser.h"
 
-namespace s21::inbound_model {
+namespace inbound_model {
 
 std::unique_ptr<Model3D> ParseModelFromFile(const std::string& file_name) {
   std::unique_ptr<Model3D> model{std::make_unique<Model3D>()};
@@ -31,4 +31,4 @@ void ParseModelFromFile(Model3D& model, const std::string& file_name) {
   parser::Parser prs(model, file_name);
   prs.ParseIt();
 }
-}  // namespace s21::inbound_model
+}  // namespace inbound_model

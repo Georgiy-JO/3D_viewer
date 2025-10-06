@@ -5,7 +5,7 @@
 /**
  * Comments referencing this function (and the function it self) are left
  * in case more testing is required
-  void PrintEdges( const s21::inbound_model::Edges& array){
+  void PrintEdges( const inbound_model::Edges& array){
     for(size_t i=0; i<(*array).size();i++)
       std::cout<<i<<") "<<(*array)[i].begin<<' '<<(*array)[i].end<<std::endl;
 
@@ -13,8 +13,8 @@
 **/
 
 TEST(Model_Model3D, Vertices_Basic) {
-  using Vec3 = s21::vectors::Vec3;
-  using Vertices = s21::inbound_model::Vertices;
+  using Vec3 = vectors::Vec3;
+  using Vertices = inbound_model::Vertices;
   Vertices arr_vec_a;
 
   EXPECT_EQ(arr_vec_a.vertices.size(), 0);
@@ -97,7 +97,7 @@ TEST(Model_Model3D, Vertices_Basic) {
 }
 
 TEST(Model_Model3D, Edge_Basic) {
-  using Edge = s21::inbound_model::Edge;
+  using Edge = inbound_model::Edge;
 
   Edge edge_1(0, 1);
   Edge edge_2(1, 2);
@@ -117,7 +117,7 @@ TEST(Model_Model3D, Edge_Basic) {
 }
 
 TEST(Model_Model3D, Edge_Comperison) {
-  using Edge = s21::inbound_model::Edge;
+  using Edge = inbound_model::Edge;
 
   Edge edge_1(0, 1);
   Edge edge_2(0, 2);
@@ -166,8 +166,8 @@ TEST(Model_Model3D, Edge_Comperison) {
 }
 
 TEST(Model_Model3D, Edges_Basic) {
-  using Edges = s21::inbound_model::Edges;
-  using Edge = s21::inbound_model::Edge;
+  using Edges = inbound_model::Edges;
+  using Edge = inbound_model::Edge;
 
   Edges arr_edges;
 
@@ -242,7 +242,7 @@ TEST(Model_Model3D, Edges_Basic) {
 }
 
 TEST(Model_Model3D, AxisBounds_Basic) {
-  using AxisBounds = s21::inbound_model::AxisBounds;
+  using AxisBounds = inbound_model::AxisBounds;
   AxisBounds bounds;
 
   EXPECT_DOUBLE_EQ(bounds.max, 0);
@@ -275,7 +275,7 @@ TEST(Model_Model3D, AxisBounds_Basic) {
 }
 
 TEST(Model_Model3D, AxisBounds3D_Basic) {
-  using AxisBounds3D = s21::inbound_model::AxisBounds3D;
+  using AxisBounds3D = inbound_model::AxisBounds3D;
 
   AxisBounds3D bounds_3D;
 
@@ -310,8 +310,8 @@ TEST(Model_Model3D, AxisBounds3D_Basic) {
 }
 
 TEST(Model_Model3D, Edges_Sort_1) {
-  using Edges = s21::inbound_model::Edges;
-  using Edge = s21::inbound_model::Edge;
+  using Edges = inbound_model::Edges;
+  using Edge = inbound_model::Edge;
 
   Edges arr_edges_1;
 
@@ -343,8 +343,8 @@ TEST(Model_Model3D, Edges_Sort_1) {
 }
 
 TEST(Model_Model3D, Edges_Sort_2) {
-  using Edges = s21::inbound_model::Edges;
-  using Edge = s21::inbound_model::Edge;
+  using Edges = inbound_model::Edges;
+  using Edge = inbound_model::Edge;
 
   Edges arr_edges_1;
 
@@ -379,8 +379,8 @@ TEST(Model_Model3D, Edges_Sort_2) {
 }
 
 TEST(Model_Model3D, Edges_Sort_ExtreamCase) {
-  using Edges = s21::inbound_model::Edges;
-  using Edge = s21::inbound_model::Edge;
+  using Edges = inbound_model::Edges;
+  using Edge = inbound_model::Edge;
 
   Edges arr_edges_1;
 
@@ -403,8 +403,8 @@ TEST(Model_Model3D, Edges_Sort_ExtreamCase) {
 }
 
 TEST(Model_Model3D, Edges_Normalize_1) {
-  using Edges = s21::inbound_model::Edges;
-  using Edge = s21::inbound_model::Edge;
+  using Edges = inbound_model::Edges;
+  using Edge = inbound_model::Edge;
 
   Edges arr_edges_1;
 
@@ -444,8 +444,8 @@ TEST(Model_Model3D, Edges_Normalize_1) {
 }
 
 TEST(Model_Model3D, Edges_Normalize_2) {
-  using Edges = s21::inbound_model::Edges;
-  using Edge = s21::inbound_model::Edge;
+  using Edges = inbound_model::Edges;
+  using Edge = inbound_model::Edge;
 
   Edges arr_edges_1;
 
@@ -492,8 +492,8 @@ TEST(Model_Model3D, Edges_Normalize_2) {
 }
 
 TEST(Model_Model3D, Edges_Normalize_ExtreamCase) {
-  using Edges = s21::inbound_model::Edges;
-  using Edge = s21::inbound_model::Edge;
+  using Edges = inbound_model::Edges;
+  using Edge = inbound_model::Edge;
 
   Edges arr_edges_1;
 
@@ -534,7 +534,7 @@ TEST(Model_Model3D, Edges_Normalize_ExtreamCase) {
 }
 
 TEST(Model_Model3D, Model3D_Basic_1) {
-  using Model3D = s21::inbound_model::Model3D;
+  using Model3D = inbound_model::Model3D;
 
   Model3D model;
 
@@ -590,7 +590,7 @@ TEST(Model_Model3D, Model3D_Basic_1) {
 }
 
 TEST(Model_Model3D, Model3D_Basic_2) {
-  using Model3D = s21::inbound_model::Model3D;
+  using Model3D = inbound_model::Model3D;
 
   Model3D model;
 
@@ -627,7 +627,7 @@ TEST(Model_Model3D, Model3D_Basic_2) {
  * RemoveGhostEdges()
  */
 TEST(Model_Model3D, Model3D_EdgeSpesialMethods) {
-  using Model3D = s21::inbound_model::Model3D;
+  using Model3D = inbound_model::Model3D;
 
   Model3D model;
 
@@ -728,7 +728,7 @@ TEST(Model_Model3D, Model3D_EdgeSpesialMethods) {
 }
 
 TEST(Model_Model3D, Model3D_Basic_GeneralUsage) {
-  using Model3D = s21::inbound_model::Model3D;
+  using Model3D = inbound_model::Model3D;
 
   Model3D model;
 
@@ -763,7 +763,7 @@ TEST(Model_Model3D, Model3D_Basic_GeneralUsage) {
 }
 
 TEST(Model_Model3D, Model3D_Basic_Errors) {
-  using Model3D = s21::inbound_model::Model3D;
+  using Model3D = inbound_model::Model3D;
 
   Model3D model;
 
@@ -792,8 +792,8 @@ TEST(Model_Model3D, Model3D_Basic_Errors) {
 }
 
 TEST(Model_Model3D, Model3D_Scaling_1) {
-  using Model3D = s21::inbound_model::Model3D;
-  using Vec3 = s21::vectors::Vec3;
+  using Model3D = inbound_model::Model3D;
+  using Vec3 = vectors::Vec3;
 
   Model3D model;
 
@@ -869,8 +869,8 @@ TEST(Model_Model3D, Model3D_Scaling_1) {
 }
 
 TEST(Model_Model3D, Model3D_Scaling_2) {
-  using Model3D = s21::inbound_model::Model3D;
-  using Vec3 = s21::vectors::Vec3;
+  using Model3D = inbound_model::Model3D;
+  using Vec3 = vectors::Vec3;
 
   Model3D model;
 
@@ -1011,8 +1011,8 @@ TEST(Model_Model3D, Model3D_Scaling_2) {
 }
 
 TEST(Model_Model3D, Model3D_Scaling_3) {
-  using Model3D = s21::inbound_model::Model3D;
-  using Vec3 = s21::vectors::Vec3;
+  using Model3D = inbound_model::Model3D;
+  using Vec3 = vectors::Vec3;
 
   Model3D model;
 
@@ -1044,7 +1044,7 @@ TEST(Model_Model3D, Model3D_Scaling_3) {
 }
 
 TEST(Model_Model3D, Model3D_Scaling_4) {
-  using Model3D = s21::inbound_model::Model3D;
+  using Model3D = inbound_model::Model3D;
 
   Model3D model;
 
@@ -1069,8 +1069,8 @@ TEST(Model_Model3D, Model3D_Scaling_4) {
 }
 
 TEST(Model_Model3D, Model3D_Centering_1) {
-  using Model3D = s21::inbound_model::Model3D;
-  using Vec3 = s21::vectors::Vec3;
+  using Model3D = inbound_model::Model3D;
+  using Vec3 = vectors::Vec3;
 
   Model3D model;
 
@@ -1109,8 +1109,8 @@ TEST(Model_Model3D, Model3D_Centering_1) {
 }
 
 TEST(Model_Model3D, Model3D_Centering_2) {
-  using Model3D = s21::inbound_model::Model3D;
-  using Vec3 = s21::vectors::Vec3;
+  using Model3D = inbound_model::Model3D;
+  using Vec3 = vectors::Vec3;
 
   Model3D model;
 
@@ -1174,8 +1174,8 @@ TEST(Model_Model3D, Model3D_Centering_2) {
 }
 
 TEST(Model_Model3D, Model3D_Centering_3) {
-  using Model3D = s21::inbound_model::Model3D;
-  using Vec3 = s21::vectors::Vec3;
+  using Model3D = inbound_model::Model3D;
+  using Vec3 = vectors::Vec3;
 
   Model3D model;
 
@@ -1289,8 +1289,8 @@ TEST(Model_Model3D, Model3D_Centering_3) {
 }
 
 TEST(Model_Model3D, Model3D_Centering_4) {
-  using Model3D = s21::inbound_model::Model3D;
-  using Vec3 = s21::vectors::Vec3;
+  using Model3D = inbound_model::Model3D;
+  using Vec3 = vectors::Vec3;
 
   Model3D model;
 
@@ -1322,9 +1322,9 @@ TEST(Model_Model3D, Model3D_Centering_4) {
 }
 
 TEST(Model_Model3D, Model3D_Single_Vertice_Edges) {
-  using Model3D = s21::inbound_model::Model3D;
-  using Vec3 = s21::vectors::Vec3;
-  using Edge = s21::inbound_model::Edge;
+  using Model3D = inbound_model::Model3D;
+  using Vec3 = vectors::Vec3;
+  using Edge = inbound_model::Edge;
 
   Model3D model;
 
@@ -1486,7 +1486,7 @@ TEST(Model_Model3D, Model3D_Single_Vertice_Edges) {
 }
 
 TEST(Model_Model3D, Model3D_Model_Name) {
-  using Model3D = s21::inbound_model::Model3D;
+  using Model3D = inbound_model::Model3D;
 
   Model3D model;
   std::string str_in{"Margo"}, str_out;
@@ -1499,8 +1499,8 @@ TEST(Model_Model3D, Model3D_Model_Name) {
 }
 
 TEST(Model_Model3D, Model3D_ManageEdges_1) {
-  using Model3D = s21::inbound_model::Model3D;
-  using Edge = s21::inbound_model::Edge;
+  using Model3D = inbound_model::Model3D;
+  using Edge = inbound_model::Edge;
 
   Model3D model;
 
@@ -1593,8 +1593,8 @@ TEST(Model_Model3D, Model3D_ManageEdges_1) {
 }
 
 TEST(Model_Model3D, Model3D_ManageEdges_2) {
-  using Model3D = s21::inbound_model::Model3D;
-  using Edge = s21::inbound_model::Edge;
+  using Model3D = inbound_model::Model3D;
+  using Edge = inbound_model::Edge;
 
   Model3D model;
 
@@ -1667,7 +1667,7 @@ TEST(Model_Model3D, Model3D_ManageEdges_2) {
 }
 
 TEST(Model_Model3D, Model3D_ManageEdges_3) {
-  using Model3D = s21::inbound_model::Model3D;
+  using Model3D = inbound_model::Model3D;
 
   Model3D model;
 
@@ -1748,9 +1748,9 @@ TEST(Model_Model3D, Model3D_ManageEdges_3) {
 }
 
 TEST(Model_Model3D, Model3D_CenterScale_UnscaleUncenter) {
-  using s21::vectors::Vec3;
+  using vectors::Vec3;
 
-  s21::inbound_model::Model3D model;
+  inbound_model::Model3D model;
   for (int i = 0; i < 21; i++) {
     model.AddVert(i + 10, i - 20, i - 10);
   }

@@ -6,7 +6,7 @@
 
 #include "../model/parser/model_parser.h"
 
-namespace s21::controller {
+namespace controller {
 
 class ModelParserWorker : public QObject {
   Q_OBJECT
@@ -15,7 +15,7 @@ class ModelParserWorker : public QObject {
   explicit ModelParserWorker(const QString& filename_,
                              QObject* parent_ = nullptr);
  signals:
-  void finished(std::shared_ptr<s21::inbound_model::Model3D> model);
+  void finished(std::shared_ptr<inbound_model::Model3D> model);
   void error(const QString& message);
  public slots:
   void Process();
@@ -23,6 +23,6 @@ class ModelParserWorker : public QObject {
  private:
   QString m_filename;
 };
-}  // namespace s21::controller
+}  // namespace controller
 
 #endif  // SRC_CONTROLLER_MODEL_PARSER_WORKER_H

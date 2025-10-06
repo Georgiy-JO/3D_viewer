@@ -6,7 +6,7 @@
 #include "../model3d/model3d.h"
 #include "service_functions/service_functions.h"
 
-namespace s21::inbound_model::parser {
+namespace inbound_model::parser {
 /**
  * @note There are service functions "ParseModelFromFile(...)" in
  * model_parser.cpp/.h that simplify working with the parser.
@@ -90,5 +90,5 @@ class Parser {
   std::string m_file_name;
 };
 
-}  // namespace s21::inbound_model::parser
+}  // namespace inbound_model::parser
 #endif  // SRC_MODEL_PARSER_PARSER_H

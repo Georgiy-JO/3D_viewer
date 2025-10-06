@@ -58,13 +58,13 @@ if(BUILD_TESTS OR BUILD_COVERAGE)
     set(THIRS_PARTY_INCLUDE_DIRS
         ${CMAKE_CURRENT_SOURCE_DIR}/..
         ${CMAKE_CURRENT_SOURCE_DIR}/../third_party
-        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/s21_matrix
+        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/matrix
     )
     set(THIRS_PARTY_SRC
-        ../third_party/s21_matrix/matrix.cpp
+        ../third_party/matrix/matrix.cpp
     )
     set(THIRS_PARTY_TEST_SRC
-        third_party/s21_matrix_tests.cpp
+        third_party/matrix_tests.cpp
     )
 
     set(CORE_INCLUDE_DIRS

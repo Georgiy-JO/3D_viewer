@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace s21::inbound_model::parser::service_functions {
+namespace inbound_model::parser::service_functions {
 
 bool IsNotEOF(const int& symbol) { return symbol != EOF; }
 
@@ -59,4 +59,4 @@ void LSpaceChTrim(std::string& line) {
 
 void LSpaceChTrim(std::istringstream& iss) { iss >> std::ws; }
 
-}  // namespace s21::inbound_model::parser::service_functions
+}  // namespace inbound_model::parser::service_functions
