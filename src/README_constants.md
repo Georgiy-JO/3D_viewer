@@ -114,3 +114,18 @@ The project contains a bunch of constants that set up the way the model is inter
 |Constant| Description|Location|
 |---|---|---|
 |MainWindow::kDefaultFile|Default model file|src/view/ui/mainwindow.h|
+
+## Capture constants
+
+|Constant| Description|Location|
+|---|---|---|
+|gui::capture::Capturer<ChildClass>::kCaptureLocation|Default capture save location.|src/view/gui/capture/capturer.h|
+|gui::capture::Capturer<ChildClass>::kTypeAmount|Default capture save files types amount.|src/view/gui/capture/capturer.h|
+|gui::capture::Capturer<ChildClass>::kTypeList|Default capture save files types + tags list.|src/view/gui/capture/capturer.h|
+|gui::capture::ScreenshotMaker::kTypeAmount|Screenshot save files types amount.|src/view/gui/capture/screenshot_maker.h|
+|gui::capture::ScreenshotMaker::kTypeList|Screenshot save files types + tags list.|src/view/gui/capture/screenshot_maker.h|
+|gui::capture::GifMaker::kTypeAmount|Gif save files types amount.|src/view/gui/capture/gif_maker.h|
+|gui::capture::GifMaker::kTypeList|Gif save files types + tags list.|src/view/gui/capture/gif_maker.h|
+|gui::capture::GifMaker::kFPS|Gif FPS parameter.|src/view/gui/capture/gif_maker.h|
+|gui::capture::GifMaker::kTime|Gif length in seconds|src/view/gui/capture/gif_maker.h|
+|gui::capture::GifMaker::kDementions|Gif detentions (width x height)|src/view/gui/capture/gif_maker.h|

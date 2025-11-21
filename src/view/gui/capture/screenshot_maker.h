@@ -35,7 +35,8 @@ class ScreenshotMaker : public Capturer<ScreenshotMaker> {
  private:
   static constexpr int kTypeAmount = 3;
   static constexpr std::array<FileType, kTypeAmount> kTypeList = {
-      FileType{"BMP", ".bmp"}, FileType{"JPEG", ".jpg"},
+      FileType{"BMP", ".bmp"}, 
+      FileType{"JPEG", ".jpg"},
       FileType{"JPEG", ".jpeg"}};
 };
 
