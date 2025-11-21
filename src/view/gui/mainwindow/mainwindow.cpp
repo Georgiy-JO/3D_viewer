@@ -1,9 +1,8 @@
 #include "mainwindow.h"
 
+#include "./ui_mainwindow.h"
 #include "controller/model_parser_worker.h"
 #include "view/gui/model_viewer/model_viewer.h"
-#include "./ui_mainwindow.h"
-
 
 namespace gui {
 MainWindow::MainWindow(QWidget* parent)
@@ -14,8 +13,8 @@ MainWindow::MainWindow(QWidget* parent)
       m_file_name(kDefaultFile) {
   OpenGLSetting();
   ui->setupUi(this);
-  if(!ui->mv_widget)  ErrorOccured("Model View Widget creation issue!");
-  
+  if (!ui->mv_widget) ErrorOccured("Model View Widget creation issue!");
+
   m_screen_shot.Initialize(ui->cb_screen_shot_format);
   m_gif.Initialize(ui->bt_gif);
 
@@ -26,7 +25,7 @@ MainWindow::MainWindow(QWidget* parent)
       ui->sl_edge_width, ui->mv_widget->GetEdgeWidthRange(),
       ui->mv_widget->GetEdgeWidth(), ui->sl_vertex_size,
       ui->mv_widget->GetVertexSizeRange(), ui->mv_widget->GetVertexSize());
-  
+
   m_model_settings.InitializeComboBoxes(
       ui->cb_projection_kind, ui->mv_widget->GetProjectionKind(),
       ui->cb_edge_kind, ui->mv_widget->GetEdgeKind(), ui->cb_vertex_kind,
@@ -56,19 +55,20 @@ void MainWindow::ErrorOccured(const QString& message) {
   TextMessageOutput("ERROR! " + message);
 }
 
-void MainWindow::ModelDataOutput(){
-  if(!ui->mv_widget->GetModelName().isEmpty())
-  TextMessageOutput(ui->mv_widget->GetModelName() + ": " +
-                            QString::number(static_cast<qulonglong>(
-                                ui->mv_widget->GetVertsAmount())) +
-                            " vertices, " +
-                            QString::number(static_cast<qulonglong>(
-                                ui->mv_widget->GetEdgesAmount())) +
-                            " edges.");
+void MainWindow::ModelDataOutput() {
+  if (!ui->mv_widget->GetModelName().isEmpty())
+    TextMessageOutput(ui->mv_widget->GetModelName() + ": " +
+                      QString::number(static_cast<qulonglong>(
+                          ui->mv_widget->GetVertsAmount())) +
+                      " vertices, " +
+                      QString::number(static_cast<qulonglong>(
+                          ui->mv_widget->GetEdgesAmount())) +
+                      " edges.");
 }
 
-void MainWindow::PopupMessageOutput(const QString& title_, const QString& text_){
-  QMessageBox::information(this, title_, text_ );
+void MainWindow::PopupMessageOutput(const QString& title_,
+                                    const QString& text_) {
+  QMessageBox::information(this, title_, text_);
 }
 
 template <typename Func>
@@ -251,7 +251,7 @@ void MainWindow::on_bt_reset_parameters_clicked() {
       ui->mv_widget->GetVertexKind());
 }
 
-void MainWindow::CompatibilitySettings(){
+void MainWindow::CompatibilitySettings() {
   ui->sl_edge_width->setVisible(false);
   ui->lb_edge_width->setVisible(false);
 }
@@ -315,12 +315,17 @@ void MainWindow::OpenGLSetting() {
 }
 
 void MainWindow::on_bt_scree_clicked() {
- // File saving window
-  std::string file = QFileDialog::getSaveFileName(
-      this, tr("Save image"), QString::fromStdString (m_screen_shot.GetDefaultFileName()),
-      tr(m_screen_shot.GetTypeList().data())).toStdString();
-  if(m_screen_shot.SaveScreenshot(ui->mv_widget->grab(), file))
-    PopupMessageOutput("Screenshot", "Screenshot successfully saved to \n"+ QString::fromStdString(m_screen_shot.GetFileName()));
+  // File saving window
+  std::string file =
+      QFileDialog::getSaveFileName(
+          this, tr("Save image"),
+          QString::fromStdString(m_screen_shot.GetDefaultFileName()),
+          tr(m_screen_shot.GetTypeList().data()))
+          .toStdString();
+  if (m_screen_shot.SaveScreenshot(ui->mv_widget->grab(), file))
+    PopupMessageOutput("Screenshot",
+                       "Screenshot successfully saved to \n" +
+                           QString::fromStdString(m_screen_shot.GetFileName()));
   else
     PopupMessageOutput("Screenshot", "Screenshot was not saved.");
 }
@@ -330,30 +335,34 @@ void MainWindow::on_cb_screen_shot_format_currentIndexChanged(int index) {
 }
 
 void MainWindow::on_bt_gif_clicked() {
-
   std::string file = QFileDialog::getSaveFileName(
-      this, tr("Save GIF"), QString::fromStdString (m_gif.GetDefaultFileName()),
-      tr(m_gif.GetTypeList().data())).toStdString();
+                         this, tr("Save GIF"),
+                         QString::fromStdString(m_gif.GetDefaultFileName()),
+                         tr(m_gif.GetTypeList().data()))
+                         .toStdString();
 
   QImage img(ui->mv_widget->size(), QImage::Format_RGB32);
   QPainter painter(&img);
   QTime timer;
-  bool successful_gif_flag=m_gif.RecordGif(file);
-  for (int i=0, frames=m_gif.GetFPS()*m_gif.GetTime(), time=m_gif.GetTime();successful_gif_flag&&i<frames;i++){
+  bool successful_gif_flag = m_gif.RecordGif(file);
+  for (int i = 0, frames = m_gif.GetFPS() * m_gif.GetTime(),
+           time = m_gif.GetTime();
+       successful_gif_flag && i < frames; i++) {
     // visualise time in the button
-    if (i % 10==0) ui->bt_gif->setText(QString::number(time--) + "s");
+    if (i % 10 == 0) ui->bt_gif->setText(QString::number(time--) + "s");
     ui->mv_widget->render(&painter);
-    successful_gif_flag=m_gif.RecordGif(img);
+    successful_gif_flag = m_gif.RecordGif(img);
     // wait 100 ms for FPS.
-    timer = QTime::currentTime().addMSecs(1000/m_gif.GetFPS());
+    timer = QTime::currentTime().addMSecs(1000 / m_gif.GetFPS());
     while (QTime::currentTime() < timer)
       QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
   }
-  successful_gif_flag=m_gif.SaveGif();
+  successful_gif_flag = m_gif.SaveGif();
   m_gif.Initialize(ui->bt_gif);
 
-  if(successful_gif_flag)
-    PopupMessageOutput("GIF", "GIF successfully saved to \n"+ QString::fromStdString(m_gif.GetFileName()));
+  if (successful_gif_flag)
+    PopupMessageOutput("GIF", "GIF successfully saved to \n" +
+                                  QString::fromStdString(m_gif.GetFileName()));
   else
     PopupMessageOutput("GIF", "GIF was not saved.");
 }

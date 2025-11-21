@@ -4,10 +4,10 @@
 #include <QMainWindow>
 #include <QString>
 
+#include "view/gui/capture/gif_maker.h"
+#include "view/gui/capture/screenshot_maker.h"
 #include "view/gui/controls/model_controls.h"
 #include "view/gui/controls/model_settings.h"
-#include "view/gui/capture/screenshot_maker.h"
-#include "view/gui/capture/gif_maker.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -78,7 +78,6 @@ class MainWindow : public QMainWindow {
   gui::capture::ScreenshotMaker m_screen_shot;
   gui::capture::GifMaker m_gif;
   QString m_file_name;
-
 };
 }  // namespace gui
 #endif  // SRC_VIEW_GUI_MAINWINDOW_MAINWINDOW_H
