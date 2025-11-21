@@ -3,6 +3,18 @@
 
 This project is an application for viewing 3D models in wireframe mode. It is implemented in C++ using the object-oriented programming paradigm.
 
+## Contents
+- [Contents](#contents)
+- [Theory](#theory)
+  - [Design patterns](#design-patterns)
+  - [Example Class Diagram](#example-class-diagram)
+- [Checklist](#checklist)
+  - [Main Part](#main-part)
+  - [Second Part](#second-part)
+  - [Third Part](#third-part)
+- [Project Notes](#project-notes)
+- [Meme](#meme)
+
 
 ## Theory
 
@@ -10,9 +22,9 @@ This project is an application for viewing 3D models in wireframe mode. It is im
 [Design patterns](/materials/patterns_info.md) - recurring problems in software design, along with general principles and solutions for addressing them.
 
 ### Example Class Diagram
-⚠️ This diagram does not fully reflect the project’s structure.
+⚠️ This diagram does not reflect the project’s structure, it is here as a theoretical element.
 
-![unreadable_example_class_diagram](misc/images/unreadable_example_class_diagram.png)
+![Unreadable_example_class_diagram](misc/images/unreadable_example_class_diagram.png)
 
 
 
