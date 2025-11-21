@@ -351,7 +351,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/view/render/shaders
 # Choose location with th following way: PREFIX=/someting/folder make install_Viewer3D 
 add_custom_target(install_Viewer3D
     COMMAND ${CMAKE_COMMAND} -DCMAKE_INSTALL_COMPONENT=Viewer3D
-                             -DCMAKE_INSTALL_PREFIX=$ENV{PREFIX}
+                             "-DCMAKE_INSTALL_PREFIX=$ENV{PREFIX}"
                              -P ${CMAKE_BINARY_DIR}/cmake_install.cmake
     DEPENDS Viewer3D
     COMMENT "Installing only Viewer3D and its resources"
