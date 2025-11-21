@@ -436,7 +436,7 @@
      <string>Reset Parameters</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="cb_screen_format">
+   <widget class="QComboBox" name="cb_screen_shot_format">
     <property name="geometry">
      <rect>
       <x>750</x>
@@ -445,16 +445,6 @@
       <height>31</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>bmp</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>jpeg</string>
-     </property>
-    </item>
    </widget>
    <widget class="QPushButton" name="bt_scree">
     <property name="geometry">

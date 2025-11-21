@@ -1,9 +1,9 @@
 #include "mainwindow.h"
 
 #include "controller/model_parser_worker.h"
-#include "third_party/gif.h"
 #include "view/gui/model_viewer/model_viewer.h"
 #include "./ui_mainwindow.h"
+
 
 namespace gui {
 MainWindow::MainWindow(QWidget* parent)
@@ -14,22 +14,32 @@ MainWindow::MainWindow(QWidget* parent)
       m_file_name(kDefaultFile) {
   OpenGLSetting();
   ui->setupUi(this);
+  if(!ui->mv_widget)  ErrorOccured("Model View Widget creation issue!");
+  
+  m_screen_shot.Initialize(ui->cb_screen_shot_format);
+  m_gif.Initialize(ui->bt_gif);
+
   m_model_controls.Initialize(ui->sl_rotate_OX, ui->sl_rotate_OY,
                               ui->sl_rotate_OZ, ui->sl_scale);
+
   m_model_settings.InitializeSliders(
       ui->sl_edge_width, ui->mv_widget->GetEdgeWidthRange(),
       ui->mv_widget->GetEdgeWidth(), ui->sl_vertex_size,
       ui->mv_widget->GetVertexSizeRange(), ui->mv_widget->GetVertexSize());
+  
   m_model_settings.InitializeComboBoxes(
       ui->cb_projection_kind, ui->mv_widget->GetProjectionKind(),
       ui->cb_edge_kind, ui->mv_widget->GetEdgeKind(), ui->cb_vertex_kind,
       ui->mv_widget->GetVertexKind());
+
   ui->text_output->setWordWrap(true);
   ui->filename_output->setWordWrap(true);
   FileNameOutput();
   TextMessageOutput("");
   connect(ui->mv_widget, &gui::ModelViewer::SignalPrintingError, this,
           &gui::MainWindow::ErrorOccured);
+
+  CompatibilitySettings();
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -46,6 +56,21 @@ void MainWindow::ErrorOccured(const QString& message) {
   TextMessageOutput("ERROR! " + message);
 }
 
+void MainWindow::ModelDataOutput(){
+  if(!ui->mv_widget->GetModelName().isEmpty())
+  TextMessageOutput(ui->mv_widget->GetModelName() + ": " +
+                            QString::number(static_cast<qulonglong>(
+                                ui->mv_widget->GetVertsAmount())) +
+                            " vertices, " +
+                            QString::number(static_cast<qulonglong>(
+                                ui->mv_widget->GetEdgesAmount())) +
+                            " edges.");
+}
+
+void MainWindow::PopupMessageOutput(const QString& title_, const QString& text_){
+  QMessageBox::information(this, title_, text_ );
+}
+
 template <typename Func>
 void MainWindow::ChangeModel(Func f) {
   try {
@@ -56,8 +81,9 @@ void MainWindow::ChangeModel(Func f) {
      * the model, only changing (aka f()).
      */
     ui->mv_widget->update();
+    ModelDataOutput();
   } catch (const std::exception& e) {
-    ErrorOccured(QString("Model changing -> ") + e.what());
+    ErrorOccured(QString("Runtime -> ") + e.what());
   }
 }
 
@@ -165,13 +191,7 @@ void MainWindow::on_bt_show_model_clicked() {
         thread->deleteLater();
         try {
           ui->mv_widget->SetModel(std::move(model));
-          TextMessageOutput(ui->mv_widget->GetModelName() + ": " +
-                            QString::number(static_cast<qulonglong>(
-                                ui->mv_widget->GetVertsAmount())) +
-                            " vertices, " +
-                            QString::number(static_cast<qulonglong>(
-                                ui->mv_widget->GetEdgesAmount())) +
-                            " edges.");
+          ModelDataOutput();
         } catch (const std::exception& e) {
           ErrorOccured("Model not set: " + QString::fromStdString(e.what()));
         }
@@ -229,6 +249,11 @@ void MainWindow::on_bt_reset_parameters_clicked() {
       ui->cb_projection_kind, ui->mv_widget->GetProjectionKind(),
       ui->cb_edge_kind, ui->mv_widget->GetEdgeKind(), ui->cb_vertex_kind,
       ui->mv_widget->GetVertexKind());
+}
+
+void MainWindow::CompatibilitySettings(){
+  ui->sl_edge_width->setVisible(false);
+  ui->lb_edge_width->setVisible(false);
 }
 
 /**
@@ -289,99 +314,48 @@ void MainWindow::OpenGLSetting() {
   QSurfaceFormat::setDefaultFormat(format);
 }
 
-
-
-
 void MainWindow::on_bt_scree_clicked() {
-  if (!ui->mv_widget) {
-    QMessageBox::critical(this, "Error", "Виджет mv_widget не существует.");
-    return;
-  }
-  QPixmap screenshot = ui->mv_widget->grab();
-  // Диалоговое окно сохранения файла
-  QString file_path = QFileDialog::getSaveFileName(
-      this, tr("Сохранить изображение"), "screenshot",
-      tr("BMP (*.bmp);;JPEG Files (*.jpg *.jpeg);;All Files (*)"), nullptr,
-      QFileDialog::DontUseNativeDialog);
-
-  // Определяем формат и суффикс на основе имени файла *и* выбранного суффикса
-  // по умолчанию
-  QString format;
-  QString suffix;
-  if (file_path.endsWith(".bmp", Qt::CaseInsensitive)) {
-    format = "BMP";
-    suffix = ".bmp";
-  } else if (file_path.endsWith(".jpg", Qt::CaseInsensitive) ||
-             file_path.endsWith(".jpeg", Qt::CaseInsensitive)) {
-    format = "JPEG";
-    suffix = ".jpg";  // или ".jpeg", если нужно различать
-  } else {
-    // Нет расширения - используем выбранный по умолчанию
-    format = (m_selectedSuffix == ".bmp") ? "BMP" : "JPEG";
-    suffix = m_selectedSuffix;
-    file_path += suffix;  // Добавляем суффикс по умолчанию
-  }
-  // Сохраняем изображение
-  if (screenshot.save(file_path, format.toUtf8())) {
-    QMessageBox::information(this, "Сохранено",
-                             "Изображение успешно сохранено.");
-  } else {
-    QMessageBox::critical(this, "Ошибка", "Не удалось сохранить изображение.");
-  }
+ // File saving window
+  std::string file = QFileDialog::getSaveFileName(
+      this, tr("Save image"), QString::fromStdString (m_screen_shot.GetDefaultFileName()),
+      tr(m_screen_shot.GetTypeList().data())).toStdString();
+  if(m_screen_shot.SaveScreenshot(ui->mv_widget->grab(), file))
+    PopupMessageOutput("Screenshot", "Screenshot successfully saved to \n"+ QString::fromStdString(m_screen_shot.GetFileName()));
+  else
+    PopupMessageOutput("Screenshot", "Screenshot was not saved.");
 }
 
-void MainWindow::on_cb_screen_format_currentIndexChanged(int index) {
-  // Определяем суффикс на основе выбранного индекса
-  if (index == 0) {
-    m_selectedSuffix = ".bmp";
-  } else {
-    m_selectedSuffix = ".jpg";
-  }
-  //  qDebug() << "Выбран суффикс: " << m_selectedSuffix;
+void MainWindow::on_cb_screen_shot_format_currentIndexChanged(int index) {
+  m_screen_shot.SetActiveType(index);
 }
 
 void MainWindow::on_bt_gif_clicked() {
-  // Генерируем уникальное имя файла по умолчанию.
-  QString timestamp = QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss");
-  QString file_name = "animation_" + timestamp;
-  // Открываем диалог сохранения файла, предлагая имя файла по умолчанию и
-  // фильтр GIF.
-  QString file_path = QFileDialog::getSaveFileName(
-      this, tr("Save Gif"), file_name, tr("GIF (*.gif)"));
-  // Если пользователь выбрал файл (не нажал "Отмена").
-  if (!file_path.isEmpty()) {
-    // Добавляем расширение ".gif", если оно отсутствует.
-    if (!file_path.endsWith(".gif", Qt::CaseInsensitive)) {
-      file_path += ".gif";
-    }
-    // Создаем объекты QImage и QPainter для отрисовки и масштабирования.
-    QImage img(ui->mv_widget->size(), QImage::Format_RGB32), img640_480;
-    QPainter painter(&img);
-    QTime timer;
-    GifWriter gif;
-    // Начинаем запись GIF (используем внешнюю библиотеку gif.h).
-    GifBegin(&gif, file_path.toLatin1(), 640, 480, 10);
-    // Цикл записи кадров (50 кадров, 10 FPS, 5 секунд).
-    for (int i = 1, sec = 5; i <= 50; ++i) {
-      // Обновляем текст кнопки каждую секунду.
-      if (i % 10 == 0) ui->bt_gif->setText(QString::number(sec--) + "s");
-      // Отрисовываем содержимое виджета на изображение.
-      ui->mv_widget->render(&painter);
-      // Масштабируем изображение до 640x480.
-      img640_480 = img.scaled(QSize(640, 480));
-      // Записываем кадр в GIF.
-      GifWriteFrame(&gif, img640_480.bits(), 640, 480, 10);
-      // Ожидаем 100 мс для управления частотой кадров.
-      timer = QTime::currentTime().addMSecs(100);
-      while (QTime::currentTime() < timer)
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
-    }
-    // Заканчиваем запись GIF.
-    ui->bt_gif->setText("GIF");
-    GifEnd(&gif);
-    // Отображаем сообщение об успешной записи.
-    QMessageBox::information(this, "Запись Gif", "Gif успешно записан.");
+
+  std::string file = QFileDialog::getSaveFileName(
+      this, tr("Save GIF"), QString::fromStdString (m_gif.GetDefaultFileName()),
+      tr(m_gif.GetTypeList().data())).toStdString();
+
+  QImage img(ui->mv_widget->size(), QImage::Format_RGB32);
+  QPainter painter(&img);
+  QTime timer;
+  bool successful_gif_flag=m_gif.RecordGif(file);
+  for (int i=0, frames=m_gif.GetFPS()*m_gif.GetTime(), time=m_gif.GetTime();successful_gif_flag&&i<frames;i++){
+    // visualise time in the button
+    if (i % 10==0) ui->bt_gif->setText(QString::number(time--) + "s");
+    ui->mv_widget->render(&painter);
+    successful_gif_flag=m_gif.RecordGif(img);
+    // wait 100 ms for FPS.
+    timer = QTime::currentTime().addMSecs(1000/m_gif.GetFPS());
+    while (QTime::currentTime() < timer)
+      QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
   }
+  successful_gif_flag=m_gif.SaveGif();
+  m_gif.Initialize(ui->bt_gif);
+
+  if(successful_gif_flag)
+    PopupMessageOutput("GIF", "GIF successfully saved to \n"+ QString::fromStdString(m_gif.GetFileName()));
+  else
+    PopupMessageOutput("GIF", "GIF was not saved.");
 }
 
 }  // namespace gui

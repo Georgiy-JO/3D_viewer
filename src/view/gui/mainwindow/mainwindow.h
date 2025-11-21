@@ -1,12 +1,13 @@
 #ifndef SRC_VIEW_GUI_MAINWINDOW_MAINWINDOW_H
 #define SRC_VIEW_GUI_MAINWINDOW_MAINWINDOW_H
 
-#include <QDateTime>  // Для генерации уникального имени файла
 #include <QMainWindow>
 #include <QString>
 
 #include "view/gui/controls/model_controls.h"
 #include "view/gui/controls/model_settings.h"
+#include "view/gui/capture/screenshot_maker.h"
+#include "view/gui/capture/gif_maker.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -50,25 +51,34 @@ class MainWindow : public QMainWindow {
   void on_bt_background_color_clicked();
   void on_bt_reset_parameters_clicked();
 
-  void TextMessageOutput(const QString& str);
-  void FileNameOutput();
-
   void on_bt_scree_clicked();
-  void on_cb_screen_format_currentIndexChanged(int index);
+  void on_cb_screen_shot_format_currentIndexChanged(int index);
   void on_bt_gif_clicked();
 
  private:
+  void TextMessageOutput(const QString& str);
+  void FileNameOutput();
+  void ModelDataOutput();
+  void PopupMessageOutput(const QString& title_, const QString& text_);
+
   void OpenGLSetting();
   template <typename Func>
   void ChangeModel(Func f);
+
+  /**
+   * @note This function neet to be run due to the compatibility issues
+   * caused by openGL 2.0+ vs 3.0+.
+   */
+  void CompatibilitySettings();
 
   static constexpr const char* kDefaultFile = "models/skull.obj";
   Ui::MainWindow* ui;
   gui::controls::ModelControls m_model_controls;
   gui::controls::ModelSettings m_model_settings;
+  gui::capture::ScreenshotMaker m_screen_shot;
+  gui::capture::GifMaker m_gif;
   QString m_file_name;
 
-  QString m_selectedSuffix = ".bmp";  // Суффикс по умолчанию
 };
 }  // namespace gui
 #endif  // SRC_VIEW_GUI_MAINWINDOW_MAINWINDOW_H

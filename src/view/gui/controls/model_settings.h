@@ -1,7 +1,6 @@
 #ifndef SRC_VIEW_GUI_CONTROLS_MODEL_SETTINGS_H
 #define SRC_VIEW_GUI_CONTROLS_MODEL_SETTINGS_H
 #include <QComboBox>
-#include <QPushButton>
 
 #include "elements/slider.h"
 

@@ -691,7 +691,7 @@ void GifWriteLzwImage(FILE* f, const uint8_t* image, uint32_t left,
   GIF_TEMP_FREE(codetree);
 }
 
-typedef struct {
+typedef struct GifWriter{
   FILE* f;
   uint8_t* oldImage;
   bool firstFrame;

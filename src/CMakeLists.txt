@@ -51,7 +51,8 @@ set(INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/view/gui/controls/elements
   ${CMAKE_CURRENT_SOURCE_DIR}/view/gui/model_viewer
   ${CMAKE_CURRENT_SOURCE_DIR}/view/gui/model_viewer/model_viewer_src
-  ${CMAKE_CURRENT_SOURCE_DIR}/view/mainwindow
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/gui/mainwindow
+  ${CMAKE_CURRENT_SOURCE_DIR}/view/gui/capture
 )
 set(SOURCES
   controller/model_parser_worker.cpp
@@ -79,6 +80,9 @@ set(SOURCES
   view/gui/mainwindow/mainwindow.cpp
   view/gui/mainwindow/mainwindow.ui
   main.cpp
+  view/gui/capture/capture_src/capturer.tpp
+  view/gui/capture/capture_src/screenshot_maker.cpp
+  view/gui/capture/capture_src/gif_maker.cpp
 )
 set(HEADERS
   controller/model_parser_worker.h
@@ -106,6 +110,9 @@ set(HEADERS
   view/gui/controls/elements/slider.h
   view/gui/mainwindow/mainwindow.h
   third_party/gif.h
+  view/gui/capture/capturer.h
+  view/gui/capture/screenshot_maker.h
+  view/gui/capture/gif_maker.h
 )
 
 set(SHADER_FILES
