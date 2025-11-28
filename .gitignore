@@ -4,7 +4,6 @@
 # Object files
 *.o
 *.ko
-# *.obj             #How else will we keep object examples? (each obj file is less than 10Mb)
 *.elf
 
 # Linker output
@@ -59,3 +58,6 @@ build
 .vscode
 */qt6-supp_notfinished.txt
 */CMakeLists.txt.user
+
+# this thing is 1.3Gb -- I'm not bringing it to remote rep
+*/models/truck.obj 

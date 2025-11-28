@@ -165,7 +165,7 @@ void MainWindow::on_bt_reset_model_pressed() {
 
 void MainWindow::on_bt_file_list_clicked() {
   QString new_file_name = QFileDialog::getOpenFileName(
-      this, tr("Choose object file"), QDir::currentPath(),
+      this, tr("Choose object file"), m_file_name,
       tr("Object files (*.obj)"));
 
   if (!new_file_name.isEmpty()) m_file_name = new_file_name;
